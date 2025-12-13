@@ -162,7 +162,7 @@ export default function Studios() {
                     <img
                       src={studio.image}
                       alt={studio.name}
-                      className="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="w-full h-64 md:h-96 lg:h-[500px] object-cover object-center transition-transform duration-700 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
                     <div className="absolute bottom-6 left-6">

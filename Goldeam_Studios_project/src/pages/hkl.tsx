@@ -192,7 +192,7 @@ export default function Home() {
             <img
               src={bg}
               alt="Podcast Studio"
-              className="w-full h-full object-cover scale-110"
+              className="w-full h-full object-cover object-center scale-110"
             />
           </div>
 
@@ -311,13 +311,13 @@ export default function Home() {
           ].map((src, index) => (
             <div
               key={index}
-              className="group relative h-80 overflow-hidden animate-on-scroll opacity-0 bg-black"
+              className="group relative h-64 md:h-80 overflow-hidden animate-on-scroll opacity-0 bg-black"
               style={{ animationDelay: `${index * 150}ms` }}
             >
               <img
                 src={src}
                 alt={`Studio Shot ${index + 1}`}
-                className="w-full h-full object-cover transition-all duration-700 group-hover:scale-125 group-hover:rotate-2 brightness-75 group-hover:brightness-100"
+                className="w-full h-full object-cover object-center transition-all duration-700 group-hover:scale-125 group-hover:rotate-2 brightness-75 group-hover:brightness-100"
               />
 
               {/* Gradient overlay */}
