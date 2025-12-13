@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chicago Podcast Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #050505;
+        color: #ffffff;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-family: 'Oswald', sans-serif;
+      }
+      .glass-nav {
+        background: rgba(5, 5, 5, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .text-gradient {
+        background: linear-gradient(to right, #ffffff, #9ca3af);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .animate-pulse-slow {
+        animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: .5; }
+      }
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #050505; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333; 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555; 
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+</head>
+<body class="selection:bg-red-600 selection:text-white">
+
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-6 bg-transparent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <a href="#" class="flex items-center gap-2 group">
+                        <div class="bg-red-600 p-2 rounded-full group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="mic" class="h-6 w-6 text-white"></i>
+                        </div>
+                        <span class="text-2xl font-bold tracking-tighter uppercase text-white">
+                            Chicago<span class="text-red-500">.</span>Podcast
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-gray-300 hover:text-white text-sm font-medium tracking-wider uppercase transition-colors">Home</a>
+                    <a href="#studio" class="text-gray-300 hover:text-white text-sm font-medium tracking-wider uppercase transition-colors">Studio</a>
+                    <a href="#services" class="text-gray-300 hover:text-white text-sm font-medium tracking-wider uppercase transition-colors">Services</a>
+                    <a href="#pricing" class="text-gray-300 hover:text-white text-sm font-medium tracking-wider uppercase transition-colors">Pricing</a>
+                    <a href="#gear" class="text-gray-300 hover:text-white text-sm font-medium tracking-wider uppercase transition-colors">Gear</a>
+                    <a href="#contact" class="bg-white text-black hover:bg-red-600 hover:text-white px-6 py-2.5 rounded-none font-bold uppercase tracking-wide transition-all duration-300 transform hover:-translate-y-1">
+                        Book Now
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
+                        <i data-lucide="menu" class="h-8 w-8"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden absolute top-full left-0 w-full glass-nav transition-all duration-300 overflow-hidden max-h-0 opacity-0">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col items-center">
+                <a href="#home" class="mobile-link text-gray-300 hover:text-white block px-3 py-4 rounded-md text-xl font-bold uppercase tracking-wider">Home</a>
+                <a href="#studio" class="mobile-link text-gray-300 hover:text-white block px-3 py-4 rounded-md text-xl font-bold uppercase tracking-wider">Studio</a>
+                <a href="#services" class="mobile-link text-gray-300 hover:text-white block px-3 py-4 rounded-md text-xl font-bold uppercase tracking-wider">Services</a>
+                <a href="#pricing" class="mobile-link text-gray-300 hover:text-white block px-3 py-4 rounded-md text-xl font-bold uppercase tracking-wider">Pricing</a>
+                <a href="#gear" class="mobile-link text-gray-300 hover:text-white block px-3 py-4 rounded-md text-xl font-bold uppercase tracking-wider">Gear</a>
+                <a href="#contact" class="mobile-link w-full text-center bg-red-600 text-white block px-3 py-4 text-xl font-bold uppercase mt-4">Book Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="home" class="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+        <!-- Background Image/Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2070&auto=format&fit=crop" alt="Podcast Studio" class="w-full h-full object-cover opacity-40" />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#050505] via-transparent to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="max-w-4xl">
+                <div class="flex items-center gap-2 mb-6 animate-pulse-slow">
+                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <span class="text-red-500 font-bold tracking-widest uppercase text-sm">Now Accepting New Creators</span>
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-tight mb-8">
+                    ELEVATE YOUR <br />
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-600">VOICE</span>
+                </h1>
+                
+                <p class="text-xl text-gray-400 mb-10 max-w-2xl leading-relaxed">
+                    Chicago's premier podcast production facility. Professional audio engineering, 4K video recording, and live streaming services in a creative industrial loft.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-6">
+                    <a href="#contact" class="group flex items-center justify-center gap-3 bg-red-600 text-white px-8 py-4 text-lg font-bold uppercase tracking-wider hover:bg-red-700 transition-all">
+                        Book A Session
+                        <i data-lucide="arrow-right" class="h-5 w-5 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    
+                    <button class="flex items-center justify-center gap-3 border border-white/20 hover:border-white text-white px-8 py-4 text-lg font-bold uppercase tracking-wider transition-all backdrop-blur-sm">
+                        <i data-lucide="play" class="h-5 w-5 fill-current"></i>
+                        Watch Tour
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <div class="w-[1px] h-24 bg-gradient-to-b from-transparent via-gray-500 to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="studio" class="py-24 bg-[#050505]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <h2 class="text-red-600 font-bold tracking-widest uppercase mb-4">The Studio</h2>
+                <h3 class="text-4xl md:text-5xl font-black text-white uppercase">Designed for Creators</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Feature 1 -->
+                <div class="bg-[#0A0A0A] border border-white/5 p-8 hover:border-red-500/50 transition-colors duration-300 group">
+                    <div class="text-gray-400 mb-4 group-hover:text-red-500 transition-colors">
+                        <i data-lucide="mic-2" class="h-10 w-10"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2 uppercase">Pro Audio</h3>
+                    <p class="text-gray-500 leading-relaxed">Shure SM7B microphones and RodeCaster Pro II interfaces for broadcast-quality sound.</p>
+                </div>
+                <!-- Feature 2 -->
+                <div class="bg-[#0A0A0A] border border-white/5 p-8 hover:border-red-500/50 transition-colors duration-300 group">
+                    <div class="text-gray-400 mb-4 group-hover:text-red-500 transition-colors">
+                        <i data-lucide="video" class="h-10 w-10"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2 uppercase">4K Multi-Cam</h3>
+                    <p class="text-gray-500 leading-relaxed">Three-angle Sony 4K camera setup with professional lighting and live switching.</p>
+                </div>
+                <!-- Feature 3 -->
+                <div class="bg-[#0A0A0A] border border-white/5 p-8 hover:border-red-500/50 transition-colors duration-300 group">
+                    <div class="text-gray-400 mb-4 group-hover:text-red-500 transition-colors">
+                        <i data-lucide="cast" class="h-10 w-10"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2 uppercase">Live Streaming</h3>
+                    <p class="text-gray-500 leading-relaxed">Direct integration with YouTube, Twitch, and Facebook Live via high-speed fiber.</p>
+                </div>
+                <!-- Feature 4 -->
+                <div class="bg-[#0A0A0A] border border-white/5 p-8 hover:border-red-500/50 transition-colors duration-300 group">
+                    <div class="text-gray-400 mb-4 group-hover:text-red-500 transition-colors">
+                        <i data-lucide="sliders" class="h-10 w-10"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2 uppercase">Post Production</h3>
+                    <p class="text-gray-500 leading-relaxed">Full editing services available. We cut clips, mix audio, and deliver final files.</p>
+                </div>
+                <!-- Feature 5 -->
+                <div class="bg-[#0A0A0A] border border-white/5 p-8 hover:border-red-500/50 transition-colors duration-300 group">
+                    <div class="text-gray-400 mb-4 group-hover:text-red-500 transition-colors">
+                        <i data-lucide="coffee" class="h-10 w-10"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2 uppercase">Comfort</h3>
+                    <p class="text-gray-500 leading-relaxed">Lounge area, green room, and unlimited coffee to keep the creative energy flowing.</p>
+                </div>
+                <!-- Feature 6 -->
+                <div class="bg-[#0A0A0A] border border-white/5 p-8 hover:border-red-500/50 transition-colors duration-300 group">
+                    <div class="text-gray-400 mb-4 group-hover:text-red-500 transition-colors">
+                        <i data-lucide="wifi" class="h-10 w-10"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2 uppercase">Fiber Internet</h3>
+                    <p class="text-gray-500 leading-relaxed">Symmetric 1Gbps connection ensures your remote guests and streams never lag.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showcase -->
+    <section class="py-0">
+        <div class="grid grid-cols-1 md:grid-cols-3">
+            <div class="group relative h-80 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=1470&auto=format&fit=crop" alt="Studio Shot 1" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0" />
+                <div class="absolute inset-0 bg-red-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            <div class="group relative h-80 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1469&auto=format&fit=crop" alt="Studio Shot 2" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0" />
+                <div class="absolute inset-0 bg-red-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            <div class="group relative h-80 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1470&auto=format&fit=crop" alt="Studio Shot 3" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0" />
+                <div class="absolute inset-0 bg-red-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="py-24 bg-[#050505]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div class="max-w-2xl">
+                    <h2 class="text-red-600 font-bold tracking-widest uppercase mb-4">Rates & Packages</h2>
+                    <h3 class="text-4xl md:text-5xl font-black text-white uppercase">Simple, Transparent Pricing</h3>
+                </div>
+                <p class="text-gray-400 max-w-sm text-right">
+                    No hidden fees. All sessions include a sound engineer to handle the technical side.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Plan 1 -->
+                <div class="relative p-8 flex flex-col h-full border border-white/10 bg-black/50">
+                    <h3 class="text-xl font-bold text-gray-400 uppercase tracking-widest mb-4">Audio Only</h3>
+                    <div class="flex items-baseline mb-8">
+                        <span class="text-5xl font-black text-white">$85</span>
+                        <span class="text-gray-500 ml-2">/ hour</span>
+                    </div>
+                    <ul class="space-y-4 mb-8 flex-1">
+                        <li class="flex items-start text-gray-300"><i data-lucide="check" class="h-5 w-5 text-red-500 mr-3 shrink-0"></i><span class="text-sm">Up to 4 Microphones</span></li>
+                        <li class="flex items-start text-gray-300"><i data-lucide="check" class="h-5 w-5 text-red-500 mr-3 shrink-0"></i><span class="text-sm">Sound Engineer Included</span></li>
+                        <li class="flex items-start text-gray-300"><i data-lucide="check" class="h-5 w-5 text-red-500 mr-3 shrink-0"></i><span class="text-sm">Raw WAV/MP3 Delivery</span></li>
+                        <li class="flex items-start text-gray-300"><i data-lucide="check" class="h-5 w-5 text-red-500 mr-3 shrink-0"></i><span class="text-sm">Instant File Transfer</span></li>
+                        <li class="flex items-start text-gray-300"><i data-lucide="check" class="h-5 w-5 text-red-500 mr-3 shrink-0"></i><span class="text-sm">Acoustically Treated Room</span></li>
+                    </ul>
+                    <button class="w-full py-4 text-sm font-bold uppercase tracking-widest transition-colors bg-white text-black hover:bg-gray-200">Select Plan</button>
+                </div>
+
+                <!-- Plan 2 -->
+                <div class="relative p-8 flex flex-col h-full border border-red-600 bg-[#0A0A0A]">
+                    <div class="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold px-3 py-1 uppercase tracking-wider">Most Popular</div>
+                    <h3 class="text-xl font-bold text-gray-400 uppercase tracking-widest mb-4">Audio + Video</h3>
+                    <div class="flex items-baseline mb-8">
+                        <span class="text-5xl font-black text-white">$125</span>
+                        <span class="text-gray-500 ml-2">/ hour</span>
+                    </div>
+                    <ul class="space-y-4 mb-8 flex-1">
+                        <li class="flex items-start text-gray-300"><i data-lucide="check" class="h-5 w-5 text-red-500 mr-3 shrink-0"></i><span class="text-sm">Everything in Audio Only</span></li>
+                        <li class="flex items-start text-gray-300"><i data-lucide="check" class="h-5 w-5 text-red-500 mr-3 shrink-0"></i><span class="text-sm">3-Camera 4K Setup</span></li>
+                        <li class="flex items-start text-gray-300"><i data-lucide="check" class="h-5 w-5 text-red-500 mr-3 shrink-0"></i><span class="text-sm">Live Video Switching</span></li>
+                        <li class="flex items-start text-gray-300"><i data-lucide="check" class="h-5 w-5 text-red-500 mr-3 shrink-0"></i><span class="text-sm">Professional Lighting</span></li>
+                        <li class="flex items-start text-gray-300"><i data-lucide="check" class="h-5 w-5 text-red-500 mr-3 shrink-0"></i><span class="text-sm">Custom Set Colors</span></li>
+                        <li class="flex items-start text-gray-300"><i data-lucide="check" class="h-5 w-5 text-red-500 mr-3 shrink-0"></i><span class="text-sm">Raw Video Files Included</span></li>
+                    </ul>
+                    <button class="w-full py-4 text-sm font-bold uppercase tracking-widest transition-colors bg-red-600 text-white hover:bg-red-700">Select Plan</button>
+                </div>
+
+                <!-- Plan 3 -->
+                <div class="relative p-8 flex flex-col h-full border border-white/10 bg-black/50">
+                    <h3 class="text-xl font-bold text-gray-400 uppercase tracking-widest mb-4">Monthly Pro</h3>
+                    <div class="flex items-baseline mb-8">
+                        <span class="text-5xl font-black text-white">$400</span>
+                        <span class="text-gray-500 ml-2">/ month</span>
+                    </div>
+                    <ul class="space-y-4 mb-8 flex-1">
+                        <li class="flex items-start text-gray-300"><i data-lucide="check" class="h-5 w-5 text-red-500 mr-3 shrink-0"></i><span class="text-sm">4 Hours Studio Time</span></li>
+                        <li class="flex items-start text-gray-300"><i data-lucide="check" class="h-5 w-5 text-red-500 mr-3 shrink-0"></i><span class="text-sm">Audio & Video Included</span></li>
+                        <li class="flex items-start text-gray-300"><i data-lucide="check" class="h-5 w-5 text-red-500 mr-3 shrink-0"></i><span class="text-sm">Priority Booking</span></li>
+                        <li class="flex items-start text-gray-300"><i data-lucide="check" class="h-5 w-5 text-red-500 mr-3 shrink-0"></i><span class="text-sm">File Storage (3 Months)</span></li>
+                        <li class="flex items-start text-gray-300"><i data-lucide="check" class="h-5 w-5 text-red-500 mr-3 shrink-0"></i><span class="text-sm">Discount on Editing</span></li>
+                        <li class="flex items-start text-gray-300"><i data-lucide="check" class="h-5 w-5 text-red-500 mr-3 shrink-0"></i><span class="text-sm">Free Guest Parking</span></li>
+                    </ul>
+                    <button class="w-full py-4 text-sm font-bold uppercase tracking-widest transition-colors bg-white text-black hover:bg-gray-200">Select Plan</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Banner -->
+    <section class="py-20 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-500 uppercase tracking-widest mb-8">Trusted by Creators From</p>
+            <div class="flex flex-wrap justify-center gap-12 md:gap-24 opacity-40 grayscale">
+                <span class="text-2xl font-black font-serif">FORBES</span>
+                <span class="text-2xl font-black font-mono">SPOTIFY</span>
+                <span class="text-2xl font-black font-sans">WBEZ</span>
+                <span class="text-2xl font-black">THE VERGE</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-[#020202] border-t border-white/5 pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
+                <div>
+                    <h4 class="text-2xl font-black text-white uppercase mb-6">Chicago Podcast Studio</h4>
+                    <p class="text-gray-500 mb-6">
+                        The premier destination for high-quality audio and video podcast production in the heart of Chicago.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-red-500 transition-colors"><i data-lucide="instagram" class="h-5 w-5"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-red-500 transition-colors"><i data-lucide="twitter" class="h-5 w-5"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-red-500 transition-colors"><i data-lucide="facebook" class="h-5 w-5"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold text-white uppercase mb-6">Contact</h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-start text-gray-400">
+                            <i data-lucide="map-pin" class="h-5 w-5 mr-3 text-red-600 shrink-0"></i>
+                            <span>123 Creative Ave, Suite 400<br />Chicago, IL 60607</span>
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i data-lucide="phone" class="h-5 w-5 mr-3 text-red-600 shrink-0"></i>
+                            <span>(312) 555-0123</span>
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i data-lucide="mail" class="h-5 w-5 mr-3 text-red-600 shrink-0"></i>
+                            <span>book@chicagopodcast.studio</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold text-white uppercase mb-6">Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-gray-500 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="#services" class="text-gray-500 hover:text-white transition-colors">Services</a></li>
+                        <li><a href="#studio" class="text-gray-500 hover:text-white transition-colors">The Studio</a></li>
+                        <li><a href="#faq" class="text-gray-500 hover:text-white transition-colors">FAQ</a></li>
+                        <li><a href="#" class="text-gray-500 hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold text-white uppercase mb-6">Newsletter</h4>
+                    <p class="text-gray-500 mb-4 text-sm">Subscribe for studio updates and recording tips.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="EMAIL ADDRESS" class="bg-[#0A0A0A] border border-white/10 text-white px-4 py-2 w-full focus:outline-none focus:border-red-600 text-sm" />
+                        <button class="bg-red-600 px-4 text-white hover:bg-red-700 transition-colors">
+                            <i data-lucide="arrow-right" class="h-4 w-4"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-600 text-sm">
+                <p>&copy; 2024 Chicago Podcast Studio. All rights reserved.</p>
+                <p class="mt-2 md:mt-0">Designed & Developed in Chicago.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('glass-nav', 'py-4');
+                navbar.classList.remove('bg-transparent', 'py-6');
+            } else {
+                navbar.classList.remove('glass-nav', 'py-4');
+                navbar.classList.add('bg-transparent', 'py-6');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuIcon = mobileMenuBtn.querySelector('i');
+        let isMenuOpen = false;
+
+        mobileMenuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('max-h-0', 'opacity-0');
+                mobileMenu.classList.add('max-h-screen', 'opacity-100');
+                // Change icon to X
+                mobileMenuIcon.setAttribute('data-lucide', 'x');
+            } else {
+                mobileMenu.classList.add('max-h-0', 'opacity-0');
+                mobileMenu.classList.remove('max-h-screen', 'opacity-100');
+                // Change icon to Menu
+                mobileMenuIcon.setAttribute('data-lucide', 'menu');
+            }
+            lucide.createIcons();
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                isMenuOpen = false;
+                mobileMenu.classList.add('max-h-0', 'opacity-0');
+                mobileMenu.classList.remove('max-h-screen', 'opacity-100');
+                mobileMenuIcon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+            });
+        });
+    </script>
+</body>
+</html>
