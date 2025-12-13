@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Instagram, Twitter, Facebook } from 'lucide-react';
+import logo from '../assets/images/GoldBeam_Logo_PNG_06.png';
 
 export default function Footer() {
   return (
@@ -11,7 +12,7 @@ export default function Footer() {
             <div className="relative">
               {/* Big Logo */}
               <img
-                src="/src/assets/images/GoldBeam_Logo_PNG_06.png"
+                src={logo}
                 alt="Goldbeam Studios"
                 className="h-40 md:h-48 lg:h-56 w-auto transition-all duration-500 
                   group-hover:scale-105 group-hover:drop-shadow-[0_0_25px_rgba(245,158,11,0.3)]

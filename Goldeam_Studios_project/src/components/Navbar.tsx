@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Menu, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import logo from '../assets/images/GoldBeam_Logo_PNG_06.png';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -70,7 +71,7 @@ export default function Navbar() {
           <Link to="/" className="flex items-center group relative z-50">
             <div className="relative">
               <img
-                src="/src/assets/images/GoldBeam_Logo_PNG_06.png"
+                src={logo}
                 alt="Goldbeam Studios"
                 className="h-28 md:h-36 lg:h-44 w-auto transition-all duration-500 
                   group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(245,158,11,0.5)]
