@@ -8,11 +8,11 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [moreDropdownOpen, setMoreDropdownOpen] = useState(false);
   const [resourcesDropdownOpen, setResourcesDropdownOpen] = useState(false);
-  
+
   // Separate state for mobile dropdowns
   const [mobileMoreDropdownOpen, setMobileMoreDropdownOpen] = useState(false);
   const [mobileResourcesDropdownOpen, setMobileResourcesDropdownOpen] = useState(false);
-  
+
   const location = useLocation();
   const moreDropdownRef = useRef<HTMLDivElement>(null);
   const resourcesDropdownRef = useRef<HTMLDivElement>(null);
@@ -53,7 +53,7 @@ export default function Navbar() {
   ];
 
   const resourcesLinks = [
-    { name: 'Blog & Articles', path: '/resources', description: 'Tips, guides, and insights' },
+    { name: 'Blog & Articles', path: '/blog', description: 'Tips, guides, and insights' },
     { name: 'More Info', path: '/more', description: 'Additional information hub' },
   ];
 
@@ -184,9 +184,8 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div
-        className={`lg:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-xl border-b border-amber-500/20 transition-all duration-300 overflow-hidden ${
-          isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
-        }`}
+        className={`lg:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-xl border-b border-amber-500/20 transition-all duration-300 overflow-hidden ${isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+          }`}
       >
         <div className="px-6 py-4 space-y-0">
           {navLinks.map((link) => (
@@ -194,11 +193,10 @@ export default function Navbar() {
               key={link.path}
               to={link.path}
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`block text-base font-medium uppercase tracking-wide transition-colors py-4 ${
-                location.pathname === link.path
+              className={`block text-base font-medium uppercase tracking-wide transition-colors py-4 ${location.pathname === link.path
                   ? 'text-amber-500'
                   : 'text-gray-300 hover:text-white'
-              }`}
+                }`}
             >
               {link.name}
             </Link>
@@ -217,7 +215,7 @@ export default function Navbar() {
                 <ChevronDown className="h-5 w-5" />
               )}
             </button>
-            
+
             {/* Mobile More Dropdown Content */}
             {mobileMoreDropdownOpen && (
               <div className="pl-4 pb-2 space-y-3 border-l border-amber-500/20 ml-3">
@@ -228,11 +226,10 @@ export default function Navbar() {
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="block group"
                   >
-                    <div className={`text-sm font-medium uppercase tracking-wide transition-colors py-2 ${
-                      location.pathname === link.path
+                    <div className={`text-sm font-medium uppercase tracking-wide transition-colors py-2 ${location.pathname === link.path
                         ? 'text-amber-500'
                         : 'text-gray-300 group-hover:text-white'
-                    }`}>
+                      }`}>
                       {link.name}
                     </div>
                     <div className="text-gray-500 text-xs group-hover:text-gray-400 transition-colors">
@@ -257,7 +254,7 @@ export default function Navbar() {
                 <ChevronDown className="h-5 w-5" />
               )}
             </button>
-            
+
             {/* Mobile Resources Dropdown Content */}
             {mobileResourcesDropdownOpen && (
               <div className="pl-4 pb-2 space-y-3 border-l border-amber-500/20 ml-3">
@@ -268,11 +265,10 @@ export default function Navbar() {
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="block group"
                   >
-                    <div className={`text-sm font-medium uppercase tracking-wide transition-colors py-2 ${
-                      location.pathname === link.path
+                    <div className={`text-sm font-medium uppercase tracking-wide transition-colors py-2 ${location.pathname === link.path
                         ? 'text-amber-500'
                         : 'text-gray-300 group-hover:text-white'
-                    }`}>
+                      }`}>
                       {link.name}
                     </div>
                     <div className="text-gray-500 text-xs group-hover:text-gray-400 transition-colors">

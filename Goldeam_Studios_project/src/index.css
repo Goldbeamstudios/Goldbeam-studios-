@@ -1,9 +1,12 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: 'Outfit', sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -114,6 +117,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -125,6 +129,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -136,6 +141,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -147,6 +153,7 @@
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -158,6 +165,7 @@
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -169,6 +177,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -176,9 +185,12 @@
 }
 
 @keyframes gradient {
-  0%, 100% {
+
+  0%,
+  100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
@@ -188,39 +200,51 @@
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
 }
 
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0) translateX(0);
   }
+
   33% {
     transform: translateY(-20px) translateX(10px);
   }
+
   66% {
     transform: translateY(10px) translateX(-10px);
   }
 }
 
 @keyframes bounce-slow {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-10px);
   }
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
   }
+
   50% {
     box-shadow: 0 0 30px rgba(245, 158, 11, 0.8);
   }
@@ -230,6 +254,7 @@
   0% {
     transform: translateX(-100%);
   }
+
   100% {
     transform: translateX(100%);
   }
@@ -239,6 +264,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -337,10 +363,60 @@ html {
   color: #000000;
 }
 
+/* Typography Enhancements */
+.prose-premium {
+  font-family: var(--font-sans);
+  line-height: 1.75;
+  color: oklch(0.8 0 0);
+}
+
+.prose-premium h1, 
+.prose-premium h2, 
+.prose-premium h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: white;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+}
+
+.prose-premium h1 { font-size: 2.5rem; }
+.prose-premium h2 { font-size: 1.875rem; border-bottom: 1px solid oklch(0.2 0 0); padding-bottom: 0.3em; }
+
+.prose-premium p {
+  margin-bottom: 1.5em;
+  font-size: 1.1rem;
+}
+
+.prose-premium strong {
+  color: white;
+  font-weight: 600;
+}
+
+.prose-premium ul {
+  list-style-type: disc;
+  padding-left: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+.prose-premium li {
+  margin-bottom: 0.5em;
+}
+
+.prose-premium blockquote {
+  font-style: italic;
+  border-left: 4px solid #f59e0b;
+  padding-left: 1em;
+  margin: 1.5em 0;
+  color: oklch(0.7 0 0);
+}
+
 /* Line Clamp Utility */
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  line-clamp: 2;
 }
