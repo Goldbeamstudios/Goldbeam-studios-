@@ -46,6 +46,7 @@ function App() {
         <Route path="/admin" element={<ProtectedRoute />}>
           <Route element={<AdminLayout />}>
             <Route index element={<Dashboard />} />
+            <Route path="posts" element={<Dashboard />} />
             <Route path="editor" element={<Editor />} />
           </Route>
         </Route>

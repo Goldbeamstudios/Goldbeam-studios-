@@ -1,6 +1,5 @@
-
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { Plus, Pencil, Trash2, Calendar, FileText, Search, AlertTriangle, Loader2 } from 'lucide-react';
 
@@ -9,11 +8,13 @@ interface Post {
     title: string;
     slug: string;
     created_at: string;
-    published: boolean; // Note: In schema I didn't add published, assuming all are potentially public or I should add it. Plan file didn't specify. I'll stick to schema: only existence matters.
+    published: boolean;
     excerpt: string;
 }
 
 export default function Dashboard() {
+    const location = useLocation();
+    const isPostsPage = location.pathname === '/admin/posts';
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
@@ -76,8 +77,12 @@ export default function Dashboard() {
         <div className="space-y-8 animate-in fade-in duration-500">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-br from-white to-gray-400">Dashboard</h1>
-                    <p className="text-gray-400 mt-1">Manage your blog content</p>
+                    <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-br from-white to-gray-400">
+                        {isPostsPage ? 'All Posts' : 'Dashboard'}
+                    </h1>
+                    <p className="text-gray-400 mt-1">
+                        {isPostsPage ? 'Manage all your blog content' : 'Overview of your blog statistics'}
+                    </p>
                 </div>
                 <Link
                     to="/admin/editor"
