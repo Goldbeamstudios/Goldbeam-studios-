@@ -148,7 +148,7 @@ export default function Dashboard() {
                                             </div>
                                         </td>
                                         <td className="p-4 text-right">
-                                            <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <div className="flex items-center justify-end gap-2 transition-opacity">
                                                 <Link
                                                     to={`/admin/editor?id=${post.id}`}
                                                     className="p-2 text-blue-400 hover:bg-blue-500/10 rounded-lg transition-colors"

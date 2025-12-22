@@ -322,8 +322,8 @@ export default function Editor() {
                     <div className="flex-1 flex min-h-0 relative">
                         {/* Editor Pane */}
                         <div className={cn(
-                            "flex-1 flex flex-col min-h-0 transition-opacity bg-gray-900/30",
-                            activeTab === 'write' ? 'opacity-100 z-10' : 'opacity-0 z-0 absolute inset-0 lg:static lg:opacity-100 lg:z-auto'
+                            "flex-1 flex-col min-h-0 bg-gray-900/30",
+                            activeTab === 'write' ? 'flex' : 'hidden lg:flex'
                         )}>
                             {/* AI Toolbar */}
                             <div className="flex items-center gap-2 p-2 border-b border-gray-800 bg-gray-950/30 overflow-x-auto">
@@ -354,7 +354,7 @@ export default function Editor() {
                         {/* Preview Pane */}
                         <div className={cn(
                             "flex-1 overflow-y-auto min-h-0 p-10 prose-premium max-w-none bg-black/40",
-                            activeTab === 'preview' ? 'opacity-100 z-10 absolute inset-0 bg-gray-950' : 'opacity-0 absolute inset-0 lg:static lg:opacity-100 lg:z-auto'
+                            activeTab === 'preview' ? 'block bg-gray-950 lg:bg-black/40' : 'hidden lg:block'
                         )}>
                             {image && <img src={image} alt="Cover" className="w-full h-56 lg:h-80 object-cover rounded-2xl mb-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)] ring-1 ring-white/10" />}
                             <h1 className="mb-6 text-4xl md:text-5xl font-display font-extrabold text-white tracking-tight leading-tight">{title || 'Untitled Post'}</h1>

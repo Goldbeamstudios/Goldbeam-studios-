@@ -1,22 +1,28 @@
+import { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Home from './pages/Home';
-import HowItWorks from './pages/HowItWorks';
-import Pricing from './pages/Pricing';
-import Studios from './pages/Studios';
-import Book from './pages/Book';
-import Build from './pages/Build';
-import More from './pages/More';
-import Contact from './pages/Contact';
-import FAQs from './pages/FAQs';
-import Resources from './pages/Resources';
-import Blog from './pages/Blog';
-import BlogPost from './pages/BlogPost';
-import Login from './pages/admin/Login';
-import Dashboard from './pages/admin/Dashboard';
-import Editor from './pages/admin/Editor';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminLayout from './layouts/AdminLayout';
 import MainLayout from './layouts/MainLayout';
+import Loading from './components/Loading';
+
+// Lazy load pages
+const Home = lazy(() => import('./pages/Home'));
+const HowItWorks = lazy(() => import('./pages/HowItWorks'));
+const Pricing = lazy(() => import('./pages/Pricing'));
+const Studios = lazy(() => import('./pages/Studios'));
+const Book = lazy(() => import('./pages/Book'));
+const Build = lazy(() => import('./pages/Build'));
+const More = lazy(() => import('./pages/More'));
+const Contact = lazy(() => import('./pages/Contact'));
+const FAQs = lazy(() => import('./pages/FAQs'));
+const Resources = lazy(() => import('./pages/Resources'));
+const Blog = lazy(() => import('./pages/Blog'));
+const BlogPost = lazy(() => import('./pages/BlogPost'));
+
+// Admin pages
+const Login = lazy(() => import('./pages/admin/Login'));
+const Dashboard = lazy(() => import('./pages/admin/Dashboard'));
+const Editor = lazy(() => import('./pages/admin/Editor'));
 
 const NotFound = () => (
   <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center p-4">
@@ -31,39 +37,41 @@ const NotFound = () => (
 function App() {
   return (
     <Router>
-      <Routes>
-        {/* Admin Routes - No MainLayout (No Navbar/Footer) */}
-        <Route path="/admin/login" element={<Login />} />
+      <Suspense fallback={<Loading />}>
+        <Routes>
+          {/* Admin Routes - No MainLayout (No Navbar/Footer) */}
+          <Route path="/admin/login" element={<Login />} />
 
-        <Route path="/admin" element={<ProtectedRoute />}>
-          <Route element={<AdminLayout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="posts" element={<Dashboard />} />
-            <Route path="editor" element={<Editor />} />
+          <Route path="/admin" element={<ProtectedRoute />}>
+            <Route element={<AdminLayout />}>
+              <Route index element={<Dashboard />} />
+              <Route path="posts" element={<Dashboard />} />
+              <Route path="editor" element={<Editor />} />
+            </Route>
           </Route>
-        </Route>
 
-        {/* Public Routes wrapped in MainLayout */}
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/how-it-works" element={<HowItWorks />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/studios" element={<Studios />} />
-          <Route path="/book" element={<Book />} />
-          <Route path="/build" element={<Build />} />
-          <Route path="/more" element={<More />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/faqs" element={<FAQs />} />
-          <Route path="/resources" element={<Resources />} />
+          {/* Public Routes wrapped in MainLayout */}
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/how-it-works" element={<HowItWorks />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/studios" element={<Studios />} />
+            <Route path="/book" element={<Book />} />
+            <Route path="/build" element={<Build />} />
+            <Route path="/more" element={<More />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/faqs" element={<FAQs />} />
+            <Route path="/resources" element={<Resources />} />
 
-          {/* Blog Routes */}
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-        </Route>
+            {/* Blog Routes */}
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
+          </Route>
 
-        {/* Fallback 404 Route */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          {/* Fallback 404 Route */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </Router>
   );
 }

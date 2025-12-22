@@ -132,6 +132,7 @@ export default function Home() {
             src={bg}
             alt="Podcast Studio"
             className="w-full h-full object-cover object-center"
+            fetchPriority="high"
           />
 
           <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
@@ -250,6 +251,8 @@ export default function Home() {
                 src={src}
                 alt={`Studio Shot ${index + 1}`}
                 className="w-full h-full object-cover object-center transition-all duration-700 group-hover:scale-125 group-hover:rotate-2 brightness-75 group-hover:brightness-100"
+                loading="lazy"
+                decoding="async"
               />
 
               {/* Gradient overlay */}
