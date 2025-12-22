@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
-import { Plus, Pencil, Trash2, Calendar, FileText, Search, AlertTriangle, Loader2 } from 'lucide-react';
+import { Plus, Pencil, Trash2, Calendar, FileText, Search, Loader2 } from 'lucide-react';
 
 interface Post {
     id: string;

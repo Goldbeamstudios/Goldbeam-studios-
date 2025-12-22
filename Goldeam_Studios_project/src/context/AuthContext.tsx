@@ -9,6 +9,7 @@ interface AuthContextType {
     profile: Profile | null;
     role: string | null;
     loading: boolean;
+    configError: string | null;
     signOut: () => Promise<void>;
 }
 
@@ -18,6 +19,7 @@ const AuthContext = createContext<AuthContextType>({
     profile: null,
     role: null,
     loading: true,
+    configError: null,
     signOut: async () => { },
 });
 
@@ -28,8 +30,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [session, setSession] = useState<Session | null>(null);
     const [profile, setProfile] = useState<Profile | null>(null);
     const [loading, setLoading] = useState(true);
+    const [configError, setConfigError] = useState<string | null>(null);
 
     useEffect(() => {
+        // Check for missing environment variables
+        if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
+            setConfigError('Missing Supabase environment variables. Please check your .env file or Vercel environment variables.');
+            setLoading(false);
+            return;
+        }
+
         const fetchProfile = async (userId: string) => {
             const { data, error } = await supabase
                 .from('profiles')
@@ -77,7 +87,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, session, profile, role: profile?.role ?? null, loading, signOut }}>
+        <AuthContext.Provider value={{ user, session, profile, role: profile?.role ?? null, loading, configError, signOut }}>
             {children}
         </AuthContext.Provider>
     );
