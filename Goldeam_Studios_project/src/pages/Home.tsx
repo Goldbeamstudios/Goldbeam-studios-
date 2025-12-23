@@ -41,80 +41,89 @@ export default function Home() {
       icon: Mic2,
       title: 'Pro Audio',
       description:
-        'Shure SM7B microphones and RodeCaster Pro II interfaces for broadcast-quality sound.',
+        'Shure SM7B microphones and RØDECaster Pro II interfaces deliver broadcast-quality sound for podcasts, interviews, and voice recording.',
     },
     {
       icon: Video,
       title: '4K Multi-Cam',
       description:
-        'Three-angle Sony 4K camera setup with professional lighting and live switching.',
+        'Three-angle Sony 4K camera setup with professional lighting and live switching for a cinematic, multi-camera look.',
     },
     {
       icon: Cast,
       title: 'Live Streaming',
       description:
-        'Direct integration with YouTube, Twitch, and Facebook Live via high-speed fiber.',
+        'Direct integration with YouTube, Twitch, and Facebook Live via high-speed fiber for reliable, real-time broadcasting.',
     },
     {
       icon: Sliders,
       title: 'Post Production',
       description:
-        'Full editing services available. We cut clips, mix audio, and deliver final files.',
+        'Full post-production services available including video editing, audio mixing, clip creation, and delivery of final files.',
     },
     {
       icon: Coffee,
       title: 'Comfort',
       description:
-        'Lounge area, green room, and unlimited coffee to keep the creative energy flowing.',
+        'Comfortable lounge area with cold beverages and complimentary coffee to keep the creative energy flowing.',
     },
     {
       icon: Wifi,
       title: 'Fiber Internet',
       description:
-        'Symmetric 1Gbps connection ensures your remote guests and streams never lag.',
+        'Ultra-fast symmetric 3Gbps fiber connection ensures smooth live streams, fast uploads, and lag-free remote guests.',
     },
   ];
 
   const pricingPlans = [
     {
       name: 'Audio Only',
-      price: '$85',
+      price: '$125',
       period: '/ hour',
+      description: '',
       features: [
-        'Up to 4 Microphones',
-        'Sound Engineer Included',
-        'Raw WAV/MP3 Delivery',
-        'Instant File Transfer',
-        'Acoustically Treated Room',
+        'Up to 4 professional microphones',
+        'Dedicated sound engineer',
+        'Acoustically treated studio',
+        'Raw WAV & MP3 files',
+        'Instant file transfer',
+        'High-speed internet for remote guests',
       ],
+      bestFor: 'Audio podcasts, interviews, voiceovers',
       popular: false,
     },
     {
       name: 'Audio + Video',
-      price: '$125',
+      price: '$300',
       period: '/ hour',
+      description: '',
       features: [
-        'Everything in Audio Only',
-        '3-Camera 4K Setup',
-        'Live Video Switching',
-        'Professional Lighting',
-        'Custom Set Colors',
-        'Raw Video Files Included',
+        'Includes everything in Audio Only, plus:',
+        'Multi-camera 4K video setup',
+        'Live multi-angle switching',
+        'Professional studio lighting',
+        'Custom set & color configuration',
+        'Raw video + audio files included',
+        'Ideal for YouTube, social clips, and livestreams',
       ],
+      bestFor: 'Video podcasts, YouTube shows, branded content',
       popular: true,
     },
     {
-      name: 'Monthly Pro',
-      price: '$400',
-      period: '/ month',
+      name: 'General Content',
+      price: '$200',
+      period: '/ hour',
+      description: 'Designed for content beyond podcasts.',
       features: [
-        '4 Hours Studio Time',
-        'Audio & Video Included',
-        'Priority Booking',
-        'File Storage (3 Months)',
-        'Discount on Editing',
-        'Free Guest Parking',
+        'Complete studio access with flexible set configurations',
+        'Professional production gear (4K Sony cameras, studio lighting, broadcast-quality audio)',
+        'On-site camera operator / studio technician',
+        'Custom lighting and camera setup',
+        'Delivery of raw video and audio files',
+        'High-speed fiber internet',
+        'Post-production services available upon request',
       ],
+      bestFor: 'Creators, educators, businesses, marketing teams, agencies, and brands producing polished visual content.',
       popular: false,
     },
   ];
@@ -324,7 +333,10 @@ export default function Home() {
                     </span>
                     <span className="text-gray-400 ml-2">{plan.period}</span>
                   </div>
-                  <ul className="space-y-4 mb-8 flex-1">
+                  {plan.description && (
+                    <p className="text-gray-400 text-sm mb-6 -mt-4 italic">{plan.description}</p>
+                  )}
+                  <ul className="space-y-4 mb-4 flex-1">
                     {plan.features.map((feature, fIndex) => (
                       <li key={fIndex} className="flex items-start text-gray-300 group-hover:text-white transition-colors">
                         <Check className="h-5 w-5 text-amber-500 mr-3 shrink-0 mt-0.5 group-hover:scale-125 transition-transform" />
@@ -332,6 +344,12 @@ export default function Home() {
                       </li>
                     ))}
                   </ul>
+                  {plan.bestFor && (
+                    <div className="mb-6 pt-4 border-t border-amber-500/10">
+                      <p className="text-xs text-gray-400 uppercase tracking-widest font-bold mb-1">Best for:</p>
+                      <p className="text-sm text-gray-300 leading-snug">{plan.bestFor}</p>
+                    </div>
+                  )}
                   <button
                     className={`relative overflow-hidden w-full py-4 text-sm font-bold uppercase tracking-widest transition-all duration-300 rounded-lg group/button ${plan.popular
                       ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-black hover:from-amber-400 hover:to-amber-500 shadow-lg shadow-amber-500/30 hover:shadow-2xl hover:shadow-amber-500/50'

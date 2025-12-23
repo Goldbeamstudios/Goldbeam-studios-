@@ -28,7 +28,7 @@ export default function Footer() {
             <h4 className="text-lg font-bold text-white uppercase mb-6">About Us</h4>
             <p className="text-gray-400 mb-6 leading-relaxed">
               Premier podcast production facility offering professional audio engineering,
-              4K video recording, and live streaming services in Chicago.
+              4K video recording, and live streaming services in Toronto.
             </p>
             <div className="flex space-x-4">
               <a
@@ -59,21 +59,21 @@ export default function Footer() {
               <li className="flex items-start text-gray-400">
                 <MapPin className="h-5 w-5 mr-3 text-amber-500 shrink-0 mt-1" />
                 <span className="hover:text-amber-400 transition-colors">
-                  123 Creative Ave, Suite 400
+                  2017 Danforth Avenue, 2nd Floor
                   <br />
-                  Chicago, IL 60607
+                  Toronto, ON M4C 1J7
                 </span>
               </li>
               <li className="flex items-center text-gray-400">
                 <Phone className="h-5 w-5 mr-3 text-amber-500 shrink-0" />
-                <a href="tel:3125550123" className="hover:text-amber-400 transition-colors">
-                  (312) 555-0123
+                <a href="tel:2899433216" className="hover:text-amber-400 transition-colors">
+                  (289) 943-3216
                 </a>
               </li>
               <li className="flex items-center text-gray-400">
                 <Mail className="h-5 w-5 mr-3 text-amber-500 shrink-0" />
-                <a href="mailto:hello@goldbeamstudios.com" className="hover:text-amber-400 transition-colors">
-                  hello@goldbeamstudios.com
+                <a href="mailto:contact@goldbeamstudios.com" className="hover:text-amber-400 transition-colors">
+                  contact@goldbeamstudios.com
                 </a>
               </li>
             </ul>
@@ -137,8 +137,8 @@ export default function Footer() {
 
         <div className="border-t border-amber-500/20 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
           <p className="mb-4 md:mb-0">&copy; 2025 Goldbeam Studios. All rights reserved.</p>
-          <Link 
-            to="https://wa.me/251913901952" 
+          <Link
+            to="https://wa.me/251913901952"
             className="text-amber-500 hover:text-amber-400 transition-colors"
           >
             Powered by Haileab
