@@ -1,26 +1,57 @@
-import { Sparkles, Users, Wifi, Coffee, Mic2, Video, Check } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Sparkles, Users, Wifi, Coffee, Mic2, Video, Check, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+// Import images
 import studioOne from '../assets/images/studio/studo_one.jpeg';
 import studioTwo from '../assets/images/studio/studo_two.jpg';
+import studioThree from '../assets/images/studio/stuido-three.jpeg';
+import studioFour from '../assets/images/studio/studio_four.jpg';
+import studioFive from '../assets/images/studio/studio_siven.jpg';
 
 export default function Studios() {
+  const [activeTheme, setActiveTheme] = useState(0);
+
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px',
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in-up');
+        }
+      });
+    }, observerOptions);
+
+    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+    animatedElements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, [activeTheme]); // Re-observe when theme changes as elements might re-render
+
   const studioA = {
     name: 'Studio A',
     subtitle: 'Main Production Suite',
-    image: studioOne,
-    description: 'Our largest and most versatile studio, Studio A is designed for professional productions that require flexibility, visual variety, and space. This studio can be configured into three distinct themes, allowing creators to match the look and feel of their content.',
+    description: 'Our largest and most versatile studio, Studio A is designed for professional productions that require flexibility, visual variety, and space.',
     themes: [
       {
         name: 'Signature',
+        image: studioOne,
         capacity: 'Up to 4 people',
         description: 'A polished, modern setup that represents the core Goldbeam Studio look. Ideal for podcasts, interviews, panels, and branded content.',
       },
       {
         name: 'Oasis',
+        image: studioThree,
         capacity: 'Up to 4 people',
         description: 'A warm, relaxed environment designed for conversational content, storytelling, and educational videos with a softer, lifestyle feel.',
       },
       {
         name: 'Chroma',
+        image: studioFour,
         capacity: 'Up to 2 people',
         description: 'A minimalist white backdrop enhanced with RGB lighting, allowing you to create custom color moods and branded looks without post-production effects.',
       },
@@ -43,7 +74,7 @@ export default function Studios() {
     subtitle: 'Compact Production Studio',
     capacity: 'Up to 2 people',
     image: studioTwo,
-    description: 'Studio B is our smaller, streamlined studio designed for focused recordings and efficient content creation. It offers the same professional quality as Studio A in a more intimate setting.',
+    description: 'Studio B is our smaller, streamlined studio designed for focused recordings and efficient content creation. It offers professional quality in a more intimate setting.',
     features: [
       'Professional audio setup',
       'Studio lighting',
@@ -53,6 +84,25 @@ export default function Studios() {
     ],
     optionalSetup: 'Green screen recording available upon request',
     bestFor: 'Solo podcasts, interviews, voice recordings, short-form content, and creators who need a clean, distraction-free space.',
+  };
+
+  const studioC = {
+    name: 'Studio C',
+    subtitle: 'General Content Studio',
+    capacity: 'Flexible',
+    image: studioFive,
+    description: 'Designed for high-end visual content beyond podcasts, from brand features to product shots.',
+    features: [
+      'Complete studio access',
+      '4K Sony cameras',
+      'Studio lighting kits',
+      'Broadcast-quality audio',
+      'On-site camera operator',
+      'Custom lighting setup',
+      'High-speed fiber internet',
+    ],
+    optionalSetup: 'Post-production services available upon request',
+    bestFor: 'Creators, educators, businesses, marketing teams, agencies, and brands producing polished visual content.',
   };
 
   const amenities = [
@@ -92,218 +142,272 @@ export default function Studios() {
               </span>
             </h1>
             <p className="text-xl text-gray-300 leading-relaxed">
-              State-of-the-art facilities designed for creators of all sizes. From intimate solo
-              recordings to large panel discussions.
+              State-of-the-art facilities designed for creators of all sizes.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Studio A Section */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-12 items-start mb-16">
-            {/* Image */}
-            <div className="flex-1 w-full">
-              <div className="relative group overflow-hidden rounded-2xl">
-                <img
-                  src={studioA.image}
-                  alt={studioA.name}
-                  className="w-full h-64 md:h-96 lg:h-[500px] object-cover object-center transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
-              </div>
-            </div>
+      {/* Studios List */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32">
+        <div className="space-y-40">
 
-            {/* Content */}
-            <div className="flex-1 space-y-8">
-              <div>
-                <h2 className="text-4xl md:text-5xl font-black text-white uppercase mb-2">
-                  {studioA.name}
-                </h2>
-                <p className="text-xl text-amber-500 font-bold mb-4">{studioA.subtitle}</p>
-                <p className="text-gray-300 leading-relaxed">{studioA.description}</p>
-              </div>
+          {/* Studio A */}
+          <section className="animate-on-scroll opacity-0">
+            <div className="flex flex-col lg:flex-row gap-16 items-center">
+              {/* Image Side */}
+              <div className="flex-1 w-full order-1">
+                <div className="relative group rounded-3xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-amber-500/20">
+                  <img
+                    src={studioA.themes[activeTheme].image}
+                    alt={studioA.name}
+                    className="w-full h-[400px] md:h-[550px] object-cover transition-all duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
 
-              {/* Capacity by Theme */}
-              <div>
-                <h3 className="text-lg font-bold text-white uppercase mb-4">Capacity:</h3>
-                <div className="space-y-2">
-                  {studioA.themes.map((theme, index) => (
-                    <div key={index} className="flex items-center gap-2 text-gray-400">
-                      <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
-                      <span className="text-sm">
-                        <span className="font-semibold text-amber-400">{theme.name} Theme:</span> {theme.capacity}
+                  {/* Theme Badge */}
+                  <div className="absolute top-6 left-6">
+                    <div className="bg-black/60 backdrop-blur-md border border-amber-500/30 px-6 py-2 rounded-full flex items-center gap-2">
+                      <Sparkles className="h-4 w-4 text-amber-500" />
+                      <span className="text-xs font-bold uppercase tracking-[0.2em] text-white">
+                        {studioA.themes[activeTheme].name} Theme
                       </span>
                     </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Available Themes */}
-          <div className="mb-16">
-            <h3 className="text-3xl md:text-4xl font-black text-white uppercase mb-8 text-center">
-              Available Themes
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {studioA.themes.map((theme, index) => (
-                <div
-                  key={index}
-                  className="bg-zinc-900 border border-amber-500/20 p-6 rounded-xl hover:border-amber-500/50 transition-all duration-300 hover:transform hover:-translate-y-2"
-                >
-                  <h4 className="text-2xl font-bold text-amber-500 mb-3">{theme.name}</h4>
-                  <p className="text-gray-300 text-sm leading-relaxed">{theme.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Studio A Features */}
-          <div className="bg-black border border-amber-500/20 p-8 rounded-2xl mb-8">
-            <h3 className="text-2xl font-bold text-white uppercase mb-6">Studio A Features</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              {studioA.features.map((feature, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-3 text-gray-300"
-                >
-                  <Check className="h-5 w-5 text-amber-500 shrink-0" />
-                  <span className="text-sm">{feature}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="pt-6 border-t border-amber-500/10 space-y-3">
-              <div>
-                <span className="text-amber-500 font-bold text-sm uppercase tracking-wider">Optional Setup:</span>
-                <p className="text-gray-300 text-sm mt-1">{studioA.optionalSetup}</p>
-              </div>
-              <div>
-                <span className="text-amber-500 font-bold text-sm uppercase tracking-wider">Best for:</span>
-                <p className="text-gray-300 text-sm mt-1">{studioA.bestFor}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Divider */}
-      <div className="border-t border-amber-500/20"></div>
-
-      {/* Studio B Section */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row-reverse gap-12 items-start">
-            {/* Image */}
-            <div className="flex-1 w-full">
-              <div className="relative group overflow-hidden rounded-2xl">
-                <img
-                  src={studioB.image}
-                  alt={studioB.name}
-                  className="w-full h-64 md:h-96 lg:h-[500px] object-cover object-center transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
-              </div>
-            </div>
-
-            {/* Content */}
-            <div className="flex-1 space-y-8">
-              <div>
-                <h2 className="text-4xl md:text-5xl font-black text-white uppercase mb-2">
-                  {studioB.name}
-                </h2>
-                <p className="text-xl text-amber-500 font-bold mb-4">{studioB.subtitle}</p>
-                <p className="text-gray-300 leading-relaxed mb-6">{studioB.description}</p>
-
-                <div className="flex items-center gap-2 text-gray-400 mb-8">
-                  <Users className="h-5 w-5 text-amber-500" />
-                  <span className="font-bold text-white">Capacity:</span>
-                  <span>{studioB.capacity}</span>
+                  </div>
                 </div>
               </div>
 
-              {/* Studio B Features */}
-              <div className="bg-zinc-900 border border-amber-500/20 p-6 rounded-xl">
-                <h3 className="text-xl font-bold text-white uppercase mb-4">Studio B Features</h3>
-                <div className="space-y-3 mb-6">
-                  {studioB.features.map((feature, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center gap-3 text-gray-300"
-                    >
-                      <Check className="h-5 w-5 text-amber-500 shrink-0" />
-                      <span className="text-sm">{feature}</span>
+              {/* Content Side */}
+              <div className="flex-1 space-y-8 order-2">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <span className="h-px w-12 bg-amber-500/50"></span>
+                    <span className="text-amber-500 font-bold uppercase tracking-widest text-sm">Studio A</span>
+                  </div>
+                  <h2 className="text-4xl md:text-6xl font-black text-white uppercase leading-tight">
+                    {studioA.subtitle}
+                  </h2>
+                </div>
+
+                <p className="text-lg text-gray-400 leading-relaxed">
+                  {studioA.description}
+                </p>
+
+                {/* Theme Switcher */}
+                <div className="space-y-4 pt-4">
+                  <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">Select Theme:</p>
+                  <div className="flex flex-wrap gap-3">
+                    {studioA.themes.map((theme, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setActiveTheme(index)}
+                        className={`px-6 py-3 rounded-xl font-bold uppercase text-xs tracking-wider transition-all duration-300 border ${activeTheme === index
+                            ? 'bg-amber-500 border-amber-500 text-black shadow-lg shadow-amber-500/40 transform -translate-y-1'
+                            : 'bg-zinc-900 border-amber-500/20 text-gray-400 hover:border-amber-500/50 hover:text-white'
+                          }`}
+                      >
+                        {theme.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="p-6 bg-zinc-900/50 rounded-2xl border border-amber-500/10 space-y-4">
+                  <div className="flex items-center gap-3">
+                    <Users className="h-5 w-5 text-amber-500" />
+                    <span className="text-white font-bold">{studioA.themes[activeTheme].capacity}</span>
+                  </div>
+                  <p className="text-sm text-gray-400 italic leading-relaxed">
+                    {studioA.themes[activeTheme].description}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {studioA.features.slice(0, 6).map((feature, index) => (
+                    <div key={index} className="flex items-center gap-3">
+                      <Check className="h-4 w-4 text-amber-500 shrink-0" />
+                      <span className="text-sm text-gray-300">{feature}</span>
                     </div>
                   ))}
                 </div>
 
-                <div className="pt-4 border-t border-amber-500/10 space-y-3">
-                  <div>
-                    <span className="text-amber-500 font-bold text-sm uppercase tracking-wider">Optional Setup:</span>
-                    <p className="text-gray-300 text-sm mt-1">{studioB.optionalSetup}</p>
-                  </div>
-                  <div>
-                    <span className="text-amber-500 font-bold text-sm uppercase tracking-wider">Best for:</span>
-                    <p className="text-gray-300 text-sm mt-1">{studioB.bestFor}</p>
-                  </div>
+                <Link
+                  to="/book"
+                  className="inline-flex items-center gap-4 bg-gradient-to-r from-amber-500 to-amber-600 text-black px-10 py-5 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/50 group"
+                >
+                  Book Studio A
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-2" />
+                </Link>
+              </div>
+            </div>
+          </section>
+
+          {/* Studio B */}
+          <section className="animate-on-scroll opacity-0">
+            <div className="flex flex-col lg:flex-row-reverse gap-16 items-center">
+              {/* Image Side */}
+              <div className="flex-1 w-full lg:order-2">
+                <div className="relative group rounded-3xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-amber-500/20">
+                  <img
+                    src={studioB.image}
+                    alt={studioB.name}
+                    className="w-full h-[400px] md:h-[550px] object-cover transition-all duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                 </div>
               </div>
 
-              <button className="bg-gradient-to-r from-amber-500 to-amber-600 text-black px-8 py-4 text-lg font-bold uppercase tracking-wider hover:from-amber-400 hover:to-amber-500 transition-all rounded-lg w-full">
-                Book {studioB.name}
-              </button>
+              {/* Content Side */}
+              <div className="flex-1 space-y-8 lg:order-1">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <span className="h-px w-12 bg-amber-500/50"></span>
+                    <span className="text-amber-500 font-bold uppercase tracking-widest text-sm">Studio B</span>
+                  </div>
+                  <h2 className="text-4xl md:text-6xl font-black text-white uppercase leading-tight">
+                    {studioB.subtitle}
+                  </h2>
+                </div>
+
+                <p className="text-lg text-gray-400 leading-relaxed">
+                  {studioB.description}
+                </p>
+
+                <div className="flex items-center gap-3 p-4 bg-zinc-900/50 rounded-xl border border-amber-500/10 w-fit">
+                  <Users className="h-5 w-5 text-amber-500" />
+                  <span className="text-white font-bold">{studioB.capacity} Capacity</span>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {studioB.features.map((feature, index) => (
+                    <div key={index} className="flex items-center gap-3">
+                      <Check className="h-4 w-4 text-amber-500 shrink-0" />
+                      <span className="text-sm text-gray-300">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <Link
+                  to="/book"
+                  className="inline-flex items-center gap-4 bg-white text-black px-10 py-5 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:scale-105 hover:bg-amber-500 group"
+                >
+                  Book Studio B
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-2" />
+                </Link>
+              </div>
             </div>
-          </div>
+          </section>
+
+          {/* Studio C */}
+          <section className="animate-on-scroll opacity-0">
+            <div className="flex flex-col lg:flex-row gap-16 items-center">
+              {/* Image Side */}
+              <div className="flex-1 w-full order-1">
+                <div className="relative group rounded-3xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-amber-500/20">
+                  <img
+                    src={studioC.image}
+                    alt={studioC.name}
+                    className="w-full h-[400px] md:h-[550px] object-cover transition-all duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                </div>
+              </div>
+
+              {/* Content Side */}
+              <div className="flex-1 space-y-8 order-2">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <span className="h-px w-12 bg-amber-500/50"></span>
+                    <span className="text-amber-500 font-bold uppercase tracking-widest text-sm">Studio C</span>
+                  </div>
+                  <h2 className="text-4xl md:text-6xl font-black text-white uppercase leading-tight">
+                    {studioC.subtitle}
+                  </h2>
+                </div>
+
+                <p className="text-lg text-gray-400 leading-relaxed">
+                  {studioC.description}
+                </p>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {studioC.features.slice(0, 6).map((feature, index) => (
+                    <div key={index} className="flex items-center gap-3">
+                      <Check className="h-4 w-4 text-amber-500 shrink-0" />
+                      <span className="text-sm text-gray-300">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-xs font-bold text-amber-500 uppercase tracking-widest">Best For:</p>
+                  <p className="text-sm text-gray-400 leading-relaxed">{studioC.bestFor}</p>
+                </div>
+
+                <Link
+                  to="/book"
+                  className="inline-flex items-center gap-4 border-2 border-amber-500/30 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:border-amber-500 hover:bg-amber-500/5 group"
+                >
+                  Book Studio C
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-2" />
+                </Link>
+              </div>
+            </div>
+          </section>
+
         </div>
-      </section>
+      </div>
 
       {/* Amenities Section */}
-      <section className="py-20 bg-zinc-900/50">
+      <section className="py-32 bg-zinc-900/40 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-20 animate-on-scroll opacity-0">
             <h2 className="text-4xl md:text-5xl font-black text-white uppercase mb-4">
-              Studio Amenities
+              Premium Amenities
             </h2>
-            <p className="text-gray-400">Everything you need for a successful recording session</p>
+            <p className="text-gray-400 max-w-2xl mx-auto">
+              We provide everything you need to focus on your content while we handle the rest.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {amenities.map((amenity, index) => (
               <div
                 key={index}
-                className="bg-black border border-amber-500/20 p-6 rounded-xl text-center hover:border-amber-500/50 transition-all duration-300 hover:transform hover:-translate-y-2"
+                className="animate-on-scroll opacity-0 bg-black/40 border border-amber-500/10 p-10 rounded-3xl text-center hover:border-amber-500/50 transition-all duration-500 hover:transform hover:-translate-y-3 group"
+                style={{ animationDelay: `${index * 150}ms` }}
               >
-                <div className="flex justify-center mb-4">
-                  <div className="bg-gradient-to-br from-amber-500 to-amber-600 p-3 rounded-xl">
-                    <amenity.icon className="h-6 w-6 text-black" />
+                <div className="flex justify-center mb-6">
+                  <div className="bg-gradient-to-br from-amber-500 to-amber-600 p-5 rounded-2xl group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-amber-500/20">
+                    <amenity.icon className="h-8 w-8 text-black" />
                   </div>
                 </div>
-                <h3 className="text-white font-bold mb-2 text-sm">{amenity.name}</h3>
-                <p className="text-xs text-gray-400 leading-relaxed">{amenity.description}</p>
+                <h3 className="text-xl font-bold text-white mb-3">{amenity.name}</h3>
+                <p className="text-sm text-gray-400 leading-relaxed">{amenity.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Virtual Tour CTA */}
-      <section className="py-20 border-y border-amber-500/20">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-black text-white uppercase mb-6">
-            Take a Virtual Tour
+      {/* Final CTA */}
+      <section className="py-32 border-t border-amber-500/10 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
+          <h2 className="text-4xl md:text-7xl font-black text-white uppercase mb-8 leading-tight">
+            Ready to <span className="text-amber-500">Record?</span>
           </h2>
-          <p className="text-xl text-gray-300 mb-8">
-            See our studios in action before you book. Schedule a walkthrough or watch our
-            virtual tour.
+          <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
+            Experience the gold standard in production. Book your session today and elevate your content.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-gradient-to-r from-amber-500 to-amber-600 text-black px-8 py-4 text-lg font-bold uppercase tracking-wider hover:from-amber-400 hover:to-amber-500 transition-all rounded-lg">
-              Watch Tour Video
-            </button>
-            <button className="border-2 border-amber-500 text-white px-8 py-4 text-lg font-bold uppercase tracking-wider hover:bg-amber-500/10 transition-all rounded-lg">
-              Schedule Walkthrough
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Link
+              to="/book"
+              className="bg-amber-500 text-black px-12 py-6 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/50"
+            >
+              Book Now
+            </Link>
+            <button className="border-2 border-amber-500/30 text-white px-12 py-6 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:border-amber-500 hover:bg-amber-500/5">
+              Contact Us
             </button>
           </div>
         </div>
