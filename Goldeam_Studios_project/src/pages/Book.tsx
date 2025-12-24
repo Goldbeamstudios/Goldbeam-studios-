@@ -1,167 +1,146 @@
+import { useEffect } from 'react';
 import { Calendar, Clock, CreditCard, CheckCircle2 } from 'lucide-react';
 
 export default function Book() {
+  useEffect(() => {
+    // Square Widget Script Loader
+    const script = document.createElement('script');
+    script.src = 'https://app.squareup.com/appointments/buyer/widget/21w2rftjhu82lt/LMTXXK2JVCGRJ.js';
+    script.async = true;
+
+    // We want to append it to the specific container
+    const container = document.getElementById('square-booking-widget');
+    if (container) {
+      container.appendChild(script);
+    }
+
+    return () => {
+      // Cleanup script on unmount
+      if (container && script.parentNode === container) {
+        container.removeChild(script);
+      }
+      // Square widget often creates other elements (modals, overlays) 
+      // but usually the main iframe is inside the container.
+    };
+  }, []);
+
   return (
     <div className="bg-black text-white min-h-screen pt-24">
       {/* Hero Section */}
       <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent"></div>
+        {/* Animated Background Elements */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-amber-600/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-5xl md:text-7xl font-black text-white uppercase mb-6">
-              Book Your{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-600">
-                Session
+            <h1 className="text-5xl md:text-8xl font-black text-white uppercase mb-6 tracking-tighter">
+              Booking <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600">
+                Portal
               </span>
             </h1>
-            <p className="text-xl text-gray-300 leading-relaxed">
-              Select your preferred studio, date, and time. Secure payment via Square.
+            <p className="text-xl text-gray-400 leading-relaxed font-medium">
+              Schedule your session in seconds. Secure your production time with our seamless booking experience.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Booking Steps */}
-      <section className="py-12 bg-zinc-900/50">
+      {/* Booking Steps Bar */}
+      <section className="py-12 border-y border-amber-500/10 bg-zinc-900/30 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { icon: Calendar, title: 'Choose Studio', description: 'Select from Studio A, B, or C' },
-              { icon: Clock, title: 'Pick Date & Time', description: 'View real-time availability' },
-              { icon: CreditCard, title: 'Secure Payment', description: 'Pay safely via Square' },
-              { icon: CheckCircle2, title: 'Confirmation', description: 'Receive booking details' },
+              { icon: Calendar, title: 'Pick a Service' },
+              { icon: Clock, title: 'Choose Time' },
+              { icon: CreditCard, title: 'Secure Pay' },
+              { icon: CheckCircle2, title: 'Confirmed' },
             ].map((step, index) => (
-              <div key={index} className="text-center">
-                <div className="flex justify-center mb-4">
-                  <div className="bg-gradient-to-br from-amber-500 to-amber-600 p-4 rounded-xl">
-                    <step.icon className="h-8 w-8 text-black" />
-                  </div>
+              <div key={index} className="flex items-center gap-4 justify-center md:justify-start">
+                <div className="bg-gradient-to-br from-amber-500 to-amber-600 p-3 rounded-xl shadow-lg shadow-amber-500/20">
+                  <step.icon className="h-5 w-5 text-black" />
                 </div>
-                <h3 className="text-white font-bold mb-2">{step.title}</h3>
-                <p className="text-sm text-gray-400">{step.description}</p>
+                <span className="text-xs font-black uppercase tracking-widest text-white/80">{step.title}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Booking Form/Integration */}
-      <section className="py-20">
+      {/* Main Booking Interface */}
+      <section className="py-24 relative">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-zinc-900 border border-amber-500/20 rounded-2xl p-8 md:p-12">
-            <h2 className="text-3xl font-black text-white uppercase mb-8 text-center">
-              Select Your Package
-            </h2>
+          <div className="bg-zinc-900/50 backdrop-blur-md border border-amber-500/20 rounded-[2.5rem] p-1 shadow-2xl overflow-hidden shadow-amber-500/5">
+            <div className="bg-black/80 rounded-[2.2rem] p-6 md:p-12">
+              <div className="mb-12 text-center">
+                <h2 className="text-2xl font-bold text-white uppercase tracking-widest mb-2">Schedule Now</h2>
+                <div className="h-1 w-20 bg-amber-500 mx-auto rounded-full"></div>
+              </div>
 
-            {/* Package Selection */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-              {[
-                { name: 'Audio Only', price: '$85/hr', features: ['Up to 4 Mics', 'Engineer Included', 'Raw Files'] },
-                { name: 'Audio + Video', price: '$125/hr', features: ['4K Recording', '3 Cameras', 'Lighting'], popular: true },
-                { name: 'Monthly Pro', price: '$400/mo', features: ['4 Hours', 'Priority Booking', 'Storage'] },
-              ].map((pkg, index) => (
-                <button
-                  key={index}
-                  className={`text-left p-6 rounded-xl border-2 transition-all hover:transform hover:-translate-y-1 ${
-                    pkg.popular
-                      ? 'border-amber-500 bg-amber-500/10'
-                      : 'border-amber-500/20 hover:border-amber-500/50'
-                  }`}
-                >
-                  {pkg.popular && (
-                    <span className="bg-gradient-to-r from-amber-500 to-amber-600 text-black px-3 py-1 rounded-full text-xs font-bold uppercase mb-3 inline-block">
-                      Popular
-                    </span>
-                  )}
-                  <h3 className="text-xl font-bold text-white mb-2">{pkg.name}</h3>
-                  <p className="text-3xl font-black text-amber-500 mb-4">{pkg.price}</p>
-                  <ul className="space-y-2">
-                    {pkg.features.map((feature, fIndex) => (
-                      <li key={fIndex} className="text-sm text-gray-400 flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-amber-500 shrink-0" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </button>
-              ))}
-            </div>
+              {/* LIVE SQUARE WIDGET CONTAINER */}
+              <div className="min-h-[600px] w-full relative">
+                <div id="square-booking-widget" className="w-full">
+                  {/* The Square script will inject the widget here */}
+                </div>
 
-            {/* Square Integration Placeholder */}
-            <div className="bg-black border border-amber-500/20 rounded-xl p-12 text-center">
-              <CreditCard className="h-16 w-16 text-amber-500 mx-auto mb-6" />
-              <h3 className="text-2xl font-bold text-white mb-4">
-                Square Booking Integration
-              </h3>
-              <p className="text-gray-400 mb-6 max-w-2xl mx-auto">
-                This is where the Square booking and payment widget will be integrated. Customers
-                can select dates, times, and complete secure payment directly through Square.
-              </p>
-              <div className="inline-block bg-gradient-to-r from-amber-500 to-amber-600 text-black px-6 py-3 rounded-lg font-bold">
-                Square Appointment Widget Goes Here
+                {/* Fallback/Loading State */}
+                <div className="absolute inset-0 -z-10 flex flex-col items-center justify-center text-center p-12">
+                  <div className="w-12 h-12 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin mb-6"></div>
+                  <p className="text-gray-500 font-medium">Loading Booking System...</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Info Section */}
-      <section className="py-20 border-t border-amber-500/20">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl font-black text-white uppercase mb-8 text-center">
-            What to Expect
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              {
-                title: 'Before Your Session',
-                points: [
-                  'Receive confirmation email with details',
-                  'Pre-session checklist and studio guide',
-                  'Remote guest coordination support',
-                ],
-              },
-              {
-                title: 'During Your Session',
-                points: [
-                  'Arrive 15 minutes early for setup',
-                  'Engineer handles all technical aspects',
-                  'Focus on creating great content',
-                ],
-              },
-              {
-                title: 'After Your Session',
-                points: [
-                  'Files delivered within 24 hours',
-                  'Access to optional editing services',
-                  'Priority rebooking for next session',
-                ],
-              },
-              {
-                title: 'Cancellation Policy',
-                points: [
-                  'Free rescheduling up to 24 hours before',
-                  'Cancellations within 24 hours: 50% fee',
-                  'No-shows are non-refundable',
-                ],
-              },
-            ].map((section, index) => (
-              <div
-                key={index}
-                className="bg-zinc-900 border border-amber-500/20 p-6 rounded-xl"
-              >
-                <h3 className="text-xl font-bold text-white mb-4">{section.title}</h3>
-                <ul className="space-y-2">
-                  {section.points.map((point, pIndex) => (
-                    <li key={pIndex} className="text-gray-400 flex items-start gap-2">
-                      <CheckCircle2 className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
-                      <span className="text-sm">{point}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+      {/* Policy and Info */}
+      <section className="pb-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div>
+              <h3 className="text-amber-500 font-bold uppercase tracking-widest text-sm mb-6 flex items-center gap-2">
+                <span className="h-px w-8 bg-amber-500/50"></span>
+                Arrival Time
+              </h3>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                Please arrive <span className="text-white font-bold">15 minutes early</span> to your scheduled session. This allows us to get you settled, test audio levels, and ensure we start exactly on time.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-amber-500 font-bold uppercase tracking-widest text-sm mb-6 flex items-center gap-2">
+                <span className="h-px w-8 bg-amber-500/50"></span>
+                Cancellation
+              </h3>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                Rescheduling is free up to <span className="text-white font-bold">24 hours</span> before your session. Cancellations within 24 hours are subject to a 50% technical fee.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-amber-500 font-bold uppercase tracking-widest text-sm mb-6 flex items-center gap-2">
+                <span className="h-px w-8 bg-amber-500/50"></span>
+                File Delivery
+              </h3>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                Raw audio and video files are delivered <span className="text-white font-bold">immediately</span> via secure transfer. Post-production turnarounds vary by project scope.
+              </p>
+            </div>
           </div>
+        </div>
+      </section>
+
+      {/* Help CTA */}
+      <section className="py-20 bg-amber-500/5 border-t border-amber-500/10">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h3 className="text-2xl font-bold text-white mb-4">Need a Custom Production Quote?</h3>
+          <p className="text-gray-400 mb-8">For large-scale projects, recurring bookings, or multi-day sessions.</p>
+          <a
+            href="mailto:contact@goldbeamstudios.com"
+            className="inline-block border-2 border-amber-500 text-amber-500 px-10 py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-amber-500 hover:text-black transition-all"
+          >
+            Contact Production Team
+          </a>
         </div>
       </section>
     </div>
