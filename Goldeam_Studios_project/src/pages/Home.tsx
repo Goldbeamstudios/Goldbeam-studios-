@@ -1,5 +1,4 @@
 import { ArrowRight, Play, Mic2, Video, Cast, Sliders, Coffee, Wifi, Check } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import bg from '../assets/banner_three.jpeg';
 import gallery1 from '../assets/banner_four.jpeg';

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Sparkles, Users, Wifi, Coffee, Mic2, Video, Check, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 // Import images
 import studioOne from '../assets/images/studio/studo_one.jpeg';
