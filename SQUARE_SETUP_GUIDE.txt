@@ -1,0 +1,140 @@
+GOLDREAM STUDIOS - SQUARE SERVICES SETUP GUIDE
+================================================
+
+This guide contains the exact text to copy-paste into your Square Dashboard for each service.
+
+Go to: Square Dashboard > Items & Services > Service Library > [Create Service]
+
+---
+
+SERVICE 1: AUDIO ONLY (Podcast Session)
+---------------------------------------
+Name: Audio Only - Podcast Session
+Price: $125.00
+Price Type: Fixed
+Duration: 1 hr 0 min
+Description:
+Premier audio-only recording session. Perfect for audio-focused podcasters, interviews, and voiceovers.
+
+Includes:
+• Up to 4 professional microphones
+• Dedicated sound engineer
+• Acoustically treated studio
+• Raw WAV & MP3 files
+• Instant file transfer
+• High-speed internet for remote guests
+
+Settings:
+• Online Booking: ON (Bookable by customers online)
+• Assigned Team: [Select your engineer or team]
+
+---
+
+SERVICE 2: AUDIO + VIDEO (Cinematic Podcast)
+---------------------------------------------
+Name: Audio + Video - Cinematic Podcast
+Price: $300.00
+Price Type: Fixed
+Duration: 1 hr 0 min
+Description:
+A full cinematic podcast experience — designed for creators who want to look as professional as they sound. Ideal for YouTube shows, branded content, and social clips.
+
+Includes:
+• Multi-camera 4K video setup
+• Live multi-angle switching
+• Professional studio lighting
+• Custom set & color configuration
+• Raw video + audio files included
+• Dedicated sound & video engineer
+
+Settings:
+• Online Booking: ON
+• Assigned Team: [Select your engineer or team]
+
+---
+
+SERVICE 3: GENERAL CONTENT PROD.
+--------------------------------
+Name: General Content Production
+Price: $200.00
+Price Type: Fixed
+Duration: 1 hr 0 min
+Description:
+Designed for high-end visual content beyond podcasts. Ideal for short-form videos, educational content, brand features, product demonstrations, and creative productions.
+
+What’s Included:
+• Complete studio access with flexible set configurations
+• Professional production gear (4K Sony cameras, studio lighting, broadcast-quality audio)
+• On-site camera operator / studio technician
+• Custom lighting and camera setup
+• Delivery of raw video and audio files
+• High-speed fiber internet
+
+Settings:
+• Online Booking: ON
+
+---
+
+ADD-ON SERVICES
+---------------
+(Tip: You can create these as separate services or "Modifiers" in Square)
+
+A. Video Editing
+• Name: Video Editing (Add-on)
+• Price: $60.00 / hour
+• Description: Clean cuts & pacing, Color correction, Lower thirds, social optimization.
+
+B. Audio Mixing & Mastering
+• Name: Audio Mixing & Mastering (Add-on)
+• Price: $40.00 / hour
+• Description: Noise reduction, EQ, compression, loudness leveling for all platforms.
+
+C. Social Media Clips
+• Name: Social Media Clips (Set of 5)
+• Price: $90.00
+• Description: 5 vertical clips (30-60s) for Reels/TikTok/Shorts with captions-ready delivery.
+
+D. Show Notes & Timestamps
+• Name: Show Notes & Timestamps
+• Price: $30.00
+• Description: Episode summary, key timestamps, and SEO-friendly formatting.
+
+---
+
+STUDIO-SPECIFIC BOOKINGS (Studios Page)
+--------------------------------------
+Since Studio A has different themes and capacities, it is best to create them as separate services so you get a specific "Deep Link" for each.
+
+A. STUDIO A - SIGNATURE THEME
+• Name: Studio A - Signature Theme
+• Price: $125/hr (or your preferred rate)
+• Description: Polished, modern setup. Capacity: Up to 4 people.
+
+B. STUDIO A - OASIS THEME
+• Name: Studio A - Oasis Theme
+• Price: $125/hr
+• Description: Warm, relaxed environment. Capacity: Up to 4 people.
+
+C. STUDIO A - CHROMA THEME
+• Name: Studio A - Chroma Theme
+• Price: $125/hr
+• Description: Minimalist white backdrop with RGB lighting. Capacity: Up to 2 people.
+
+D. STUDIO B - COMPACT PRODUCTION
+• Name: Studio B - Compact Session
+• Price: [Set your price]
+• Description: Focused recordings & efficient creation. Capacity: Up to 2 people.
+
+---
+
+IMPORTANT SETTINGS FOR ALL SERVICES
+-----------------------------------
+1. Online Booking: Bookable by customers online (MUST BE CHECKED).
+2. Location: Ensure "The Goldbeam Studio" is selected.
+3. Pricing: Always use "Fixed" price type unless it's a quote.
+4. Assigned Team Members: Make sure yourself or a "Studio Resource" is assigned to the service.
+
+NEXT STEP:
+Once you save these, go to: Appointments > Online Booking > Channels > Service-specific links. 
+Copy each link (e.g. for Studio A - Oasis) and paste them here for me!
+I will make the buttons on the Studio page "smart" so they link to the exact theme the user is looking at.

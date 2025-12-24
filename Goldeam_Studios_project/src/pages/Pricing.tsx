@@ -18,6 +18,7 @@ export default function Pricing() {
       bestFor: 'Audio podcasts, interviews, voiceovers',
       popular: false,
       gradient: 'from-gray-500 to-gray-600',
+      bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/KIZZB5V36MBOXNNU2QH4Y6JR'
     },
     {
       name: 'Audio + Video',
@@ -36,6 +37,7 @@ export default function Pricing() {
       bestFor: 'Video podcasts, YouTube shows, branded content',
       popular: true,
       gradient: 'from-amber-500 to-amber-600',
+      bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/M6M42KEY7HWM6IYSAFEPU4K4'
     },
     {
       name: 'General Content',
@@ -54,6 +56,7 @@ export default function Pricing() {
       bestFor: 'Creators, educators, businesses, marketing teams, agencies, and brands producing polished visual content.',
       popular: false,
       gradient: 'from-amber-600 to-orange-600',
+      bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/PGCDYBESUFP7SQBIAKF7WFSJ'
     },
   ];
 
@@ -101,9 +104,16 @@ export default function Pricing() {
         'Key timestamps',
         'SEO-friendly formatting',
         'Ready for website & podcast platforms',
-      ]
+      ],
+      bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/PGCDYBESUFP7SQBIAKF7WFSJ' // Using general for now if specific not provided
     },
   ];
+
+  const addOnUrls = {
+    'Video Editing': 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/DRI7SB7EF5CFVOHRCU5PBHDX',
+    'Audio Mixing & Mastering': 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/ABWXB5PUDZCLMFWTWOQWT2G7',
+    'Social Media Clips': 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/MW5A3Q2LF3X5CKDPTPSUNPJD',
+  };
 
   return (
     <div className="bg-black text-white min-h-screen pt-24">
@@ -134,8 +144,8 @@ export default function Pricing() {
               <div
                 key={index}
                 className={`relative p-8 flex flex-col h-full rounded-2xl transition-all duration-300 hover:transform hover:-translate-y-2 ${plan.popular
-                    ? 'border-2 border-amber-500 bg-zinc-900 shadow-2xl shadow-amber-500/30 scale-105'
-                    : 'border border-amber-500/20 bg-black/50 hover:border-amber-500/50'
+                  ? 'border-2 border-amber-500 bg-zinc-900 shadow-2xl shadow-amber-500/30 scale-105'
+                  : 'border border-amber-500/20 bg-black/50 hover:border-amber-500/50'
                   }`}
               >
                 {plan.popular && (
@@ -166,14 +176,17 @@ export default function Pricing() {
                     <p className="text-sm text-gray-300 leading-snug">{plan.bestFor}</p>
                   </div>
                 )}
-                <button
-                  className={`w-full py-4 text-sm font-bold uppercase tracking-widest transition-all rounded-lg ${plan.popular
-                      ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-black hover:from-amber-400 hover:to-amber-500 shadow-lg shadow-amber-500/30'
-                      : 'bg-white text-black hover:bg-gray-200'
+                <a
+                  href={(plan as any).bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`w-full py-4 text-center text-sm font-bold uppercase tracking-widest transition-all rounded-lg block ${plan.popular
+                    ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-black hover:from-amber-400 hover:to-amber-500 shadow-lg shadow-amber-500/30'
+                    : 'bg-white text-black hover:bg-gray-200'
                     }`}
                 >
                   Select Plan
-                </button>
+                </a>
               </div>
             ))}
           </div>
@@ -210,6 +223,14 @@ export default function Pricing() {
                       ))}
                     </ul>
                   )}
+                  <a
+                    href={(addOnUrls as any)[addon.name] || '#'}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 w-full py-3 text-center text-xs font-bold uppercase tracking-widest border border-amber-500/30 text-white rounded-lg hover:bg-amber-500 hover:text-black transition-all"
+                  >
+                    Add Service
+                  </a>
                 </div>
               ))}
             </div>

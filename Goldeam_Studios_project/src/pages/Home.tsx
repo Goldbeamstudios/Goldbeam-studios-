@@ -91,6 +91,7 @@ export default function Home() {
       ],
       bestFor: 'Audio podcasts, interviews, voiceovers',
       popular: false,
+      bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/KIZZB5V36MBOXNNU2QH4Y6JR'
     },
     {
       name: 'Audio + Video',
@@ -108,6 +109,7 @@ export default function Home() {
       ],
       bestFor: 'Video podcasts, YouTube shows, branded content',
       popular: true,
+      bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/M6M42KEY7HWM6IYSAFEPU4K4'
     },
     {
       name: 'General Content',
@@ -125,6 +127,7 @@ export default function Home() {
       ],
       bestFor: 'Creators, educators, businesses, marketing teams, agencies, and brands producing polished visual content.',
       popular: false,
+      bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/PGCDYBESUFP7SQBIAKF7WFSJ'
     },
   ];
 
@@ -173,13 +176,15 @@ export default function Home() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6 animate-fade-in-delay-2">
-              <Link
-                to="/book"
+              <a
+                href="https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group flex items-center justify-center gap-3 bg-gradient-to-r from-amber-500 to-amber-600 text-black px-8 py-4 text-lg font-bold uppercase tracking-wider hover:from-amber-400 hover:to-amber-500 transition-all transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-amber-500/50 rounded-lg"
               >
                 Book A Session
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              </a>
 
               <button className="flex items-center justify-center gap-3 border-2 border-amber-500/30 hover:border-amber-500 text-white px-8 py-4 text-lg font-bold uppercase tracking-wider transition-all backdrop-blur-sm hover:bg-amber-500/10 rounded-lg">
                 <Play className="h-5 w-5 fill-current" />
@@ -350,15 +355,18 @@ export default function Home() {
                       <p className="text-sm text-gray-300 leading-snug">{plan.bestFor}</p>
                     </div>
                   )}
-                  <button
-                    className={`relative overflow-hidden w-full py-4 text-sm font-bold uppercase tracking-widest transition-all duration-300 rounded-lg group/button ${plan.popular
+                  <a
+                    href={(plan as any).bookingUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`relative overflow-hidden w-full py-4 text-center text-sm font-bold uppercase tracking-widest transition-all duration-300 rounded-lg group/button block ${plan.popular
                       ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-black hover:from-amber-400 hover:to-amber-500 shadow-lg shadow-amber-500/30 hover:shadow-2xl hover:shadow-amber-500/50'
                       : 'bg-white text-black hover:bg-amber-400'
                       }`}
                   >
                     <span className="relative z-10">Select Plan</span>
                     <span className="absolute inset-0 bg-gradient-to-r from-amber-400 to-amber-500 opacity-0 group-hover/button:opacity-100 transition-opacity"></span>
-                  </button>
+                  </a>
                 </div>
               </div>
             ))}

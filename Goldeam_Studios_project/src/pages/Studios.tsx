@@ -42,18 +42,21 @@ export default function Studios() {
         image: studioOne,
         capacity: 'Up to 4 people',
         description: 'A polished, modern setup that represents the core Goldbeam Studio look. Ideal for podcasts, interviews, panels, and branded content.',
+        bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/ZHLIUT4OKK265VGAQDD34YXS',
       },
       {
         name: 'Oasis',
         image: studioThree,
         capacity: 'Up to 4 people',
         description: 'A warm, relaxed environment designed for conversational content, storytelling, and educational videos with a softer, lifestyle feel.',
+        bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/NYQAYVPQRWRAWYVSTAG5L4AC',
       },
       {
         name: 'Chroma',
         image: studioFour,
         capacity: 'Up to 2 people',
         description: 'A minimalist white backdrop enhanced with RGB lighting, allowing you to create custom color moods and branded looks without post-production effects.',
+        bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/J44VS5ERBOKIONVWZ4DOPC4V',
       },
     ],
     features: [
@@ -84,6 +87,7 @@ export default function Studios() {
     ],
     optionalSetup: 'Green screen recording available upon request',
     bestFor: 'Solo podcasts, interviews, voice recordings, short-form content, and creators who need a clean, distraction-free space.',
+    bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/KIZZB5V36MBOXNNU2QH4Y6JR', // Using Audio Only for Studio B for now if not distinct
   };
 
   const studioC = {
@@ -103,6 +107,7 @@ export default function Studios() {
     ],
     optionalSetup: 'Post-production services available upon request',
     bestFor: 'Creators, educators, businesses, marketing teams, agencies, and brands producing polished visual content.',
+    bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/PGCDYBESUFP7SQBIAKF7WFSJ',
   };
 
   const amenities = [
@@ -202,8 +207,8 @@ export default function Studios() {
                         key={index}
                         onClick={() => setActiveTheme(index)}
                         className={`px-6 py-3 rounded-xl font-bold uppercase text-xs tracking-wider transition-all duration-300 border ${activeTheme === index
-                            ? 'bg-amber-500 border-amber-500 text-black shadow-lg shadow-amber-500/40 transform -translate-y-1'
-                            : 'bg-zinc-900 border-amber-500/20 text-gray-400 hover:border-amber-500/50 hover:text-white'
+                          ? 'bg-amber-500 border-amber-500 text-black shadow-lg shadow-amber-500/40 transform -translate-y-1'
+                          : 'bg-zinc-900 border-amber-500/20 text-gray-400 hover:border-amber-500/50 hover:text-white'
                           }`}
                       >
                         {theme.name}
@@ -231,13 +236,15 @@ export default function Studios() {
                   ))}
                 </div>
 
-                <Link
-                  to="/book"
+                <a
+                  href={studioA.themes[activeTheme].bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-4 bg-gradient-to-r from-amber-500 to-amber-600 text-black px-10 py-5 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/50 group"
                 >
-                  Book Studio A
+                  Book {studioA.name}
                   <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-2" />
-                </Link>
+                </a>
               </div>
             </div>
           </section>
@@ -287,13 +294,15 @@ export default function Studios() {
                   ))}
                 </div>
 
-                <Link
-                  to="/book"
+                <a
+                  href={(studioB as any).bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-4 bg-white text-black px-10 py-5 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:scale-105 hover:bg-amber-500 group"
                 >
-                  Book Studio B
+                  Book {studioB.name}
                   <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-2" />
-                </Link>
+                </a>
               </div>
             </div>
           </section>
@@ -343,13 +352,15 @@ export default function Studios() {
                   <p className="text-sm text-gray-400 leading-relaxed">{studioC.bestFor}</p>
                 </div>
 
-                <Link
-                  to="/book"
+                <a
+                  href={(studioC as any).bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-4 border-2 border-amber-500/30 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:border-amber-500 hover:bg-amber-500/5 group"
                 >
-                  Book Studio C
+                  Book {studioC.name}
                   <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-2" />
-                </Link>
+                </a>
               </div>
             </div>
           </section>
@@ -400,12 +411,14 @@ export default function Studios() {
             Experience the gold standard in production. Book your session today and elevate your content.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link
-              to="/book"
-              className="bg-amber-500 text-black px-12 py-6 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/50"
+            <a
+              href="https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-amber-500 text-black px-12 py-6 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/50 block text-center"
             >
               Book Now
-            </Link>
+            </a>
             <button className="border-2 border-amber-500/30 text-white px-12 py-6 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:border-amber-500 hover:bg-amber-500/5">
               Contact Us
             </button>
