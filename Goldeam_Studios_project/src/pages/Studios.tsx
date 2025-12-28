@@ -11,6 +11,7 @@ import studioFive from '../assets/images/studio/studio_siven.jpg';
 export default function Studios() {
   const [activeTheme, setActiveTheme] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [lightboxStudio, setLightboxStudio] = useState<'A' | 'B'>('A');
 
   const nextSlide = (e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -44,8 +45,8 @@ export default function Studios() {
 
   const studioA = {
     name: 'Studio A',
-    subtitle: 'Main Production Suite',
-    description: 'Our largest and most versatile studio, Studio A is designed for professional productions that require flexibility, visual variety, and space.',
+    subtitle: 'General Content Studio',
+    description: '(Studio A) Our largest and most versatile studio, designed for high-end visual content and professional productions that require flexibility, variety, and space.',
     themes: [
       {
         name: 'Signature',
@@ -87,7 +88,7 @@ export default function Studios() {
     subtitle: 'Compact Production Studio',
     capacity: 'Up to 2 people',
     image: studioTwo,
-    description: 'Studio B is our smaller, streamlined studio designed for focused recordings and efficient content creation. It offers professional quality in a more intimate setting.',
+    description: '(Studio B) Our smaller, streamlined studio designed for focused recordings and efficient content creation. It offers professional quality in a more intimate setting.',
     features: [
       'Professional audio setup',
       'Studio lighting',
@@ -97,27 +98,7 @@ export default function Studios() {
     ],
     optionalSetup: 'Green screen recording available upon request',
     bestFor: 'Solo podcasts, interviews, voice recordings, short-form content, and creators who need a clean, distraction-free space.',
-    bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/KIZZB5V36MBOXNNU2QH4Y6JR', // Using Audio Only for Studio B for now if not distinct
-  };
-
-  const studioC = {
-    name: 'Studio C',
-    subtitle: 'General Content Studio',
-    capacity: 'Flexible',
-    image: studioFive,
-    description: 'Designed for high-end visual content beyond podcasts, from brand features to product shots.',
-    features: [
-      'Complete studio access',
-      '4K Sony cameras',
-      'Studio lighting kits',
-      'Broadcast-quality audio',
-      'On-site camera operator',
-      'Custom lighting setup',
-      'High-speed fiber internet',
-    ],
-    optionalSetup: 'Post-production services available upon request',
-    bestFor: 'Creators, educators, businesses, marketing teams, agencies, and brands producing polished visual content.',
-    bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/PGCDYBESUFP7SQBIAKF7WFSJ',
+    bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/KIZZB5V36MBOXNNU2QH4Y6JR',
   };
 
   const amenities = [
@@ -177,7 +158,10 @@ export default function Studios() {
                   <div
                     className="flex h-full transition-transform duration-700 ease-out cursor-zoom-in"
                     style={{ transform: `translateX(-${activeTheme * 100}%)` }}
-                    onClick={() => setIsLightboxOpen(true)}
+                    onClick={() => {
+                      setLightboxStudio('A');
+                      setIsLightboxOpen(true);
+                    }}
                   >
                     {studioA.themes.map((theme, idx) => (
                       <div key={idx} className="min-w-full h-full relative">
@@ -249,11 +233,13 @@ export default function Studios() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-4">
                     <span className="h-px w-12 bg-amber-500/50"></span>
-                    <span className="text-amber-500 font-bold uppercase tracking-widest text-sm">Studio A</span>
+                    <h2 className="text-4xl md:text-6xl font-black text-white uppercase leading-tight">
+                      {studioA.name}
+                    </h2>
                   </div>
-                  <h2 className="text-4xl md:text-6xl font-black text-white uppercase leading-tight">
+                  <h3 className="text-2xl md:text-3xl font-bold text-amber-500 uppercase tracking-widest">
                     {studioA.subtitle}
-                  </h2>
+                  </h3>
                 </div>
 
                 <p className="text-lg text-gray-400 leading-relaxed">
@@ -320,9 +306,19 @@ export default function Studios() {
                   <img
                     src={studioB.image}
                     alt={studioB.name}
-                    className="w-full h-[400px] md:h-[550px] object-cover transition-all duration-700 group-hover:scale-105"
+                    className="w-full h-[400px] md:h-[550px] object-cover transition-all duration-700 group-hover:scale-105 cursor-zoom-in"
+                    onClick={() => {
+                      setLightboxStudio('B');
+                      setIsLightboxOpen(true);
+                    }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+                    <div className="bg-black/40 backdrop-blur-md p-4 rounded-full border border-white/20">
+                      <Maximize2 className="h-6 w-6 text-white" />
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
                 </div>
               </div>
 
@@ -331,11 +327,13 @@ export default function Studios() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-4">
                     <span className="h-px w-12 bg-amber-500/50"></span>
-                    <span className="text-amber-500 font-bold uppercase tracking-widest text-sm">Studio B</span>
+                    <h2 className="text-4xl md:text-6xl font-black text-white uppercase leading-tight">
+                      {studioB.name}
+                    </h2>
                   </div>
-                  <h2 className="text-4xl md:text-6xl font-black text-white uppercase leading-tight">
+                  <h3 className="text-2xl md:text-3xl font-bold text-amber-500 uppercase tracking-widest">
                     {studioB.subtitle}
-                  </h2>
+                  </h3>
                 </div>
 
                 <p className="text-lg text-gray-400 leading-relaxed">
@@ -363,64 +361,6 @@ export default function Studios() {
                   className="inline-flex items-center gap-4 bg-white text-black px-10 py-5 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:scale-105 hover:bg-amber-500 group"
                 >
                   Book {studioB.name}
-                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-2" />
-                </a>
-              </div>
-            </div>
-          </section>
-
-          {/* Studio C */}
-          <section className="animate-on-scroll opacity-0">
-            <div className="flex flex-col lg:flex-row gap-16 items-center">
-              {/* Image Side */}
-              <div className="flex-1 w-full order-1">
-                <div className="relative group rounded-3xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-amber-500/20">
-                  <img
-                    src={studioC.image}
-                    alt={studioC.name}
-                    className="w-full h-[400px] md:h-[550px] object-cover transition-all duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                </div>
-              </div>
-
-              {/* Content Side */}
-              <div className="flex-1 space-y-8 order-2">
-                <div className="space-y-4">
-                  <div className="flex items-center gap-4">
-                    <span className="h-px w-12 bg-amber-500/50"></span>
-                    <span className="text-amber-500 font-bold uppercase tracking-widest text-sm">Studio C</span>
-                  </div>
-                  <h2 className="text-4xl md:text-6xl font-black text-white uppercase leading-tight">
-                    {studioC.subtitle}
-                  </h2>
-                </div>
-
-                <p className="text-lg text-gray-400 leading-relaxed">
-                  {studioC.description}
-                </p>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {studioC.features.slice(0, 6).map((feature, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <Check className="h-4 w-4 text-amber-500 shrink-0" />
-                      <span className="text-sm text-gray-300">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="space-y-2">
-                  <p className="text-xs font-bold text-amber-500 uppercase tracking-widest">Best For:</p>
-                  <p className="text-sm text-gray-400 leading-relaxed">{studioC.bestFor}</p>
-                </div>
-
-                <a
-                  href={(studioC as any).bookingUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-4 border-2 border-amber-500/30 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:border-amber-500 hover:bg-amber-500/5 group"
-                >
-                  Book {studioC.name}
                   <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-2" />
                 </a>
               </div>
@@ -501,20 +441,24 @@ export default function Studios() {
             <X size={40} strokeWidth={1.5} />
           </button>
 
-          {/* Navigation Arrows */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-8 p-6 rounded-full bg-white/5 hover:bg-white/10 text-white transition-all z-[110] border border-white/10 hidden md:block"
-          >
-            <ChevronLeft size={32} />
-          </button>
+          {/* Navigation Arrows - Only for Studio A */}
+          {lightboxStudio === 'A' && (
+            <>
+              <button
+                onClick={prevSlide}
+                className="absolute left-8 p-6 rounded-full bg-white/5 hover:bg-white/10 text-white transition-all z-[110] border border-white/10 hidden md:block"
+              >
+                <ChevronLeft size={32} />
+              </button>
 
-          <button
-            onClick={nextSlide}
-            className="absolute right-8 p-6 rounded-full bg-white/5 hover:bg-white/10 text-white transition-all z-[110] border border-white/10 hidden md:block"
-          >
-            <ChevronRight size={32} />
-          </button>
+              <button
+                onClick={nextSlide}
+                className="absolute right-8 p-6 rounded-full bg-white/5 hover:bg-white/10 text-white transition-all z-[110] border border-white/10 hidden md:block"
+              >
+                <ChevronRight size={32} />
+              </button>
+            </>
+          )}
 
           {/* Image Container */}
           <div
@@ -522,36 +466,38 @@ export default function Studios() {
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src={studioA.themes[activeTheme].image}
-              alt={studioA.themes[activeTheme].name}
+              src={lightboxStudio === 'A' ? studioA.themes[activeTheme].image : studioB.image}
+              alt={lightboxStudio === 'A' ? `${studioA.name} - ${studioA.themes[activeTheme].name}` : studioB.name}
               className="w-full h-full object-contain rounded-xl shadow-2xl animate-fade-in-up"
             />
 
             {/* Info Overlay */}
             <div className="mt-8 text-center space-y-2">
               <h3 className="text-2xl font-black uppercase text-amber-500 tracking-wider">
-                {studioA.name} - {studioA.themes[activeTheme].name}
+                {lightboxStudio === 'A' ? `${studioA.name} - ${studioA.themes[activeTheme].name}` : `${studioB.name} - ${studioB.subtitle}`}
               </h3>
               <p className="text-gray-400 font-medium">
-                {studioA.themes[activeTheme].capacity}
+                {lightboxStudio === 'A' ? studioA.themes[activeTheme].capacity : studioB.capacity}
               </p>
             </div>
 
-            {/* Mobile Navigation */}
-            <div className="flex gap-4 mt-8 md:hidden">
-              <button
-                onClick={prevSlide}
-                className="p-4 rounded-full bg-white/5 border border-white/10 text-white"
-              >
-                <ChevronLeft size={24} />
-              </button>
-              <button
-                onClick={nextSlide}
-                className="p-4 rounded-full bg-white/5 border border-white/10 text-white"
-              >
-                <ChevronRight size={24} />
-              </button>
-            </div>
+            {/* Mobile Navigation - Only for Studio A */}
+            {lightboxStudio === 'A' && (
+              <div className="flex gap-4 mt-8 md:hidden">
+                <button
+                  onClick={prevSlide}
+                  className="p-4 rounded-full bg-white/5 border border-white/10 text-white"
+                >
+                  <ChevronLeft size={24} />
+                </button>
+                <button
+                  onClick={nextSlide}
+                  className="p-4 rounded-full bg-white/5 border border-white/10 text-white"
+                >
+                  <ChevronRight size={24} />
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
