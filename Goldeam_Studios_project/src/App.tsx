@@ -15,6 +15,7 @@ const Build = lazy(() => import('./pages/Build'));
 const More = lazy(() => import('./pages/More'));
 const Contact = lazy(() => import('./pages/Contact'));
 const FAQs = lazy(() => import('./pages/FAQs'));
+const LocationParking = lazy(() => import('./pages/LocationParking'));
 const Resources = lazy(() => import('./pages/Resources'));
 const Blog = lazy(() => import('./pages/Blog'));
 const BlogPost = lazy(() => import('./pages/BlogPost'));
@@ -61,6 +62,7 @@ function App() {
             <Route path="/more" element={<More />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/faqs" element={<FAQs />} />
+            <Route path="/location-parking" element={<LocationParking />} />
             <Route path="/resources" element={<Resources />} />
 
             {/* Blog Routes */}

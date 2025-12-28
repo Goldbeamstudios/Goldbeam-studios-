@@ -1,111 +1,136 @@
-import { Check, Sparkles } from 'lucide-react';
+import { Check, Sparkles, Minus } from 'lucide-react';
 
 export default function Pricing() {
   const pricingPlans = [
     {
-      name: 'Audio Only',
-      price: '$125',
+      name: 'Audio-Only Podcast',
+      price: '$170',
       period: '/ hour',
-      description: 'Perfect for audio-focused podcasters',
+      description: 'Perfect for audio-focused podcasts, interviews, and voiceovers.',
       features: [
-        'Up to 4 professional microphones',
-        'Dedicated sound engineer',
-        'Acoustically treated studio',
+        'Dedicated audio-only studio (up to 2 people)',
+        'Professional sound engineer',
+        'Acoustically treated room',
         'Raw WAV & MP3 files',
-        'Instant file transfer',
-        'High-speed internet for remote guests',
+        'File delivery within 24 hours',
       ],
-      bestFor: 'Audio podcasts, interviews, voiceovers',
+      bestFor: 'Audio podcasts, interviews, voice recording',
       popular: false,
       gradient: 'from-gray-500 to-gray-600',
       bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/KIZZB5V36MBOXNNU2QH4Y6JR'
     },
     {
-      name: 'Audio + Video',
+      name: 'Audio + Video Podcast',
       price: '$300',
       period: '/ hour',
-      description: 'A full cinematic podcast experience — designed for creators who want to look as professional as they sound.',
+      description: 'A cinematic podcast experience designed for creators who want a professional visual presence.',
       features: [
-        'Includes everything in Audio Only, plus:',
         'Multi-camera 4K video setup',
         'Live multi-angle switching',
         'Professional studio lighting',
-        'Custom set & color configuration',
-        'Raw video + audio files included',
-        'Ideal for YouTube, social clips, and livestreams',
+        'On-site camera operator / technician',
+        'Custom set and color configuration',
+        'Live-cut program video + program audio',
+        'File delivery within 24 hours',
       ],
       bestFor: 'Video podcasts, YouTube shows, branded content',
       popular: true,
       gradient: 'from-amber-500 to-amber-600',
+      note: 'ISO camera files and isolated audio tracks are available as optional add-ons.',
       bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/M6M42KEY7HWM6IYSAFEPU4K4'
     },
     {
-      name: 'General Content',
-      price: '$200',
+      name: 'General Content (Non-Podcast)',
+      price: '$250',
       period: '/ hour',
-      description: 'Designed for content beyond podcasts. Ideal for short-form videos, educational content, brand features, product demonstrations, interviews, and creative productions.',
+      description: 'Designed for content beyond podcasts, including educational videos, interviews, product demos, and brand content.',
       features: [
-        'Complete studio access with flexible set configurations',
-        'Professional production gear (4K Sony cameras, studio lighting, broadcast-quality audio)',
-        'On-site camera operator / studio technician',
-        'Custom lighting and camera setup',
-        'Delivery of raw video and audio files',
-        'High-speed fiber internet',
-        'Post-production services available upon request',
+        'Full studio access',
+        'Professional camera operator / studio technician',
+        'Studio lighting and camera setup',
+        'Live-cut program video + program audio',
+        'File delivery within 24 hours',
       ],
-      bestFor: 'Creators, educators, businesses, marketing teams, agencies, and brands producing polished visual content.',
+      bestFor: 'Creators, educators, businesses, agencies, and brands',
       popular: false,
       gradient: 'from-amber-600 to-orange-600',
+      note: 'ISO recording and post-production services are optional add-ons.',
       bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/PGCDYBESUFP7SQBIAKF7WFSJ'
     },
   ];
 
+  const comparisonFeatures = [
+    { name: 'Audio-Only Studio', audio: true, video: false, general: false },
+    { name: 'Full Studio Access', audio: false, video: true, general: true },
+    { name: 'Sound Engineer', audio: true, video: true, general: true },
+    { name: 'Camera Operator / Tech', audio: false, video: true, general: true },
+    { name: 'Acoustically Treated Room', audio: true, video: true, general: true },
+    { name: 'Multi-Cam 4K Setup', audio: false, video: true, general: true },
+    { name: 'Live Multi-Angle Switching', audio: false, video: true, general: true },
+    { name: 'Studio Lighting', audio: false, video: true, general: true },
+    { name: 'Custom Set Config', audio: false, video: true, general: true },
+    { name: 'Raw WAV & MP3 Files', audio: true, video: true, general: true },
+    { name: 'Live-Cut Program Video', audio: false, video: true, general: true },
+    { name: 'Program Program Audio', audio: false, video: true, general: true },
+    { name: 'File Delivery (24 Hours)', audio: true, video: true, general: true },
+    { name: 'ISO Recording / Tracks', audio: 'Optional', video: 'Optional', general: 'Optional' },
+    { name: 'Post-Production / Editing', audio: 'Optional', video: 'Optional', general: 'Optional' },
+  ];
+
   const addOns = [
     {
-      name: 'Video Editing',
-      price: '$60 / hour',
-      description: 'Professional editing tailored for podcasts, interviews, and branded content.',
-      features: [
-        'Clean cuts & pacing',
-        'Color correction',
-        'Lower thirds & basic motion graphics',
-        'Export optimized for YouTube & social platforms',
-      ]
+      name: 'ISO Recording',
+      price: '$75',
+      period: 'per hour',
+      description: 'Individual camera ISO files and isolated audio tracks. Must be requested in advance.',
+    },
+    {
+      name: 'Basic Video Edit',
+      price: '$75',
+      period: '(1 full episode)',
+      description: 'Clean cuts, basic pacing, simple audio balance, YouTube-ready export.',
+    },
+    {
+      name: 'Advanced Video Edit',
+      price: '$250',
+      period: '(1 full episode)',
+      description: 'Color correction, lower thirds, intro/outro (provided assets), light motion graphics, audio cleanup.',
     },
     {
       name: 'Audio Mixing & Mastering',
-      price: '$40 / hour',
-      description: 'Broadcast-ready audio polishing for a clean, balanced sound.',
-      features: [
-        'Noise reduction & cleanup',
-        'EQ, compression, loudness leveling',
-        'Optimized for Spotify, Apple Podcasts, YouTube',
-      ]
+      price: '$60',
+      period: 'per episode',
+      description: 'Noise reduction, EQ, compression, loudness leveling, final WAV + MP3.',
     },
     {
       name: 'Social Media Clips',
       price: '$90',
       period: 'per set (5 clips)',
-      description: 'Short-form vertical clips designed to grow your audience.',
-      features: [
-        '5 clips (30–60 seconds each)',
-        'Vertical (Reels / TikTok / Shorts)',
-        'Captions-ready delivery',
-        'Platform-safe formatting',
-      ]
+      description: 'Vertical clips (30–60s) optimized for Reels, TikTok, and Shorts.',
     },
     {
       name: 'Show Notes & Timestamps',
       price: '$30',
       period: 'per episode',
-      description: 'AI-assisted summaries reviewed for clarity and structure.',
-      features: [
-        'Episode summary',
-        'Key timestamps',
-        'SEO-friendly formatting',
-        'Ready for website & podcast platforms',
-      ],
-      bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/PGCDYBESUFP7SQBIAKF7WFSJ' // Using general for now if specific not provided
+      description: 'Episode summary, key points, and chapter timestamps.',
+    },
+    {
+      name: 'Teleprompter',
+      price: '$50',
+      period: 'per session',
+      description: 'Hardware setup, script loading, and live operation. Script provided by client.',
+    },
+    {
+      name: 'On-Set Display / TV Monitor',
+      price: '$50',
+      period: 'per session',
+      description: 'HDMI display for visual reference during recording.',
+    },
+    {
+      name: 'Live Streaming',
+      price: '$75',
+      period: '/ hour',
+      description: 'Live broadcast setup, testing, and monitoring. Program feed only.',
     },
   ];
 
@@ -170,6 +195,11 @@ export default function Pricing() {
                     </li>
                   ))}
                 </ul>
+                {(plan as any).note && (
+                  <p className="text-[10px] text-gray-500 mb-6 italic leading-relaxed">
+                    Note: {(plan as any).note}
+                  </p>
+                )}
                 {plan.bestFor && (
                   <div className="mb-6 pt-4 border-t border-amber-500/10">
                     <p className="text-xs text-gray-400 uppercase tracking-widest font-bold mb-1">Best for:</p>
@@ -190,6 +220,93 @@ export default function Pricing() {
               </div>
             ))}
           </div>
+
+          {/* Comparison Table */}
+          <div className="mt-32 mb-24">
+            <div className="text-center mb-16">
+              <h2 className="text-amber-500 font-bold tracking-[0.2em] uppercase mb-4">Comparison</h2>
+              <h3 className="text-4xl md:text-5xl font-black text-white uppercase mb-8">Detailed Feature Breakdown</h3>
+              <p className="text-gray-400 max-w-2xl mx-auto">Compare our plans side-by-side to find the perfect production package for your content needs.</p>
+            </div>
+
+            <div className="overflow-x-auto pb-8">
+              <div className="min-w-[900px] border border-amber-500/10 rounded-3xl overflow-hidden bg-zinc-900/30 backdrop-blur-md">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="border-b border-amber-500/10">
+                      <th className="p-8 text-xs font-bold text-gray-400 uppercase tracking-widest bg-black/50 w-1/4">Feature Specs</th>
+                      {pricingPlans.map((plan, i) => (
+                        <th key={i} className="p-8 text-center bg-black/50">
+                          <div className="text-amber-500 font-bold text-xs mb-2 uppercase tracking-widest">{plan.name}</div>
+                          <div className="text-white font-black text-3xl mb-1">{plan.price}</div>
+                          <div className="text-gray-500 text-[10px] uppercase tracking-[0.2em]">{plan.period}</div>
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {comparisonFeatures.map((feature, i) => (
+                      <tr
+                        key={i}
+                        className={`group hover:bg-white/[0.02] transition-colors ${i !== comparisonFeatures.length - 1 ? 'border-b border-white/5' : ''
+                          }`}
+                      >
+                        <td className="p-6 pl-8 text-gray-400 font-medium group-hover:text-white transition-colors text-sm">
+                          {feature.name}
+                        </td>
+                        {[feature.audio, feature.video, feature.general].map((included, j) => (
+                          <td key={j} className="p-6 text-center border-l border-white/5">
+                            <div className="flex justify-center">
+                              {included === true ? (
+                                <div className="p-1.5 bg-amber-500/10 rounded-full group-hover:bg-amber-500/20 transition-all">
+                                  <Check className="h-4 w-4 text-amber-500" />
+                                </div>
+                              ) : included === false ? (
+                                <div className="p-1.5 bg-white/5 rounded-full opacity-20">
+                                  <Minus className="h-4 w-4 text-gray-600" />
+                                </div>
+                              ) : (
+                                <span className="text-[10px] font-black uppercase tracking-widest py-1.5 px-4 bg-white/5 text-gray-300 rounded-lg group-hover:bg-amber-500 group-hover:text-black transition-all border border-white/5">
+                                  {included}
+                                </span>
+                              )}
+                            </div>
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                  <tfoot>
+                    <tr className="border-t border-amber-500/10">
+                      <td className="p-8 bg-black/50"></td>
+                      {pricingPlans.map((plan, i) => (
+                        <td key={i} className="p-8 text-center bg-black/50 border-l border-white/5">
+                          <a
+                            href={(plan as any).bookingUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`inline-block w-full py-4 text-[10px] font-black uppercase tracking-[0.2em] rounded-xl transition-all shadow-lg ${plan.popular
+                                ? 'bg-amber-500 text-black hover:bg-amber-400 shadow-amber-500/20'
+                                : 'bg-white/10 text-white hover:bg-white hover:text-black border border-white/10'
+                              }`}
+                          >
+                            Get Started
+                          </a>
+                        </td>
+                      ))}
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+
+            <div className="mt-8 flex items-center justify-center gap-2 text-gray-500 text-xs italic">
+              <Sparkles className="h-3 w-3 text-amber-500/50" />
+              <span>All sessions include a dedicated sound engineer to handle the technical side.</span>
+            </div>
+          </div>
+
+          <div className="border-t border-amber-500/20"></div>
 
           {/* Add-ons */}
           <div className="border-t border-amber-500/20 pt-20">
@@ -212,17 +329,6 @@ export default function Pricing() {
                     {addon.period && <span className="text-sm text-gray-400">{addon.period}</span>}
                   </div>
                   <p className="text-sm text-gray-300 mb-4 flex-grow">{addon.description}</p>
-
-                  {addon.features && (
-                    <ul className="space-y-2 mt-4 pt-4 border-t border-amber-500/10">
-                      {addon.features.map((feature, i) => (
-                        <li key={i} className="flex items-start text-xs text-gray-400">
-                          <Check className="h-3 w-3 text-amber-500 mr-2 shrink-0 mt-0.5" />
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
                   <a
                     href={(addOnUrls as any)[addon.name] || '#'}
                     target="_blank"
@@ -251,20 +357,36 @@ export default function Pricing() {
                 a: 'We accept all major credit and debit cards through our secure Square checkout system. Payment is required to confirm your booking.',
               },
               {
-                q: 'Can I cancel or reschedule my session?',
-                a: 'Yes. You may reschedule up to 24 hours before your session at no additional charge. Cancellations made within 24 hours of the booking time may be subject to a fee.',
+                q: 'Is there a minimum booking time?',
+                a: 'Some services and studio setups may require a minimum booking duration. This will be shown during booking.',
               },
               {
-                q: 'Do you offer discounts for extended or repeat bookings?',
-                a: 'Yes. If you require multiple hours, recurring sessions, or long-form production, please contact us to discuss custom pricing options.',
+                q: 'What files will I receive?',
+                a: 'Audio-Only sessions include WAV and MP3 files. Audio + Video and General Content sessions include a live-cut video and program audio.',
+              },
+              {
+                q: 'How quickly will I receive my files?',
+                a: 'Non-edited files are delivered within 24 hours. Edited content is typically delivered within 72 hours.',
+              },
+              {
+                q: 'Are ISO files included?',
+                a: 'No. ISO files are optional add-ons and must be requested in advance.',
+              },
+              {
+                q: 'Do you offer live streaming?',
+                a: 'Yes. Live streaming is available as an add-on.',
               },
               {
                 q: 'What happens if my session runs longer than scheduled?',
-                a: 'Additional time is billed at the standard hourly rate, calculated in 15-minute increments, subject to studio availability.',
+                a: 'Additional time is billed in 15-minute increments at the standard hourly rate, subject to availability.',
               },
               {
-                q: 'Is there a minimum booking time?',
-                a: 'Some services and studio setups may require a minimum booking duration, which will be shown during scheduling or confirmed before your session.',
+                q: 'Can I cancel or reschedule?',
+                a: 'You may reschedule up to 24 hours before your session at no charge. Cancellations within 24 hours may be subject to a fee.',
+              },
+              {
+                q: 'Do you store files long-term?',
+                a: 'Files are available for download for a limited time. Clients are responsible for backing up their files.',
               },
             ].map((faq, index) => (
               <div

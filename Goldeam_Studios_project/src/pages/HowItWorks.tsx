@@ -1,4 +1,5 @@
-import { Calendar, Headphones, Video, Download, CheckCircle2 } from 'lucide-react';
+import { Calendar, Headphones, Video, Download, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function HowItWorks() {
   const steps = [
@@ -23,7 +24,7 @@ export default function HowItWorks() {
       details: [
         'Content planning guide',
         'Technical requirements',
-        'Guest coordination',
+        <Link to="/location-parking" className="text-amber-500 hover:underline">Location & Parking details</Link>,
       ],
     },
     {
@@ -80,9 +81,8 @@ export default function HowItWorks() {
             {steps.map((step, index) => (
               <div
                 key={index}
-                className={`flex flex-col ${
-                  index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
-                } gap-12 items-center`}
+                className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
+                  } gap-12 items-center`}
               >
                 {/* Content */}
                 <div className="flex-1 space-y-6">
@@ -131,12 +131,21 @@ export default function HowItWorks() {
           <p className="text-xl text-gray-300 mb-8">
             Book your first session today and experience professional podcast production.
           </p>
-          <a
-            href="/book"
-            className="inline-flex items-center gap-3 bg-gradient-to-r from-amber-500 to-amber-600 text-black px-8 py-4 text-lg font-bold uppercase tracking-wider hover:from-amber-400 hover:to-amber-500 transition-all transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-amber-500/50 rounded-lg"
-          >
-            Book Now
-          </a>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <a
+              href="/book"
+              className="inline-flex items-center gap-3 bg-gradient-to-r from-amber-500 to-amber-600 text-black px-8 py-4 text-lg font-bold uppercase tracking-wider hover:from-amber-400 hover:to-amber-500 transition-all transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-amber-500/50 rounded-lg"
+            >
+              Book Now
+            </a>
+            <Link
+              to="/location-parking"
+              className="inline-flex items-center gap-3 border-2 border-amber-500/30 hover:border-amber-500 text-white px-8 py-4 text-lg font-bold uppercase tracking-wider transition-all backdrop-blur-sm hover:bg-amber-500/10 rounded-lg"
+            >
+              Location & Parking
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+          </div>
         </div>
       </section>
     </div>

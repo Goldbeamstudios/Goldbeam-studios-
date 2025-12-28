@@ -1,4 +1,4 @@
-import { ArrowRight, Play, Mic2, Video, Cast, Sliders, Coffee, Wifi, Check } from 'lucide-react';
+import { ArrowRight, Play, Mic2, Video, Cast, Sliders, Coffee, Wifi, Check, MapPin } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import bg from '../assets/banner_three.jpeg';
 import gallery1 from '../assets/banner_four.jpeg';
@@ -77,18 +77,17 @@ export default function Home() {
   const pricingPlans = [
     {
       name: 'Audio Only',
-      price: '$125',
+      price: '$170',
       period: '/ hour',
-      description: '',
+      description: 'Perfect for audio-focused podcasts, interviews, and voiceovers.',
       features: [
-        'Up to 4 professional microphones',
-        'Dedicated sound engineer',
-        'Acoustically treated studio',
+        'Dedicated audio-only studio (up to 2 people)',
+        'Professional sound engineer',
+        'Acoustically treated room',
         'Raw WAV & MP3 files',
-        'Instant file transfer',
-        'High-speed internet for remote guests',
+        'File delivery within 24 hours',
       ],
-      bestFor: 'Audio podcasts, interviews, voiceovers',
+      bestFor: 'Audio podcasts, interviews, voice recording',
       popular: false,
       bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/KIZZB5V36MBOXNNU2QH4Y6JR'
     },
@@ -96,15 +95,15 @@ export default function Home() {
       name: 'Audio + Video',
       price: '$300',
       period: '/ hour',
-      description: '',
+      description: 'A cinematic podcast experience designed for creators who want a professional visual presence.',
       features: [
-        'Includes everything in Audio Only, plus:',
         'Multi-camera 4K video setup',
         'Live multi-angle switching',
         'Professional studio lighting',
-        'Custom set & color configuration',
-        'Raw video + audio files included',
-        'Ideal for YouTube, social clips, and livestreams',
+        'On-site camera operator / technician',
+        'Custom set and color configuration',
+        'Live-cut program video + program audio',
+        'File delivery within 24 hours',
       ],
       bestFor: 'Video podcasts, YouTube shows, branded content',
       popular: true,
@@ -112,19 +111,17 @@ export default function Home() {
     },
     {
       name: 'General Content',
-      price: '$200',
+      price: '$250',
       period: '/ hour',
-      description: 'Designed for content beyond podcasts.',
+      description: 'Designed for content beyond podcasts, including educational videos, interviews, product demos, and brand content.',
       features: [
-        'Complete studio access with flexible set configurations',
-        'Professional production gear (4K Sony cameras, studio lighting, broadcast-quality audio)',
-        'On-site camera operator / studio technician',
-        'Custom lighting and camera setup',
-        'Delivery of raw video and audio files',
-        'High-speed fiber internet',
-        'Post-production services available upon request',
+        'Full studio access',
+        'Professional camera operator / studio technician',
+        'Studio lighting and camera setup',
+        'Live-cut program video + program audio',
+        'File delivery within 24 hours',
       ],
-      bestFor: 'Creators, educators, businesses, marketing teams, agencies, and brands producing polished visual content.',
+      bestFor: 'Creators, educators, businesses, agencies, and brands',
       popular: false,
       bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/PGCDYBESUFP7SQBIAKF7WFSJ'
     },
@@ -221,7 +218,7 @@ export default function Home() {
               <div
                 key={index}
                 className="animate-on-scroll opacity-0 bg-zinc-900/50 backdrop-blur-sm border border-amber-500/10 p-8 hover:border-amber-500/50 transition-all duration-500 group hover:transform hover:-translate-y-3 hover:shadow-2xl hover:shadow-amber-500/20 rounded-lg relative overflow-hidden"
-                style={{ animationDelay: `${index * 100}ms` }}
+                style={{ animationDelay: `${index * 100} ms` }}
               >
                 {/* Shine effect on hover */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-500/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></div>
@@ -258,11 +255,11 @@ export default function Home() {
             <div
               key={index}
               className="group relative h-64 md:h-80 overflow-hidden animate-on-scroll opacity-0 bg-black"
-              style={{ animationDelay: `${index * 150}ms` }}
+              style={{ animationDelay: `${index * 150} ms` }}
             >
               <img
                 src={src}
-                alt={`Studio Shot ${index + 1}`}
+                alt={`Studio Shot ${index + 1} `}
                 className="w-full h-full object-cover object-center transition-all duration-700 group-hover:scale-125 group-hover:rotate-2 brightness-75 group-hover:brightness-100"
                 loading="lazy"
                 decoding="async"
@@ -313,58 +310,64 @@ export default function Home() {
             {pricingPlans.map((plan, index) => (
               <div
                 key={index}
-                className={`relative p-8 flex flex-col h-full rounded-lg transition-all duration-500 hover:transform hover:-translate-y-3 group ${plan.popular
-                  ? 'border-2 border-amber-500 bg-zinc-900/80 backdrop-blur-sm shadow-2xl shadow-amber-500/30 scale-105'
-                  : 'border border-amber-500/20 bg-black/50 backdrop-blur-sm hover:border-amber-500/50 hover:shadow-xl hover:shadow-amber-500/20'
-                  }`}
+                className={`relative p-8 flex flex-col h-full rounded-2xl transition-all duration-500 hover:transform hover:-translate-y-3 group ${plan.popular
+                  ? 'border-2 border-amber-500 bg-zinc-900/80 backdrop-blur-md shadow-[0_20px_50px_rgba(245,158,11,0.2)] scale-105 z-10'
+                  : 'border border-amber-500/10 bg-zinc-900/30 backdrop-blur-sm hover:border-amber-500/40 hover:shadow-2xl hover:shadow-amber-500/10'
+                  } `}
               >
                 {/* Animated background gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
 
                 {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-amber-500 to-amber-600 text-black text-xs font-bold px-4 py-1 uppercase tracking-wider rounded-full animate-pulse-glow shadow-lg shadow-amber-500/50">
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-amber-500 to-amber-600 text-black text-[10px] font-bold px-6 py-1.5 uppercase tracking-[0.2em] rounded-full shadow-lg shadow-amber-500/50 z-20">
                     Most Popular
                   </div>
                 )}
 
-                <div className="relative z-10">
-                  <h3 className="text-xl font-bold text-gray-400 uppercase tracking-widest mb-4 group-hover:text-amber-500 transition-colors">
+                <div className="relative z-10 flex flex-col h-full">
+                  <h3 className="text-sm font-bold text-amber-500/80 uppercase tracking-[0.2em] mb-4 group-hover:text-amber-500 transition-colors">
                     {plan.name}
                   </h3>
-                  <div className="flex items-baseline mb-8">
-                    <span className="text-5xl font-black text-white group-hover:text-amber-400 transition-colors">
+                  <div className="flex items-baseline mb-6">
+                    <span className="text-5xl font-black text-white group-hover:scale-110 transition-transform origin-left">
                       {plan.price}
                     </span>
-                    <span className="text-gray-400 ml-2">{plan.period}</span>
+                    <span className="text-gray-500 ml-2 font-medium">{plan.period}</span>
                   </div>
+
                   {plan.description && (
-                    <p className="text-gray-400 text-sm mb-6 -mt-4 italic">{plan.description}</p>
+                    <p className="text-gray-400 text-sm mb-6 leading-relaxed italic">{plan.description}</p>
                   )}
-                  <ul className="space-y-4 mb-4 flex-1">
+
+                  <ul className="space-y-4 mb-8 flex-1">
                     {plan.features.map((feature, fIndex) => (
-                      <li key={fIndex} className="flex items-start text-gray-300 group-hover:text-white transition-colors">
-                        <Check className="h-5 w-5 text-amber-500 mr-3 shrink-0 mt-0.5 group-hover:scale-125 transition-transform" />
-                        <span className="text-sm">{feature}</span>
+                      <li key={fIndex} className="flex items-start text-gray-400 group-hover:text-gray-200 transition-colors">
+                        <div className="p-1 bg-amber-500/10 rounded-full mr-3 mt-0.5 group-hover:bg-amber-500/20 transition-colors">
+                          <Check className="h-3 w-3 text-amber-500" />
+                        </div>
+                        <span className="text-sm leading-tight">{feature}</span>
                       </li>
                     ))}
                   </ul>
+
                   {plan.bestFor && (
-                    <div className="mb-6 pt-4 border-t border-amber-500/10">
-                      <p className="text-xs text-gray-400 uppercase tracking-widest font-bold mb-1">Best for:</p>
-                      <p className="text-sm text-gray-300 leading-snug">{plan.bestFor}</p>
+                    <div className="mb-8 p-4 bg-white/5 rounded-xl border border-white/5">
+                      <p className="text-[10px] text-amber-500/60 uppercase tracking-widest font-black mb-2">Perfect For</p>
+                      <p className="text-xs text-gray-300 leading-relaxed font-medium">{plan.bestFor}</p>
                     </div>
                   )}
+
                   <a
                     href={(plan as any).bookingUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`relative overflow-hidden w-full py-4 text-center text-sm font-bold uppercase tracking-widest transition-all duration-300 rounded-lg group/button block ${plan.popular
-                      ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-black hover:from-amber-400 hover:to-amber-500 shadow-lg shadow-amber-500/30 hover:shadow-2xl hover:shadow-amber-500/50'
-                      : 'bg-white text-black hover:bg-amber-400'
-                      }`}
+                    className={`relative overflow-hidden w-full py-4 text-center text-xs font-black uppercase tracking-[0.2em] transition-all duration-300 rounded-xl group/btn block ${plan.popular
+                      ? 'bg-amber-500 text-black hover:bg-amber-400 shadow-lg shadow-amber-500/20'
+                      : 'bg-white/10 text-white hover:bg-white hover:text-black border border-white/10'
+                      } `}
                   >
-                    <span className="relative z-10">Select Plan</span>
-                    <span className="absolute inset-0 bg-gradient-to-r from-amber-400 to-amber-500 opacity-0 group-hover/button:opacity-100 transition-opacity"></span>
+                    <span className="relative z-10">Secure Your Slot</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-amber-600 opacity-0 group-hover/btn:opacity-100 transition-opacity"></div>
                   </a>
                 </div>
               </div>
@@ -394,6 +397,53 @@ export default function Home() {
                 {brand}
               </span>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Location Section */}
+      <section className="py-32 bg-black relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,rgba(245,158,11,0.05),transparent_50%)]"></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-20 animate-on-scroll opacity-0">
+            <div className="inline-flex items-center gap-3 mb-6 px-4 py-2 rounded-full border border-amber-500/20 bg-amber-500/5">
+              <MapPin className="h-3 w-3 text-amber-500" />
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-500">Find Your Way</span>
+            </div>
+            <h3 className="text-5xl md:text-7xl font-black text-white uppercase mb-8 leading-[0.9] tracking-tighter">
+              Located steps from <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600">
+                Woodbine Station
+              </span>
+            </h3>
+            <p className="text-xl text-gray-500 font-medium uppercase tracking-[0.2em]">
+              Danforth Ave, Toronto, ON
+            </p>
+          </div>
+
+          <div className="animate-on-scroll opacity-0 delay-200 w-full max-w-6xl mx-auto group">
+            <div className="relative p-2 bg-zinc-900 border border-white/5 rounded-[3rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.5)]">
+              <div className="relative h-[550px] rounded-[2.5rem] overflow-hidden">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2885.667503461284!2d-79.3090!3d43.6860!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4cc7766099dc3%3A0x63806a644171221b!2sWoodbine!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, filter: 'grayscale(1) invert(0.9) contrast(1.2)' }}
+                  allowFullScreen={true}
+                  loading="lazy"
+                  className="relative z-0 transition-transform duration-1000 group-hover:scale-105"
+                ></iframe>
+              </div>
+
+              {/* Decorative elements */}
+              <div className="absolute top-10 left-10 p-5 bg-black/80 backdrop-blur-xl border border-white/10 rounded-2xl z-20">
+                <div className="flex items-center gap-3">
+                  <div className="w-2.5 h-2.5 bg-amber-500 rounded-full animate-pulse"></div>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-white">Visit Our Studio</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Sparkles, Users, Wifi, Coffee, Mic2, Video, Check, ArrowRight } from 'lucide-react';
+import { Sparkles, Users, Wifi, Coffee, Mic2, Video, Check, ArrowRight, ChevronLeft, ChevronRight, X, Maximize2 } from 'lucide-react';
 
 // Import images
 import studioOne from '../assets/images/studio/studo_one.jpeg';
@@ -10,6 +10,17 @@ import studioFive from '../assets/images/studio/studio_siven.jpg';
 
 export default function Studios() {
   const [activeTheme, setActiveTheme] = useState(0);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+
+  const nextSlide = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setActiveTheme((prev) => (prev + 1) % studioA.themes.length);
+  };
+
+  const prevSlide = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setActiveTheme((prev) => (prev - 1 + studioA.themes.length) % studioA.themes.length);
+  };
 
   useEffect(() => {
     const observerOptions = {
@@ -159,24 +170,76 @@ export default function Studios() {
           {/* Studio A */}
           <section className="animate-on-scroll opacity-0">
             <div className="flex flex-col lg:flex-row gap-16 items-center">
-              {/* Image Side */}
+              {/* Image Side - Carousel */}
               <div className="flex-1 w-full order-1">
-                <div className="relative group rounded-3xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-amber-500/20">
-                  <img
-                    src={studioA.themes[activeTheme].image}
-                    alt={studioA.name}
-                    className="w-full h-[400px] md:h-[550px] object-cover transition-all duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                <div className="relative group rounded-3xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-amber-500/20 aspect-[4/3] md:aspect-[3/2] lg:aspect-square xl:aspect-[4/3]">
+                  {/* Sliding Container */}
+                  <div
+                    className="flex h-full transition-transform duration-700 ease-out cursor-zoom-in"
+                    style={{ transform: `translateX(-${activeTheme * 100}%)` }}
+                    onClick={() => setIsLightboxOpen(true)}
+                  >
+                    {studioA.themes.map((theme, idx) => (
+                      <div key={idx} className="min-w-full h-full relative">
+                        <img
+                          src={theme.image}
+                          alt={`${studioA.name} - ${theme.name}`}
+                          className="w-full h-full object-cover"
+                        />
+                        {/* Hover Overlay */}
+                        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                          <div className="bg-black/40 backdrop-blur-md p-4 rounded-full border border-white/20">
+                            <Maximize2 className="h-6 w-6 text-white" />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
+
+                  {/* Navigation Arrows */}
+                  <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 flex justify-between items-center z-20 pointer-events-none">
+                    <button
+                      onClick={prevSlide}
+                      className="p-3 rounded-full bg-black/40 backdrop-blur-md border border-amber-500/30 text-white hover:bg-amber-500 hover:text-black transition-all duration-300 pointer-events-auto shadow-xl group/btn"
+                      aria-label="Previous theme"
+                    >
+                      <ChevronLeft className="h-6 w-6 transition-transform group-hover/btn:-translate-x-1" />
+                    </button>
+                    <button
+                      onClick={nextSlide}
+                      className="p-3 rounded-full bg-black/40 backdrop-blur-md border border-amber-500/30 text-white hover:bg-amber-500 hover:text-black transition-all duration-300 pointer-events-auto shadow-xl group/btn"
+                      aria-label="Next theme"
+                    >
+                      <ChevronRight className="h-6 w-6 transition-transform group-hover/btn:translate-x-1" />
+                    </button>
+                  </div>
 
                   {/* Theme Badge */}
-                  <div className="absolute top-6 left-6">
+                  <div className="absolute top-6 left-6 z-20">
                     <div className="bg-black/60 backdrop-blur-md border border-amber-500/30 px-6 py-2 rounded-full flex items-center gap-2">
                       <Sparkles className="h-4 w-4 text-amber-500" />
                       <span className="text-xs font-bold uppercase tracking-[0.2em] text-white">
                         {studioA.themes[activeTheme].name} Theme
                       </span>
                     </div>
+                  </div>
+
+                  {/* Indicators */}
+                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+                    {studioA.themes.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActiveTheme(idx);
+                        }}
+                        className={`h-1.5 transition-all duration-300 rounded-full ${activeTheme === idx ? 'w-8 bg-amber-500' : 'w-2 bg-white/30 hover:bg-white/50'}`}
+                        aria-label={`Go to slide ${idx + 1}`}
+                      />
+                    ))}
                   </div>
                 </div>
               </div>
@@ -424,6 +487,74 @@ export default function Studios() {
           </div>
         </div>
       </section>
+      {/* Lightbox Modal */}
+      {isLightboxOpen && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-xl animate-fade-in"
+          onClick={() => setIsLightboxOpen(false)}
+        >
+          {/* Close Button */}
+          <button
+            className="absolute top-8 right-8 p-4 text-white/70 hover:text-white transition-colors z-[110]"
+            onClick={() => setIsLightboxOpen(false)}
+          >
+            <X size={40} strokeWidth={1.5} />
+          </button>
+
+          {/* Navigation Arrows */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-8 p-6 rounded-full bg-white/5 hover:bg-white/10 text-white transition-all z-[110] border border-white/10 hidden md:block"
+          >
+            <ChevronLeft size={32} />
+          </button>
+
+          <button
+            onClick={nextSlide}
+            className="absolute right-8 p-6 rounded-full bg-white/5 hover:bg-white/10 text-white transition-all z-[110] border border-white/10 hidden md:block"
+          >
+            <ChevronRight size={32} />
+          </button>
+
+          {/* Image Container */}
+          <div
+            className="relative max-w-7xl max-h-[85vh] mx-auto px-4 flex flex-col items-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={studioA.themes[activeTheme].image}
+              alt={studioA.themes[activeTheme].name}
+              className="w-full h-full object-contain rounded-xl shadow-2xl animate-fade-in-up"
+            />
+
+            {/* Info Overlay */}
+            <div className="mt-8 text-center space-y-2">
+              <h3 className="text-2xl font-black uppercase text-amber-500 tracking-wider">
+                {studioA.name} - {studioA.themes[activeTheme].name}
+              </h3>
+              <p className="text-gray-400 font-medium">
+                {studioA.themes[activeTheme].capacity}
+              </p>
+            </div>
+
+            {/* Mobile Navigation */}
+            <div className="flex gap-4 mt-8 md:hidden">
+              <button
+                onClick={prevSlide}
+                className="p-4 rounded-full bg-white/5 border border-white/10 text-white"
+              >
+                <ChevronLeft size={24} />
+              </button>
+              <button
+                onClick={nextSlide}
+                className="p-4 rounded-full bg-white/5 border border-white/10 text-white"
+              >
+                <ChevronRight size={24} />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

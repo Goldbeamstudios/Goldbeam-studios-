@@ -41,12 +41,13 @@ export default function Navbar() {
 
   const navLinks = [
     { name: 'Home', path: '/' },
+    { name: 'How It Works', path: '/how-it-works' },
     { name: 'Pricing', path: '/pricing' },
     { name: 'Studios', path: '/studios' },
   ];
 
   const moreLinks = [
-    { name: 'How It Works', path: '/how-it-works', description: 'Our process from booking to delivery' },
+    { name: 'Location & Parking', path: '/location-parking', description: 'Directions, parking, and transit access' },
     { name: 'About Us', path: '/build', description: 'Learn about our services' },
     { name: 'Contact', path: '/contact', description: 'Get in touch with us' },
     { name: 'FAQs', path: '/faqs', description: 'Frequently asked questions' },
@@ -99,7 +100,7 @@ export default function Navbar() {
             <div className="relative" ref={moreDropdownRef}>
               <button
                 onClick={() => setMoreDropdownOpen(!moreDropdownOpen)}
-                className={`flex items-center gap-1 text-sm font-medium tracking-wider uppercase transition-all duration-300 hover:text-amber-500 ${['/how-it-works', '/build', '/contact', '/faqs'].includes(location.pathname)
+                className={`flex items-center gap-1 text-sm font-medium tracking-wider uppercase transition-all duration-300 hover:text-amber-500 ${['/location-parking', '/build', '/contact', '/faqs'].includes(location.pathname)
                   ? 'text-amber-500'
                   : 'text-gray-300'
                   }`}
@@ -109,19 +110,24 @@ export default function Navbar() {
               </button>
 
               {moreDropdownOpen && (
-                <div className="absolute top-full right-0 mt-2 w-64 bg-black border border-amber-500/20 rounded-xl shadow-2xl overflow-hidden z-50">
-                  {moreLinks.map((link) => (
-                    <Link
-                      key={link.path}
-                      to={link.path}
-                      onClick={() => setMoreDropdownOpen(false)}
-                      className={`block px-6 py-4 hover:bg-amber-500/10 transition-colors border-b border-amber-500/10 last:border-0 ${location.pathname === link.path ? 'bg-amber-500/10' : ''
-                        }`}
-                    >
-                      <div className="text-white font-bold text-sm uppercase">{link.name}</div>
-                      <div className="text-gray-400 text-xs mt-1">{link.description}</div>
-                    </Link>
-                  ))}
+                <div className="absolute top-full right-0 mt-4 w-72 bg-black/80 backdrop-blur-2xl border border-amber-500/20 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-300">
+                  <div className="p-2 space-y-1">
+                    {moreLinks.map((link) => (
+                      <Link
+                        key={link.path}
+                        to={link.path}
+                        onClick={() => setMoreDropdownOpen(false)}
+                        className={`group block px-4 py-3 rounded-xl transition-all duration-300 ${location.pathname === link.path ? 'bg-amber-500/10' : 'hover:bg-white/5'
+                          }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className={`font-bold text-xs uppercase tracking-widest transition-colors ${location.pathname === link.path ? 'text-amber-500' : 'text-white group-hover:text-amber-500'}`}>{link.name}</div>
+                          <div className="h-px w-0 bg-amber-500 group-hover:w-8 transition-all duration-500"></div>
+                        </div>
+                        <div className="text-gray-400 text-[10px] mt-1 group-hover:text-gray-300 transition-colors uppercase tracking-tight">{link.description}</div>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
@@ -140,19 +146,24 @@ export default function Navbar() {
               </button>
 
               {resourcesDropdownOpen && (
-                <div className="absolute top-full right-0 mt-2 w-64 bg-black border border-amber-500/20 rounded-xl shadow-2xl overflow-hidden z-50">
-                  {resourcesLinks.map((link) => (
-                    <Link
-                      key={link.path}
-                      to={link.path}
-                      onClick={() => setResourcesDropdownOpen(false)}
-                      className={`block px-6 py-4 hover:bg-amber-500/10 transition-colors border-b border-amber-500/10 last:border-0 ${location.pathname === link.path ? 'bg-amber-500/10' : ''
-                        }`}
-                    >
-                      <div className="text-white font-bold text-sm uppercase">{link.name}</div>
-                      <div className="text-gray-400 text-xs mt-1">{link.description}</div>
-                    </Link>
-                  ))}
+                <div className="absolute top-full right-0 mt-4 w-72 bg-black/80 backdrop-blur-2xl border border-amber-500/20 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-300">
+                  <div className="p-2 space-y-1">
+                    {resourcesLinks.map((link) => (
+                      <Link
+                        key={link.path}
+                        to={link.path}
+                        onClick={() => setResourcesDropdownOpen(false)}
+                        className={`group block px-4 py-3 rounded-xl transition-all duration-300 ${location.pathname === link.path ? 'bg-amber-500/10' : 'hover:bg-white/5'
+                          }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className={`font-bold text-xs uppercase tracking-widest transition-colors ${location.pathname === link.path ? 'text-amber-500' : 'text-white group-hover:text-amber-500'}`}>{link.name}</div>
+                          <div className="h-px w-0 bg-amber-500 group-hover:w-8 transition-all duration-500"></div>
+                        </div>
+                        <div className="text-gray-400 text-[10px] mt-1 group-hover:text-gray-300 transition-colors uppercase tracking-tight">{link.description}</div>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
@@ -194,8 +205,8 @@ export default function Navbar() {
               to={link.path}
               onClick={() => setIsMobileMenuOpen(false)}
               className={`block text-base font-medium uppercase tracking-wide transition-colors py-4 ${location.pathname === link.path
-                  ? 'text-amber-500'
-                  : 'text-gray-300 hover:text-white'
+                ? 'text-amber-500'
+                : 'text-gray-300 hover:text-white'
                 }`}
             >
               {link.name}
@@ -227,8 +238,8 @@ export default function Navbar() {
                     className="block group"
                   >
                     <div className={`text-sm font-medium uppercase tracking-wide transition-colors py-2 ${location.pathname === link.path
-                        ? 'text-amber-500'
-                        : 'text-gray-300 group-hover:text-white'
+                      ? 'text-amber-500'
+                      : 'text-gray-300 group-hover:text-white'
                       }`}>
                       {link.name}
                     </div>
@@ -266,8 +277,8 @@ export default function Navbar() {
                     className="block group"
                   >
                     <div className={`text-sm font-medium uppercase tracking-wide transition-colors py-2 ${location.pathname === link.path
-                        ? 'text-amber-500'
-                        : 'text-gray-300 group-hover:text-white'
+                      ? 'text-amber-500'
+                      : 'text-gray-300 group-hover:text-white'
                       }`}>
                       {link.name}
                     </div>
