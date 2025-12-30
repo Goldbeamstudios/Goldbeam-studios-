@@ -51,14 +51,10 @@ export default function Dashboard() {
     const handleDeletePost = async (id: string, title: string) => {
         if (!window.confirm(`Are you sure you want to delete "${title}"? This action cannot be undone.`)) return;
 
-        if (!window.confirm(`Are you sure you want to delete "${title}"? This action cannot be undone.`)) return;
-
         try {
             const { error } = await supabase.from('posts').delete().eq('id', id);
             if (error) throw error;
             setPosts(posts.filter(post => post.id !== id));
-        } catch (error) {
-            console.error('Error deleting post:', error);
         } catch (error) {
             console.error('Error deleting post:', error);
         }
@@ -105,24 +101,13 @@ export default function Dashboard() {
                     <div className="flex bg-zinc-900 p-1 rounded-xl border border-zinc-800">
                         <button
                             onClick={() => setActiveTab('appointments')}
-                            className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'appointments' ? 'bg-amber-500 text-black' : 'text-zinc-500'}`}
+                            className="px-4 py-2 rounded-lg text-sm font-bold transition-all bg-amber-500 text-black"
                         >
                             Bookings
                         </button>
                         <button
                             onClick={() => setActiveTab('posts')}
-                        <button
-                            onClick={() => setActiveTab('appointments')}
-                            className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'appointments' ? 'bg-amber-500 text-black' : 'text-zinc-500'}`}
-                        >
-                            Bookings
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('posts')}
-                            className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'posts' ? 'bg-amber-500 text-black' : 'text-zinc-500'}`}
-                        >
-                            Blog
-                        </button>
+                            className="px-4 py-2 rounded-lg text-sm font-bold transition-all text-zinc-500"
                         >
                             Blog
                         </button>
@@ -221,6 +206,6 @@ export default function Dashboard() {
                     </div>
                 )}
             </div>
-        </div >
+        </div>
     );
 }
