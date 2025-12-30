@@ -1,4 +1,4 @@
-import { MapPin, Car, Train, Clock, Info, ExternalLink, ArrowRight, Navigation } from 'lucide-react';
+import { MapPin, Car, Train, Clock, Info, ExternalLink, Navigation } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 

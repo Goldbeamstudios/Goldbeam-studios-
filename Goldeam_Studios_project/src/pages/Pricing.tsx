@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Check, Sparkles, Minus, Plus, ShoppingCart } from 'lucide-react';
 
@@ -7,6 +7,7 @@ export default function Pricing() {
   const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
   const pricingPlans = [
     {
+      id: 'audio',
       name: 'Audio-Only Podcast',
       price: '$170',
       period: '/ hour',
@@ -24,6 +25,7 @@ export default function Pricing() {
       bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/KIZZB5V36MBOXNNU2QH4Y6JR'
     },
     {
+      id: 'audio_video',
       name: 'Audio + Video Podcast',
       price: '$300',
       period: '/ hour',
@@ -44,6 +46,7 @@ export default function Pricing() {
       bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/M6M42KEY7HWM6IYSAFEPU4K4'
     },
     {
+      id: 'general',
       name: 'General Content (Non-Podcast)',
       price: '$250',
       period: '/ hour',
@@ -136,11 +139,6 @@ export default function Pricing() {
     },
   ];
 
-  const addOnUrls = {
-    'Video Editing': 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/DRI7SB7EF5CFVOHRCU5PBHDX',
-    'Audio Mixing & Mastering': 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/ABWXB5PUDZCLMFWTWOQWT2G7',
-    'Social Media Clips': 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/MW5A3Q2LF3X5CKDPTPSUNPJD',
-  };
 
   const toggleAddOn = (name: string) => {
     setSelectedAddOns(prev =>

@@ -20,7 +20,6 @@ export default function Dashboard() {
     const [appointments, setAppointments] = useState<Appointment[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
-    const [deleteLoading, setDeleteLoading] = useState<string | null>(null);
     const [activeTab, setActiveTab] = useState<'posts' | 'appointments'>(
         (isPostsPage ? 'posts' : 'appointments') as 'posts' | 'appointments'
     );
@@ -52,15 +51,16 @@ export default function Dashboard() {
     const handleDeletePost = async (id: string, title: string) => {
         if (!window.confirm(`Are you sure you want to delete "${title}"? This action cannot be undone.`)) return;
 
-        setDeleteLoading(id);
+        if (!window.confirm(`Are you sure you want to delete "${title}"? This action cannot be undone.`)) return;
+
         try {
             const { error } = await supabase.from('posts').delete().eq('id', id);
             if (error) throw error;
             setPosts(posts.filter(post => post.id !== id));
         } catch (error) {
             console.error('Error deleting post:', error);
-        } finally {
-            setDeleteLoading(null);
+        } catch (error) {
+            console.error('Error deleting post:', error);
         }
     };
 
@@ -111,7 +111,18 @@ export default function Dashboard() {
                         </button>
                         <button
                             onClick={() => setActiveTab('posts')}
+                        <button
+                            onClick={() => setActiveTab('appointments')}
+                            className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'appointments' ? 'bg-amber-500 text-black' : 'text-zinc-500'}`}
+                        >
+                            Bookings
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('posts')}
                             className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'posts' ? 'bg-amber-500 text-black' : 'text-zinc-500'}`}
+                        >
+                            Blog
+                        </button>
                         >
                             Blog
                         </button>
@@ -210,6 +221,6 @@ export default function Dashboard() {
                     </div>
                 )}
             </div>
-        </div>
+        </div >
     );
 }

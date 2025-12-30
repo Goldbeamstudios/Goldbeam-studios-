@@ -6,7 +6,6 @@ import studioOne from '../assets/images/studio/studo_one.jpeg';
 import studioTwo from '../assets/images/studio/studo_two.jpg';
 import studioThree from '../assets/images/studio/stuido-three.jpeg';
 import studioFour from '../assets/images/studio/studio_four.jpg';
-import studioFive from '../assets/images/studio/studio_siven.jpg';
 
 export default function Studios() {
   const [activeTheme, setActiveTheme] = useState(0);
