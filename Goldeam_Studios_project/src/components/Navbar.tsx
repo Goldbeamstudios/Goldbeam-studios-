@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Menu, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../assets/images/GoldBeam_Logo_PNG_06.png';
+import ThemeToggle from './ThemeToggle';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -61,7 +62,7 @@ export default function Navbar() {
   return (
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ${isScrolled
-        ? 'bg-black/90 backdrop-blur-xl border-b border-amber-500/20'
+        ? 'bg-background/90 dark:bg-black/90 backdrop-blur-xl border-b border-amber-500/20'
         : 'bg-transparent'
         }`}
     >
@@ -89,7 +90,7 @@ export default function Navbar() {
                 to={link.path}
                 className={`text-sm font-medium tracking-wider uppercase transition-all duration-300 hover:text-amber-500 ${location.pathname === link.path
                   ? 'text-amber-500'
-                  : 'text-gray-300'
+                  : 'text-foreground/70 dark:text-gray-300'
                   }`}
               >
                 {link.name}
@@ -102,7 +103,7 @@ export default function Navbar() {
                 onClick={() => setMoreDropdownOpen(!moreDropdownOpen)}
                 className={`flex items-center gap-1 text-sm font-medium tracking-wider uppercase transition-all duration-300 hover:text-amber-500 ${['/location-parking', '/build', '/contact', '/faqs'].includes(location.pathname)
                   ? 'text-amber-500'
-                  : 'text-gray-300'
+                  : 'text-foreground/70 dark:text-gray-300'
                   }`}
               >
                 More
@@ -110,7 +111,7 @@ export default function Navbar() {
               </button>
 
               {moreDropdownOpen && (
-                <div className="absolute top-full right-0 mt-4 w-72 bg-black/80 backdrop-blur-2xl border border-amber-500/20 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-300">
+                <div className="absolute top-full right-0 mt-4 w-72 bg-white/95 dark:bg-black/80 backdrop-blur-2xl border border-amber-500/20 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-300">
                   <div className="p-2 space-y-1">
                     {moreLinks.map((link) => (
                       <Link
@@ -146,7 +147,7 @@ export default function Navbar() {
               </button>
 
               {resourcesDropdownOpen && (
-                <div className="absolute top-full right-0 mt-4 w-72 bg-black/80 backdrop-blur-2xl border border-amber-500/20 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-300">
+                <div className="absolute top-full right-0 mt-4 w-72 bg-white/95 dark:bg-black/80 backdrop-blur-2xl border border-amber-500/20 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-300">
                   <div className="p-2 space-y-1">
                     {resourcesLinks.map((link) => (
                       <Link
@@ -168,6 +169,8 @@ export default function Navbar() {
               )}
             </div>
 
+            <ThemeToggle />
+
             <Link
               to="/book"
               className="bg-gradient-to-r from-amber-500 to-amber-600 text-black hover:from-amber-400 hover:to-amber-500 
@@ -180,22 +183,25 @@ export default function Navbar() {
           </div>
 
           {/* Mobile menu button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden text-gray-300 hover:text-amber-500 focus:outline-none transition-colors"
-          >
-            {isMobileMenuOpen ? (
-              <X className="h-8 w-8" />
-            ) : (
-              <Menu className="h-8 w-8" />
-            )}
-          </button>
+          <div className="lg:hidden flex items-center gap-4">
+            <ThemeToggle />
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="text-foreground/70 dark:text-gray-300 hover:text-amber-500 focus:outline-none transition-colors"
+            >
+              {isMobileMenuOpen ? (
+                <X className="h-8 w-8" />
+              ) : (
+                <Menu className="h-8 w-8" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Mobile Menu */}
       <div
-        className={`lg:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-xl border-b border-amber-500/20 transition-all duration-300 overflow-hidden ${isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+        className={`lg:hidden absolute top-full left-0 w-full bg-background/95 dark:bg-black/95 backdrop-blur-xl border-b border-amber-500/20 transition-all duration-300 overflow-hidden ${isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
           }`}
       >
         <div className="px-6 py-4 space-y-0">
@@ -206,7 +212,7 @@ export default function Navbar() {
               onClick={() => setIsMobileMenuOpen(false)}
               className={`block text-base font-medium uppercase tracking-wide transition-colors py-4 ${location.pathname === link.path
                 ? 'text-amber-500'
-                : 'text-gray-300 hover:text-white'
+                : 'text-foreground/80 dark:text-gray-300 hover:text-amber-600 dark:hover:text-white'
                 }`}
             >
               {link.name}

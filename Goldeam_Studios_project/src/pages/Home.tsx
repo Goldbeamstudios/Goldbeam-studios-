@@ -128,7 +128,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="bg-black text-white">
+    <div className="bg-black text-white transition-colors duration-300">
       {/* Hero Section */}
       <section
         ref={heroRef}
@@ -143,7 +143,7 @@ export default function Home() {
             fetchPriority="high"
           />
 
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/20 to-transparent"></div>
 
           {/* Animated gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-amber-600/10 animate-pulse-slow"></div>
@@ -341,7 +341,7 @@ export default function Home() {
 
                   <ul className="space-y-4 mb-8 flex-1">
                     {plan.features.map((feature, fIndex) => (
-                      <li key={fIndex} className="flex items-start text-gray-400 group-hover:text-gray-200 transition-colors">
+                      <li key={fIndex} className="flex items-start text-gray-300 group-hover:text-white transition-colors">
                         <div className="p-1 bg-amber-500/10 rounded-full mr-3 mt-0.5 group-hover:bg-amber-500/20 transition-colors">
                           <Check className="h-3 w-3 text-amber-500" />
                         </div>
@@ -351,9 +351,9 @@ export default function Home() {
                   </ul>
 
                   {plan.bestFor && (
-                    <div className="mb-8 p-4 bg-white/5 rounded-xl border border-white/5">
+                    <div className="mb-8 p-4 bg-black/50 rounded-xl border border-amber-500/5">
                       <p className="text-[10px] text-amber-500/60 uppercase tracking-widest font-black mb-2">Perfect For</p>
-                      <p className="text-xs text-gray-300 leading-relaxed font-medium">{plan.bestFor}</p>
+                      <p className="text-xs text-gray-400 leading-relaxed font-medium">{plan.bestFor}</p>
                     </div>
                   )}
 
@@ -363,7 +363,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className={`relative overflow-hidden w-full py-4 text-center text-xs font-black uppercase tracking-[0.2em] transition-all duration-300 rounded-xl group/btn block ${plan.popular
                       ? 'bg-amber-500 text-black hover:bg-amber-400 shadow-lg shadow-amber-500/20'
-                      : 'bg-white/10 text-white hover:bg-white hover:text-black border border-white/10'
+                      : 'bg-white text-black hover:bg-amber-500 hover:text-black border border-amber-500/10'
                       } `}
                   >
                     <span className="relative z-10">Secure Your Slot</span>
@@ -377,11 +377,11 @@ export default function Home() {
       </section>
 
       {/* Trust Banner */}
-      <section className="py-20 border-y border-amber-500/20 relative overflow-hidden">
+      <section className="py-20 border-y border-amber-500/20 relative overflow-hidden bg-black">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-500/5 to-transparent animate-shimmer"></div>
 
         <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
-          <p className="text-gray-400 uppercase tracking-widest mb-8 animate-fade-in">
+          <p className="text-gray-500 uppercase tracking-widest mb-8 animate-fade-in">
             Trusted by Creators From
           </p>
           <div className="flex flex-wrap justify-center gap-12 md:gap-24 opacity-40 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-700">
@@ -423,16 +423,17 @@ export default function Home() {
           </div>
 
           <div className="animate-on-scroll opacity-0 delay-200 w-full max-w-6xl mx-auto group">
-            <div className="relative p-2 bg-zinc-900 border border-white/5 rounded-[3rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.5)]">
+            <div className="relative p-2 bg-zinc-900 border border-amber-500/10 rounded-[3rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.5)]">
               <div className="relative h-[550px] rounded-[2.5rem] overflow-hidden">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2885.667503461284!2d-79.3090!3d43.6860!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4cc7766099dc3%3A0x63806a644171221b!2sWoodbine!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca"
                   width="100%"
                   height="100%"
-                  style={{ border: 0, filter: 'grayscale(1) invert(0.9) contrast(1.2)' }}
-                  allowFullScreen={true}
-                  loading="lazy"
-                  className="relative z-0 transition-transform duration-1000 group-hover:scale-105"
+                  style={{
+                    border: 0,
+                    filter: 'contrast(1.2)'
+                  }}
+                  className="relative z-0 transition-transform duration-1000 group-hover:scale-105 grayscale-[1] invert-[0.9]"
                 ></iframe>
               </div>
 

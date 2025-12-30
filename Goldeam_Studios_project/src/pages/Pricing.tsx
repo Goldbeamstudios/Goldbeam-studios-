@@ -1,6 +1,10 @@
-import { Check, Sparkles, Minus } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Check, Sparkles, Minus, Plus, ShoppingCart } from 'lucide-react';
 
 export default function Pricing() {
+  const navigate = useNavigate();
+  const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
   const pricingPlans = [
     {
       name: 'Audio-Only Podcast',
@@ -60,21 +64,19 @@ export default function Pricing() {
   ];
 
   const comparisonFeatures = [
-    { name: 'Audio-Only Studio', audio: true, video: false, general: false },
+    { name: 'Book Studio A', audio: false, video: true, general: true },
+    { name: 'Book Studio B', audio: true, video: true, general: true },
     { name: 'Full Studio Access', audio: false, video: true, general: true },
-    { name: 'Sound Engineer', audio: true, video: true, general: true },
-    { name: 'Camera Operator / Tech', audio: false, video: true, general: true },
     { name: 'Acoustically Treated Room', audio: true, video: true, general: true },
     { name: 'Multi-Cam 4K Setup', audio: false, video: true, general: true },
-    { name: 'Live Multi-Angle Switching', audio: false, video: true, general: true },
+    { name: 'Live Multi-Angle Switching', audio: false, video: true, general: false },
     { name: 'Studio Lighting', audio: false, video: true, general: true },
-    { name: 'Custom Set Config', audio: false, video: true, general: true },
-    { name: 'Raw WAV & MP3 Files', audio: true, video: true, general: true },
+    { name: 'Custom Set Config', audio: false, video: false, general: true },
+    { name: 'Raw WAV & MP3 Files', audio: true, video: false, general: false },
     { name: 'Live-Cut Program Video', audio: false, video: true, general: true },
-    { name: 'Program Program Audio', audio: false, video: true, general: true },
+    { name: 'Program Audio', audio: true, video: true, general: true },
     { name: 'File Delivery (24 Hours)', audio: true, video: true, general: true },
-    { name: 'ISO Recording / Tracks', audio: 'Optional', video: 'Optional', general: 'Optional' },
-    { name: 'Post-Production / Editing', audio: 'Optional', video: 'Optional', general: 'Optional' },
+    { name: 'Producer', audio: false, video: true, general: true },
   ];
 
   const addOns = [
@@ -138,6 +140,23 @@ export default function Pricing() {
     'Video Editing': 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/DRI7SB7EF5CFVOHRCU5PBHDX',
     'Audio Mixing & Mastering': 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/ABWXB5PUDZCLMFWTWOQWT2G7',
     'Social Media Clips': 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/MW5A3Q2LF3X5CKDPTPSUNPJD',
+  };
+
+  const toggleAddOn = (name: string) => {
+    setSelectedAddOns(prev =>
+      prev.includes(name)
+        ? prev.filter(item => item !== name)
+        : [...prev, name]
+    );
+  };
+
+  const calculateTotal = (basePrice: string) => {
+    const base = parseInt(basePrice.replace('$', ''));
+    const addOnTotal = selectedAddOns.reduce((sum, name) => {
+      const addon = addOns.find(a => a.name === name);
+      return sum + (addon ? parseInt(addon.price.replace('$', '')) : 0);
+    }, 0);
+    return base + addOnTotal;
   };
 
   return (
@@ -206,20 +225,62 @@ export default function Pricing() {
                     <p className="text-sm text-gray-300 leading-snug">{plan.bestFor}</p>
                   </div>
                 )}
-                <a
-                  href={(plan as any).bookingUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <div className="flex items-baseline mb-8 pt-4 border-t border-white/5">
+                  <div className="flex flex-col">
+                    <span className="text-xs text-gray-500 uppercase font-bold mb-1">Estimated Total</span>
+                    <div className="flex items-baseline">
+                      <span className="text-5xl font-black text-amber-500">${calculateTotal(plan.price)}</span>
+                      <span className="text-gray-400 ml-2">{plan.period}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => navigate('/book-wizard', { state: { plan: plan.id } })}
                   className={`w-full py-4 text-center text-sm font-bold uppercase tracking-widest transition-all rounded-lg block ${plan.popular
                     ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-black hover:from-amber-400 hover:to-amber-500 shadow-lg shadow-amber-500/30'
                     : 'bg-white text-black hover:bg-gray-200'
                     }`}
                 >
-                  Select Plan
-                </a>
+                  Book Plan
+                </button>
               </div>
             ))}
           </div>
+
+          {/* Sticky Total Bar for Mobile/Desktop */}
+          {selectedAddOns.length > 0 && (
+            <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-2xl animate-fade-in-up">
+              <div className="bg-zinc-900/90 backdrop-blur-xl border border-amber-500/50 rounded-2xl p-6 shadow-2xl flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-bold text-amber-500 uppercase tracking-widest mb-1">Multi-Service Selection</p>
+                  <p className="text-sm text-gray-300">
+                    {selectedAddOns.length} Add-on{selectedAddOns.length > 1 ? 's' : ''} Selected
+                  </p>
+                </div>
+                <div className="flex items-center gap-6">
+                  <div className="text-right">
+                    <p className="text-xs text-gray-500 uppercase font-bold">Additional</p>
+                    <p className="text-xl font-black text-white">
+                      +${selectedAddOns.reduce((sum, name) => {
+                        const addon = addOns.find(a => a.name === name);
+                        return sum + (addon ? parseInt(addon.price.replace('$', '')) : 0);
+                      }, 0)}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      const element = document.getElementById('pricing-grid');
+                      element?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="bg-amber-500 text-black px-6 py-3 rounded-xl font-black uppercase text-xs tracking-widest hover:bg-amber-400 transition-all flex items-center gap-2"
+                  >
+                    Confirm Plans <ShoppingCart className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Comparison Table */}
           <div className="mt-32 mb-24">
@@ -286,8 +347,8 @@ export default function Pricing() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className={`inline-block w-full py-4 text-[10px] font-black uppercase tracking-[0.2em] rounded-xl transition-all shadow-lg ${plan.popular
-                                ? 'bg-amber-500 text-black hover:bg-amber-400 shadow-amber-500/20'
-                                : 'bg-white/10 text-white hover:bg-white hover:text-black border border-white/10'
+                              ? 'bg-amber-500 text-black hover:bg-amber-400 shadow-amber-500/20'
+                              : 'bg-white/10 text-white hover:bg-white hover:text-black border border-white/10'
                               }`}
                           >
                             Get Started
@@ -329,14 +390,23 @@ export default function Pricing() {
                     {addon.period && <span className="text-sm text-gray-400">{addon.period}</span>}
                   </div>
                   <p className="text-sm text-gray-300 mb-4 flex-grow">{addon.description}</p>
-                  <a
-                    href={(addOnUrls as any)[addon.name] || '#'}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-6 w-full py-3 text-center text-xs font-bold uppercase tracking-widest border border-amber-500/30 text-white rounded-lg hover:bg-amber-500 hover:text-black transition-all"
+                  <button
+                    onClick={() => toggleAddOn(addon.name)}
+                    className={`mt-6 w-full py-3 text-center text-xs font-bold uppercase tracking-widest border transition-all rounded-lg flex items-center justify-center gap-2 ${selectedAddOns.includes(addon.name)
+                      ? 'bg-amber-500 border-amber-500 text-black'
+                      : 'border-amber-500/30 text-white hover:border-amber-500 hover:bg-amber-500/5'
+                      }`}
                   >
-                    Add Service
-                  </a>
+                    {selectedAddOns.includes(addon.name) ? (
+                      <>
+                        <Check className="h-4 w-4" /> Selected
+                      </>
+                    ) : (
+                      <>
+                        <Plus className="h-4 w-4" /> Add Service
+                      </>
+                    )}
+                  </button>
                 </div>
               ))}
             </div>

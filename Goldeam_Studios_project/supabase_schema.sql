@@ -127,3 +127,46 @@ insert into public.profiles (id, email, role)
 values ('62682f9d-32d6-4d1c-b3f2-2960d6323a8c', 'admin@goldbeam.com', 'super_admin')
 on conflict (id) do nothing;
 
+-- Create appointments table for Square API integration
+create table if not exists public.appointments (
+  id uuid default gen_random_uuid() primary key,
+  square_booking_id text unique,
+  customer_id uuid references auth.users null,
+  customer_name text not null,
+  customer_email text not null,
+  plan_type text not null check (plan_type in ('audio', 'audio_video', 'general')),
+  studio text not null check (studio in ('A', 'B')),
+  theme text,
+  duration_hours int not null,
+  addons jsonb default '[]'::jsonb,
+  total_price decimal(10, 2) not null,
+  booking_date date not null,
+  start_time time not null,
+  status text default 'pending' check (status in ('pending', 'confirmed', 'cancelled')),
+  created_at timestamp with time zone default now(),
+  updated_at timestamp with time zone default now()
+);
+
+-- Enable RLS on appointments
+alter table public.appointments enable row level security;
+
+-- Policies for appointments
+create policy "Users can view their own appointments."
+  on appointments for select
+  using ( auth.uid() = customer_id );
+
+create policy "Users can insert their own appointments."
+  on appointments for insert
+  with check ( auth.uid() = customer_id );
+
+-- Admin can view/edit all appointments
+create policy "Admins can manage all appointments."
+  on appointments
+  using (
+    exists (
+      select 1 from public.profiles
+      where profiles.id = auth.uid()
+      and profiles.role in ('admin', 'super_admin')
+    )
+  );
+

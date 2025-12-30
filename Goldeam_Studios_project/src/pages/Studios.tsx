@@ -125,19 +125,19 @@ export default function Studios() {
   ];
 
   return (
-    <div className="bg-black text-white min-h-screen pt-24">
+    <div className="bg-black text-white min-h-screen transition-colors duration-300">
       {/* Hero Section */}
       <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-5xl md:text-7xl font-black text-white uppercase mb-6 animate-fade-in">
+            <h1 className="text-5xl md:text-8xl font-black text-white uppercase tracking-tight mb-8 leading-[0.9] text-shadow-lg shadow-black/50 animate-slide-up">
               Our{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-600">
                 Studios
               </span>
             </h1>
-            <p className="text-xl text-gray-300 leading-relaxed">
+            <p className="text-xl text-muted-foreground leading-relaxed">
               State-of-the-art facilities designed for creators of all sizes.
             </p>
           </div>
@@ -156,7 +156,7 @@ export default function Studios() {
                 <div className="relative group rounded-3xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-amber-500/20 aspect-[4/3] md:aspect-[3/2] lg:aspect-square xl:aspect-[4/3]">
                   {/* Sliding Container */}
                   <div
-                    className="flex h-full transition-transform duration-700 ease-out cursor-zoom-in"
+                    className="flex h-full transition-transform duration-700 ease-out cursor-zoom-in bg-zinc-900"
                     style={{ transform: `translateX(-${activeTheme * 100}%)` }}
                     onClick={() => {
                       setLightboxStudio('A');
@@ -233,7 +233,7 @@ export default function Studios() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-4">
                     <span className="h-px w-12 bg-amber-500/50"></span>
-                    <h2 className="text-4xl md:text-6xl font-black text-white uppercase leading-tight">
+                    <h2 className="text-4xl md:text-6xl font-black uppercase text-white leading-[0.9] mb-6">
                       {studioA.name}
                     </h2>
                   </div>
@@ -242,7 +242,7 @@ export default function Studios() {
                   </h3>
                 </div>
 
-                <p className="text-lg text-gray-400 leading-relaxed">
+                <p className="text-xl text-gray-400 mb-8 leading-relaxed font-light">
                   {studioA.description}
                 </p>
 
@@ -256,7 +256,7 @@ export default function Studios() {
                         onClick={() => setActiveTheme(index)}
                         className={`px-6 py-3 rounded-xl font-bold uppercase text-xs tracking-wider transition-all duration-300 border ${activeTheme === index
                           ? 'bg-amber-500 border-amber-500 text-black shadow-lg shadow-amber-500/40 transform -translate-y-1'
-                          : 'bg-zinc-900 border-amber-500/20 text-gray-400 hover:border-amber-500/50 hover:text-white'
+                          : 'bg-zinc-900 border-amber-500/20 text-gray-300 hover:border-amber-500/50 hover:text-white'
                           }`}
                       >
                         {theme.name}
@@ -265,12 +265,12 @@ export default function Studios() {
                   </div>
                 </div>
 
-                <div className="p-6 bg-zinc-900/50 rounded-2xl border border-amber-500/10 space-y-4">
+                <div className="p-6 bg-zinc-900 rounded-2xl border border-amber-500/10 space-y-4">
                   <div className="flex items-center gap-3">
                     <Users className="h-5 w-5 text-amber-500" />
                     <span className="text-white font-bold">{studioA.themes[activeTheme].capacity}</span>
                   </div>
-                  <p className="text-sm text-gray-400 italic leading-relaxed">
+                  <p className="text-sm text-muted-foreground italic leading-relaxed">
                     {studioA.themes[activeTheme].description}
                   </p>
                 </div>
@@ -279,7 +279,7 @@ export default function Studios() {
                   {studioA.features.slice(0, 6).map((feature, index) => (
                     <div key={index} className="flex items-center gap-3">
                       <Check className="h-4 w-4 text-amber-500 shrink-0" />
-                      <span className="text-sm text-gray-300">{feature}</span>
+                      <span className="text-sm text-muted-foreground">{feature}</span>
                     </div>
                   ))}
                 </div>
@@ -340,7 +340,7 @@ export default function Studios() {
                   {studioB.description}
                 </p>
 
-                <div className="flex items-center gap-3 p-4 bg-zinc-900/50 rounded-xl border border-amber-500/10 w-fit">
+                <div className="flex items-center gap-3 p-4 bg-zinc-900 rounded-xl border border-amber-500/10 w-fit">
                   <Users className="h-5 w-5 text-amber-500" />
                   <span className="text-white font-bold">{studioB.capacity} Capacity</span>
                 </div>
@@ -358,7 +358,7 @@ export default function Studios() {
                   href={(studioB as any).bookingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-4 bg-white text-black px-10 py-5 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:scale-105 hover:bg-amber-500 group"
+                  className="inline-flex items-center gap-4 bg-white text-black px-10 py-5 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:scale-105 hover:bg-amber-500 hover:text-black group"
                 >
                   Book {studioB.name}
                   <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-2" />
@@ -371,7 +371,7 @@ export default function Studios() {
       </div>
 
       {/* Amenities Section */}
-      <section className="py-32 bg-zinc-900/40 relative">
+      <section className="py-32 bg-black/50 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20 animate-on-scroll opacity-0">
             <h2 className="text-4xl md:text-5xl font-black text-white uppercase mb-4">
@@ -386,7 +386,7 @@ export default function Studios() {
             {amenities.map((amenity, index) => (
               <div
                 key={index}
-                className="animate-on-scroll opacity-0 bg-black/40 border border-amber-500/10 p-10 rounded-3xl text-center hover:border-amber-500/50 transition-all duration-500 hover:transform hover:-translate-y-3 group"
+                className="animate-on-scroll opacity-0 bg-zinc-900 border border-amber-500/10 p-10 rounded-3xl text-center hover:border-amber-500/50 transition-all duration-500 hover:transform hover:-translate-y-3 group"
                 style={{ animationDelay: `${index * 150}ms` }}
               >
                 <div className="flex justify-center mb-6">
@@ -476,7 +476,7 @@ export default function Studios() {
               <h3 className="text-2xl font-black uppercase text-amber-500 tracking-wider">
                 {lightboxStudio === 'A' ? `${studioA.name} - ${studioA.themes[activeTheme].name}` : `${studioB.name} - ${studioB.subtitle}`}
               </h3>
-              <p className="text-gray-400 font-medium">
+              <p className="text-muted-foreground font-medium">
                 {lightboxStudio === 'A' ? studioA.themes[activeTheme].capacity : studioB.capacity}
               </p>
             </div>

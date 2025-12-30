@@ -25,6 +25,10 @@ const Login = lazy(() => import('./pages/admin/Login'));
 const Dashboard = lazy(() => import('./pages/admin/Dashboard'));
 const Editor = lazy(() => import('./pages/admin/Editor'));
 
+// Booking Wizard
+const BookWizard = lazy(() => import('./pages/BookWizard'));
+const BookingSuccess = lazy(() => import('./pages/BookingSuccess'));
+
 const NotFound = () => (
   <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center p-4">
     <h1 className="text-6xl font-bold text-white mb-4">404</h1>
@@ -58,6 +62,8 @@ function App() {
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/studios" element={<Studios />} />
             <Route path="/book" element={<Book />} />
+            <Route path="/book-wizard" element={<BookWizard />} />
+            <Route path="/booking-success" element={<BookingSuccess />} />
             <Route path="/build" element={<Build />} />
             <Route path="/more" element={<More />} />
             <Route path="/contact" element={<Contact />} />

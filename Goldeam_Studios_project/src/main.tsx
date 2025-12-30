@@ -4,13 +4,14 @@ import './index.css'
 import App from './App.tsx'
 import { AuthProvider } from './context/AuthContext.tsx'
 
-// Set dark mode by default
-document.documentElement.classList.add('dark')
+import { ThemeProvider } from './context/ThemeContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
-      <App />
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
     </AuthProvider>
   </StrictMode>,
 )
