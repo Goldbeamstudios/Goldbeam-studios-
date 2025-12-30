@@ -75,16 +75,25 @@ export default function BookWizard() {
         fetchConfig();
     }, []);
 
-    const [booking, setBooking] = useState<BookingState>({
-        plan: (location.state?.plan as any) || 'audio_video',
-        studio: 'A',
-        theme: 'signature',
-        duration: 1,
-        addons: [],
-        date: new Date().toISOString().split('T')[0],
-        time: '',
-        customerName: '',
-        customerEmail: '',
+    // Scroll to top when component mounts
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    const [booking, setBooking] = useState<BookingState>(() => {
+        const planFromState = location.state?.plan;
+        console.log('Initializing BookWizard with plan:', planFromState);
+        return {
+            plan: planFromState || 'audio_video',
+            studio: 'A',
+            theme: 'signature',
+            duration: 1,
+            addons: [],
+            date: new Date().toISOString().split('T')[0],
+            time: '',
+            customerName: '',
+            customerEmail: '',
+        };
     });
 
     const fetchSlots = useCallback(async () => {
