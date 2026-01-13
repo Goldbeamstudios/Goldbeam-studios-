@@ -5,14 +5,10 @@ import { supabase } from '../../lib/supabase';
 import {
     Plus,
     Search,
-    FileText,
     Pencil,
     Trash2,
     ExternalLink,
     Clock,
-    Eye,
-    EyeOff,
-    MoreVertical,
     Zap,
     BookOpen
 } from 'lucide-react';
