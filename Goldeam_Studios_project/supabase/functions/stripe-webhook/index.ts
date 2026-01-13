@@ -86,12 +86,20 @@ serve(async (req) => {
                         to: 'info@goldbeamstudios.com',
                         subject: 'New Paid Booking - Goldbeam Studios',
                         html: `
-                <h1>New Booking Confirmed!</h1>
-                <p><strong>Customer:</strong> ${metadata.customerName} (${metadata.customerEmail})</p>
-                <p><strong>Session:</strong> ${metadata.plan} - Studio ${metadata.studio}</p>
-                <p><strong>Date:</strong> ${metadata.date} at ${metadata.time}</p>
-                <p><strong>Duration:</strong> ${metadata.duration} hour(s)</p>
-                <p><strong>Total Paid:</strong> $${(session.amount_total || 0) / 100}</p>
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 12px;">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <img src="https://qsnudsnqbpbmjbzwyqzr.supabase.co/storage/v1/object/public/blog-images/logo.png" alt="Goldbeam Studios" style="max-width: 150px;">
+                    </div>
+                    <h1 style="color: #000; text-align: center; font-size: 22px;">New Booking Confirmed!</h1>
+                    <div style="background: #f9f9f9; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                        <p><strong>Customer:</strong> ${metadata.customerName}</p>
+                        <p><strong>Email:</strong> ${metadata.customerEmail}</p>
+                        <p><strong>Session:</strong> ${metadata.plan} - Studio ${metadata.studio}</p>
+                        <p><strong>Date:</strong> ${metadata.date} at ${metadata.time}</p>
+                        <p><strong>Duration:</strong> ${metadata.duration} hour(s)</p>
+                        <p><strong>Total Paid:</strong> $${(session.amount_total || 0) / 100}</p>
+                    </div>
+                </div>
               `
                     }
                 })
@@ -102,16 +110,20 @@ serve(async (req) => {
                         to: metadata.customerEmail,
                         subject: 'Booking Confirmed - Goldbeam Studios',
                         html: `
-                <h1>Hi ${metadata.customerName},</h1>
-                <p>Your session at Goldbeam Studios has been confirmed and paid!</p>
-                <p><strong>Details:</strong></p>
-                <ul>
-                  <li><strong>Studio:</strong> Studio ${metadata.studio}</li>
-                  <li><strong>Date:</strong> ${metadata.date}</li>
-                  <li><strong>Time:</strong> ${metadata.time}</li>
-                  <li><strong>Duration:</strong> ${metadata.duration} hour(s)</li>
-                </ul>
-                <p>We look forward to seeing you!</p>
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 12px;">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <img src="https://qsnudsnqbpbmjbzwyqzr.supabase.co/storage/v1/object/public/blog-images/logo.png" alt="Goldbeam Studios" style="max-width: 150px;">
+                    </div>
+                    <h1 style="color: #000;">Hi ${metadata.customerName},</h1>
+                    <p>Your session at Goldbeam Studios has been confirmed and paid!</p>
+                    <div style="background: #000; color: #fff; padding: 25px; border-radius: 12px; margin: 25px 0;">
+                        <p style="margin: 8px 0; border-bottom: 1px solid #333; pb-8px;"><strong>Studio:</strong> Studio ${metadata.studio}</p>
+                        <p style="margin: 8px 0; border-bottom: 1px solid #333; pb-8px;"><strong>Date:</strong> ${metadata.date}</p>
+                        <p style="margin: 8px 0; border-bottom: 1px solid #333; pb-8px;"><strong>Time:</strong> ${metadata.time}</p>
+                        <p style="margin: 8px 0;"><strong>Duration:</strong> ${metadata.duration} hour(s)</p>
+                    </div>
+                    <p style="text-align: center; color: #666; font-style: italic;">We look forward to seeing you at the studio!</p>
+                </div>
               `
                     }
                 })

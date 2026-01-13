@@ -2,24 +2,18 @@ import { useState, useEffect, memo } from 'react';
 import { supabase } from '../../lib/supabase';
 import {
     Search,
-    Filter,
-    MoreHorizontal,
     Clock,
-    CheckCircle2,
     XCircle,
-    AlertCircle,
     Mail,
     Trash2,
     Calendar as CalendarIcon,
     User,
-    ChevronDown,
     Save,
     RefreshCcw,
     Send,
     Eye,
     Phone,
-    MapPin,
-    ArrowRight
+    Check
 } from 'lucide-react';
 import { formatTime } from '../../lib/utils';
 
@@ -180,7 +174,8 @@ const AdminBookings = () => {
                         booking_date: booking.booking_date,
                         start_time: formatTime(booking.start_time),
                         studio: booking.studio,
-                        duration: booking.duration_hours
+                        duration: booking.duration_hours,
+                        logo_url: 'https://qsnudsnqbpbmjbzwyqzr.supabase.co/storage/v1/object/public/blog-images/logo.png'
                     }
                 }
             });
@@ -213,7 +208,8 @@ const AdminBookings = () => {
                                 booking_date: booking.booking_date,
                                 start_time: formatTime(booking.start_time),
                                 studio: booking.studio,
-                                duration: booking.duration_hours
+                                duration: booking.duration_hours,
+                                logo_url: 'https://qsnudsnqbpbmjbzwyqzr.supabase.co/storage/v1/object/public/blog-images/logo.png'
                             }
                         }
                     });
@@ -492,7 +488,7 @@ const AdminBookings = () => {
                                         {selectedBooking.addons.map((addon, idx) => (
                                             <div key={idx} className="p-3 bg-zinc-900/50 rounded-xl border border-zinc-800 flex justify-between items-center group">
                                                 <span className="text-xs font-black text-zinc-400 uppercase tracking-tight group-hover:text-white transition-colors">{addon.replace('_', ' ')}</span>
-                                                <Badge size={14} className="text-zinc-600" />
+                                                <Check size={14} className="text-zinc-600" />
                                             </div>
                                         ))}
                                     </div>
