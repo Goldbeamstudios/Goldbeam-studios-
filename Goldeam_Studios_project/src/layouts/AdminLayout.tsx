@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LayoutDashboard, PenTool, FileText, LogOut, Menu, X, Globe } from 'lucide-react';
+import { LayoutDashboard, PenTool, FileText, LogOut, Menu, X, Globe, Calendar, ShoppingBag } from 'lucide-react';
 import { cn } from '../lib/utils'; // Assuming clsx/tailwind-merge utils exist, otherwise I'll use inline or create it.
 
 export default function AdminLayout() {
@@ -18,6 +18,8 @@ export default function AdminLayout() {
 
     const navItems = [
         { label: 'Dashboard', path: '/admin', icon: LayoutDashboard },
+        { label: 'Bookings', path: '/admin/bookings', icon: ShoppingBag },
+        { label: 'Schedule', path: '/admin/schedule', icon: Calendar },
         { label: 'All Posts', path: '/admin/posts', icon: FileText },
         { label: 'New Post', path: '/admin/editor', icon: PenTool },
     ];

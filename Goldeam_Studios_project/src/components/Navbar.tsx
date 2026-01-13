@@ -172,7 +172,7 @@ export default function Navbar() {
             <ThemeToggle />
 
             <Link
-              to="/book"
+              to="/book-wizard"
               className="bg-gradient-to-r from-amber-500 to-amber-600 text-black hover:from-amber-400 hover:to-amber-500 
                 px-8 py-3 rounded-lg font-bold uppercase tracking-wide transition-all duration-300 
                 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-amber-500/50 
@@ -299,7 +299,7 @@ export default function Navbar() {
 
           <div className="border-t border-amber-500/20 pt-6">
             <Link
-              to="/book"
+              to="/book-wizard"
               onClick={() => setIsMobileMenuOpen(false)}
               className="block w-full text-center bg-gradient-to-r from-amber-500 to-amber-600 text-black px-6 py-4 text-base font-bold uppercase rounded-lg hover:from-amber-400 hover:to-amber-500 transition-all duration-300"
             >

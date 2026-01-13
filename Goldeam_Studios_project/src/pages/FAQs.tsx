@@ -10,7 +10,7 @@ export default function FAQs() {
       questions: [
         {
           q: 'How do I book a session?',
-          a: 'You can book a session directly through our website using Square. Choose your preferred date, time, and studio, then complete the secure payment.',
+          a: 'You can book a session directly through our website using Stripe. Choose your preferred date, time, and studio, then complete the secure payment.',
         },
         {
           q: 'How far in advance should I book?',
@@ -61,7 +61,7 @@ export default function FAQs() {
       questions: [
         {
           q: 'What payment methods do you accept?',
-          a: 'We accept all major credit cards, debit cards, and ACH payments through Square.',
+          a: 'We accept all major credit cards, debit cards, and ACH payments through Stripe.',
         },
         {
           q: 'Are there any hidden fees?',
@@ -123,9 +123,8 @@ export default function FAQs() {
                         )}
                       </button>
                       <div
-                        className={`transition-all duration-300 overflow-hidden ${
-                          isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                        }`}
+                        className={`transition-all duration-300 overflow-hidden ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                          }`}
                       >
                         <div className="px-6 pb-6 text-gray-400 leading-relaxed">{faq.a}</div>
                       </div>

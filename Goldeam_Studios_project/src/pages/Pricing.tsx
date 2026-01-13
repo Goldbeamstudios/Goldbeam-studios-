@@ -9,30 +9,29 @@ export default function Pricing() {
     {
       id: 'audio',
       name: 'Audio-Only Podcast',
-      price: '$170',
+      price: 'From $170',
       period: '/ hour',
-      description: 'Perfect for audio-focused podcasts, interviews, and voiceovers.',
+      description: 'Perfect for audio-focused podcasts, interviews, and voiceovers. Hosted in Studio B.',
       features: [
-        'Dedicated audio-only studio (up to 2 people)',
+        'Dedicated audio-only studio (Studio B)',
         'Professional sound engineer',
-        'Acoustically treated room',
+        'Multi-hour discounts up to 40%',
         'Raw WAV & MP3 files',
         'File delivery within 24 hours',
       ],
       bestFor: 'Audio podcasts, interviews, voice recording',
       popular: false,
       gradient: 'from-gray-500 to-gray-600',
-      bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/KIZZB5V36MBOXNNU2QH4Y6JR'
     },
     {
       id: 'audio_video',
       name: 'Audio + Video Podcast',
-      price: '$300',
+      price: 'From $250',
       period: '/ hour',
-      description: 'A cinematic podcast experience designed for creators who want a professional visual presence.',
+      description: 'A cinematic podcast experience. Choose between Studio A (Premium) or Studio B (Standard).',
       features: [
         'Multi-camera 4K video setup',
-        'Live multi-angle switching',
+        'Multi-hour discounts up to 40%',
         'Professional studio lighting',
         'On-site camera operator / technician',
         'Custom set and color configuration',
@@ -42,27 +41,25 @@ export default function Pricing() {
       bestFor: 'Video podcasts, YouTube shows, branded content',
       popular: true,
       gradient: 'from-amber-500 to-amber-600',
-      note: 'ISO camera files and isolated audio tracks are available as optional add-ons.',
-      bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/M6M42KEY7HWM6IYSAFEPU4K4'
+      note: 'Rates: Studio A ($300/hr), Studio B ($250/hr). Discounts apply for 2+ hours.',
     },
     {
       id: 'general',
-      name: 'General Content (Non-Podcast)',
-      price: '$250',
+      name: 'General Content',
+      price: 'From $200',
       period: '/ hour',
-      description: 'Designed for content beyond podcasts, including educational videos, interviews, product demos, and brand content.',
+      description: 'Designed for educational videos, product demos, and brand content.',
       features: [
-        'Full studio access',
-        'Professional camera operator / studio technician',
-        'Studio lighting and camera setup',
+        'Full studio access (Studio A or B)',
+        'Professional camera operator',
+        'Multi-hour discounts up to 40%',
         'Live-cut program video + program audio',
         'File delivery within 24 hours',
       ],
-      bestFor: 'Creators, educators, businesses, agencies, and brands',
+      bestFor: 'Creators, educators, and businesses',
       popular: false,
       gradient: 'from-amber-600 to-orange-600',
-      note: 'ISO recording and post-production services are optional add-ons.',
-      bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/PGCDYBESUFP7SQBIAKF7WFSJ'
+      note: 'Rates: Studio A ($250/hr), Studio B ($200/hr). Discounts apply for 2+ hours.',
     },
   ];
 
@@ -87,55 +84,55 @@ export default function Pricing() {
       name: 'ISO Recording',
       price: '$75',
       period: 'per hour',
-      description: 'Individual camera ISO files and isolated audio tracks. Must be requested in advance.',
+      description: 'Individual camera ISO files and isolated audio tracks. Includes all camera ISO files + isolated audio tracks.',
     },
     {
       name: 'Basic Video Edit',
       price: '$75',
       period: '(1 full episode)',
-      description: 'Clean cuts, basic pacing, simple audio balance, YouTube-ready export.',
+      description: 'Trimming dead air, basic pacing, simple audio balance, YouTube-ready export.',
     },
     {
       name: 'Advanced Video Edit',
       price: '$250',
       period: '(1 full episode)',
-      description: 'Color correction, lower thirds, intro/outro (provided assets), light motion graphics, audio cleanup.',
+      description: 'Full edit, color correction, lower thirds, intro/outro (provided assets), light motion graphics, audio cleanup.',
     },
     {
       name: 'Audio Mixing & Mastering',
       price: '$60',
       period: 'per episode',
-      description: 'Noise reduction, EQ, compression, loudness leveling, final WAV + MP3.',
+      description: 'Noise reduction, EQ, compression, broadcast-ready sound. Final WAV + MP3.',
     },
     {
       name: 'Social Media Clips',
       price: '$90',
-      period: 'per set (5 clips)',
-      description: 'Vertical clips (30–60s) optimized for Reels, TikTok, and Shorts.',
+      period: '(5 clips)',
+      description: '5 short vertical clips (30–60s) optimized for Reels, TikTok, and Shorts.',
     },
     {
       name: 'Show Notes & Timestamps',
       price: '$30',
       period: 'per episode',
-      description: 'Episode summary, key points, and chapter timestamps.',
+      description: 'Episode summary, key points, and chapter markers.',
     },
     {
       name: 'Teleprompter',
       price: '$50',
       period: 'per session',
-      description: 'Hardware setup, script loading, and live operation. Script provided by client.',
+      description: 'Hardware setup, script loading, and formatting. On-site operation included.',
     },
     {
       name: 'On-Set Display / TV Monitor',
       price: '$50',
       period: 'per session',
-      description: 'HDMI display for visual reference during recording.',
+      description: 'TV monitor setup and HDMI input for visual reference during recording.',
     },
     {
       name: 'Live Streaming',
       price: '$75',
       period: '/ hour',
-      description: 'Live broadcast setup, testing, and monitoring. Program feed only.',
+      description: 'Live broadcast setup, platform connection, and monitoring.',
     },
   ];
 
@@ -149,7 +146,7 @@ export default function Pricing() {
   };
 
   const calculateTotal = (basePrice: string) => {
-    const base = parseInt(basePrice.replace('$', ''));
+    const base = parseInt(basePrice.replace('From $', ''));
     const addOnTotal = selectedAddOns.reduce((sum, name) => {
       const addon = addOns.find(a => a.name === name);
       return sum + (addon ? parseInt(addon.price.replace('$', '')) : 0);
@@ -340,17 +337,15 @@ export default function Pricing() {
                       <td className="p-8 bg-black/50"></td>
                       {pricingPlans.map((plan, i) => (
                         <td key={i} className="p-8 text-center bg-black/50 border-l border-white/5">
-                          <a
-                            href={(plan as any).bookingUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                          <button
+                            onClick={() => navigate('/book-wizard', { state: { plan: plan.id } })}
                             className={`inline-block w-full py-4 text-[10px] font-black uppercase tracking-[0.2em] rounded-xl transition-all shadow-lg ${plan.popular
                               ? 'bg-amber-500 text-black hover:bg-amber-400 shadow-amber-500/20'
                               : 'bg-white/10 text-white hover:bg-white hover:text-black border border-white/10'
                               }`}
                           >
                             Get Started
-                          </a>
+                          </button>
                         </td>
                       ))}
                     </tr>
@@ -422,7 +417,7 @@ export default function Pricing() {
             {[
               {
                 q: 'What payment methods do you accept?',
-                a: 'We accept all major credit and debit cards through our secure Square checkout system. Payment is required to confirm your booking.',
+                a: 'We accept all major credit and debit cards through our secure Stripe checkout system. Payment is required to confirm your booking.',
               },
               {
                 q: 'Is there a minimum booking time?',

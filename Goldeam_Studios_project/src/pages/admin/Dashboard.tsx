@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
-import { Plus, Pencil, Trash2, Calendar, Search, Loader2, Music, Video, Zap, Clock, User } from 'lucide-react';
+import { Plus, Pencil, Trash2, Calendar, Search, Loader2, Music, Video, Zap, Clock, User, Check } from 'lucide-react';
+import { formatTime } from '../../lib/utils';
 import type { Appointment } from '../../types/supabase';
 
 interface Post {
@@ -192,12 +193,14 @@ export default function Dashboard() {
                                                 <Calendar size={14} /> {appt.booking_date}
                                             </div>
                                             <div className="flex items-center gap-2 text-xs text-zinc-500">
-                                                <Clock size={12} /> {appt.start_time} ({appt.duration_hours}h)
+                                                <Clock size={12} /> {formatTime(appt.start_time)} ({appt.duration_hours}h)
                                             </div>
                                         </td>
                                         <td className="p-4 text-right">
                                             <div className="font-black text-amber-500">${appt.total_price}</div>
-                                            <div className="text-[10px] uppercase font-bold text-zinc-600 tracking-tighter">{appt.status}</div>
+                                            <div className="flex items-center justify-end gap-1 text-[10px] uppercase font-bold text-green-500 tracking-tighter">
+                                                <Check size={10} /> {appt.status}
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}

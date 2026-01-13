@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Sparkles, Users, Wifi, Coffee, Mic2, Video, Check, ArrowRight, ChevronLeft, ChevronRight, X, Maximize2 } from 'lucide-react';
 
 // Import images
@@ -8,6 +9,7 @@ import studioThree from '../assets/images/studio/stuido-three.jpeg';
 import studioFour from '../assets/images/studio/studio_four.jpg';
 
 export default function Studios() {
+  const navigate = useNavigate();
   const [activeTheme, setActiveTheme] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [lightboxStudio, setLightboxStudio] = useState<'A' | 'B'>('A');
@@ -52,21 +54,18 @@ export default function Studios() {
         image: studioOne,
         capacity: 'Up to 4 people',
         description: 'A polished, modern setup that represents the core Goldbeam Studio look. Ideal for podcasts, interviews, panels, and branded content.',
-        bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/ZHLIUT4OKK265VGAQDD34YXS',
       },
       {
         name: 'Oasis',
         image: studioThree,
         capacity: 'Up to 4 people',
         description: 'A warm, relaxed environment designed for conversational content, storytelling, and educational videos with a softer, lifestyle feel.',
-        bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/NYQAYVPQRWRAWYVSTAG5L4AC',
       },
       {
         name: 'Chroma',
         image: studioFour,
         capacity: 'Up to 2 people',
         description: 'A minimalist white backdrop enhanced with RGB lighting, allowing you to create custom color moods and branded looks without post-production effects.',
-        bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/J44VS5ERBOKIONVWZ4DOPC4V',
       },
     ],
     features: [
@@ -97,7 +96,6 @@ export default function Studios() {
     ],
     optionalSetup: 'Green screen recording available upon request',
     bestFor: 'Solo podcasts, interviews, voice recordings, short-form content, and creators who need a clean, distraction-free space.',
-    bookingUrl: 'https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ/services/KIZZB5V36MBOXNNU2QH4Y6JR',
   };
 
   const amenities = [
@@ -283,15 +281,13 @@ export default function Studios() {
                   ))}
                 </div>
 
-                <a
-                  href={studioA.themes[activeTheme].bookingUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => navigate('/book-wizard', { state: { plan: 'general', studio: 'A' } })}
                   className="inline-flex items-center gap-4 bg-gradient-to-r from-amber-500 to-amber-600 text-black px-10 py-5 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/50 group"
                 >
                   Book {studioA.name}
                   <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-2" />
-                </a>
+                </button>
               </div>
             </div>
           </section>
@@ -353,15 +349,13 @@ export default function Studios() {
                   ))}
                 </div>
 
-                <a
-                  href={(studioB as any).bookingUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => navigate('/book-wizard', { state: { plan: 'audio', studio: 'B' } })}
                   className="inline-flex items-center gap-4 bg-white text-black px-10 py-5 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:scale-105 hover:bg-amber-500 hover:text-black group"
                 >
                   Book {studioB.name}
                   <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-2" />
-                </a>
+                </button>
               </div>
             </div>
           </section>
@@ -412,14 +406,12 @@ export default function Studios() {
             Experience the gold standard in production. Book your session today and elevate your content.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <a
-              href="https://book.squareup.com/appointments/vp8i8fb53nyb4e/location/LMTXXK2JVCGRJ"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => navigate('/book-wizard')}
               className="bg-amber-500 text-black px-12 py-6 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/50 block text-center"
             >
               Book Now
-            </a>
+            </button>
             <button className="border-2 border-amber-500/30 text-white px-12 py-6 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:border-amber-500 hover:bg-amber-500/5">
               Contact Us
             </button>

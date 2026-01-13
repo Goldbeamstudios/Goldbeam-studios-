@@ -1,14 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
     Check, ChevronRight,
     ChevronLeft, Loader2, Music, Video, Zap, ShieldCheck
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
-
-// CONFIGURATION: Replace these with your actual Square IDs
-const DEFAULT_LOCATION_ID = 'LMTXXK2JVCGRJ';
-const DEFAULT_SERVICE_ID = 'M6M42KEY7HWM6IYSAFEPU4K4';
+import { formatTime } from '../lib/utils';
+import { useServerTime } from '../hooks/useServerTime';
 
 type Step = 'plan' | 'studio' | 'details' | 'schedule' | 'confirm';
 
@@ -27,8 +25,13 @@ interface BookingState {
 const ADD_ONS = [
     { id: 'iso', name: 'ISO Recording', price: 75, duration: 'per hour' },
     { id: 'basic_edit', name: 'Basic Video Edit', price: 75, duration: 'per episode' },
+    { id: 'advanced_edit', name: 'Advanced Video Edit', price: 250, duration: 'per episode' },
     { id: 'mastering', name: 'Audio Mixing & Mastering', price: 60, duration: 'per episode' },
     { id: 'clips', name: 'Social Media Clips', price: 90, duration: 'per set (5 clips)' },
+    { id: 'notes', name: 'Show Notes & Timestamps', price: 30, duration: 'per episode' },
+    { id: 'teleprompter', name: 'Teleprompter', price: 50, duration: 'per session' },
+    { id: 'monitor', name: 'On-Set Display / TV Monitor', price: 50, duration: 'per session' },
+    { id: 'live_stream', name: 'Live Streaming', price: 75, duration: 'per hour' },
 ];
 
 const THEMES = [
@@ -37,48 +40,39 @@ const THEMES = [
     { id: 'chroma', name: 'Chroma', description: 'RGB custom moods' },
 ];
 
+const ALL_SLOTS = [
+    '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'
+];
+
+interface Studio {
+    id: string;
+    name: string;
+    description: string;
+}
+
 export default function BookWizard() {
-    const navigate = useNavigate();
     const location = useLocation();
     const [currentStep, setCurrentStep] = useState<Step>('plan');
     const [loading, setLoading] = useState(false);
     const [fetchingSlots, setFetchingSlots] = useState(false);
     const [availableSlots, setAvailableSlots] = useState<string[]>([]);
-
-    const [config, setConfig] = useState({
-        locationId: DEFAULT_LOCATION_ID,
-        serviceId: DEFAULT_SERVICE_ID,
-        teamMemberId: '',
-        isDynamic: false
-    });
-
-    // Auto-configure IDs from Square
-    useEffect(() => {
-        const fetchConfig = async () => {
-            try {
-                const { data, error } = await supabase.functions.invoke('list-square-services');
-                if (!error && data?.services?.length > 0) {
-                    // Use the first available service for the demo
-                    const service = data.services[0];
-                    console.log('Auto-configured Square:', service, 'Team Member:', data.teamMemberId);
-                    setConfig({
-                        locationId: service.location_id || DEFAULT_LOCATION_ID,
-                        serviceId: service.variation_id,
-                        teamMemberId: data.teamMemberId || '',
-                        isDynamic: true
-                    });
-                }
-            } catch (err) {
-                console.warn('Failed to auto-configure Square IDs:', err);
-            }
-        };
-        fetchConfig();
-    }, []);
+    const [studios, setStudios] = useState<Studio[]>([]);
+    const [blockedDates, setBlockedDates] = useState<string[]>([]);
+    const { serverTime } = useServerTime();
 
     // Scroll to top when component mounts
     useEffect(() => {
         window.scrollTo(0, 0);
+        fetchStudios();
+        fetchBlockedDates();
     }, []);
+
+    const fetchBlockedDates = async () => {
+        const { data, error } = await supabase.from('blocked_dates').select('blocked_date');
+        if (!error && data) {
+            setBlockedDates(data.map(d => d.blocked_date));
+        }
+    };
 
     const [booking, setBooking] = useState<BookingState>(() => {
         const planFromState = location.state?.plan;
@@ -89,60 +83,104 @@ export default function BookWizard() {
             theme: 'signature',
             duration: 1,
             addons: [],
-            date: new Date().toISOString().split('T')[0],
+            date: '', // Initialize as empty, will be set by serverTime effect
             time: '',
             customerName: '',
             customerEmail: '',
         };
     });
 
+    // Update date when serverTime is available
+    useEffect(() => {
+        if (serverTime && !booking.date) {
+            setBooking(prev => ({
+                ...prev,
+                date: serverTime.toISOString().split('T')[0]
+            }));
+        }
+    }, [serverTime, booking.date]);
+
+    const fetchStudios = async () => {
+        const { data, error } = await supabase.from('studios').select('*').eq('is_active', true);
+        if (!error && data) {
+            setStudios(data);
+        }
+    };
+
     const fetchSlots = useCallback(async () => {
         if (!booking.date) return;
+
+        const currentStudio = studios.find(s => s.name === booking.studio);
+        if (!currentStudio) return;
+
         setFetchingSlots(true);
         try {
-            const { data, error } = await supabase.functions.invoke('square-availability', {
-                body: {
-                    location_id: config.locationId,
-                    start_at: `${booking.date}T00:00:00Z`,
-                    end_at: `${booking.date}T23:59:59Z`,
-                    service_id: config.serviceId
-                }
+            const { data, error } = await supabase.rpc('get_available_slots', {
+                p_studio_id: currentStudio.id,
+                p_date: booking.date,
+                p_duration: booking.duration
             });
+
             if (error) throw error;
-            // Extract times from availabilities
-            const times = data.availabilities?.map((a: any) =>
-                new Date(a.start_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
-            ) || [];
-            setAvailableSlots(times);
+
+            // Map time objects/strings to HH:mm format
+            const freeSlots = data?.map((slot: { slot_time: string }) => {
+                const parts = slot.slot_time.split(':');
+                return `${parts[0]}:${parts[1]}`;
+            }) || [];
+
+            setAvailableSlots(freeSlots);
+
+            // Clear selected time if it's no longer available
+            if (booking.time && !freeSlots.includes(booking.time)) {
+                setBooking(prev => ({ ...prev, time: '' }));
+            }
         } catch (err) {
             console.error('Error fetching slots:', err);
-            // Fallback slots for demo if API fails
-            setAvailableSlots(['09:00', '11:00', '13:00', '15:00', '17:00']);
+            setAvailableSlots([]);
         } finally {
             setFetchingSlots(false);
         }
-    }, [booking.date, config.locationId, config.serviceId]);
+    }, [booking.date, booking.studio, booking.duration, studios]);
 
     useEffect(() => {
-        if (currentStep === 'schedule') {
+        if (currentStep === 'schedule' || (currentStep === 'details' && booking.date)) {
             fetchSlots();
         }
     }, [currentStep, fetchSlots]);
 
     // Calculate total price accurately
     const calculateTotal = () => {
-        let base = 0;
-        if (booking.plan === 'audio') base = 170;
-        if (booking.plan === 'audio_video') base = 300;
-        if (booking.plan === 'general') base = 250;
+        let baseRate = 0;
 
+        // Base Rates
+        if (booking.plan === 'audio') baseRate = 170; // Studio B only
+        else if (booking.plan === 'audio_video') {
+            baseRate = booking.studio === 'A' ? 300 : 250;
+        } else if (booking.plan === 'general') {
+            baseRate = booking.studio === 'A' ? 250 : 200;
+        }
+
+        // Apply Multi-Hour Discounts
+        let discount = 0;
+        if (booking.duration === 2) discount = 0.20;
+        else if (booking.duration === 3) discount = 0.25;
+        else if (booking.duration === 4) discount = 0.30;
+        else if (booking.duration === 5) discount = 0.32;
+        else if (booking.duration === 6) discount = 0.34;
+        else if (booking.duration === 7) discount = 0.36;
+        else if (booking.duration >= 8) discount = 0.40;
+
+        const discountedStudioTotal = (baseRate * booking.duration) * (1 - discount);
+
+        // Add-ons Calculation
         const hourlyAddons = ADD_ONS.filter(a => booking.addons.includes(a.id) && a.duration === 'per hour');
         const flatAddons = ADD_ONS.filter(a => booking.addons.includes(a.id) && a.duration !== 'per hour');
 
-        const totalHourly = base + hourlyAddons.reduce((sum, a) => sum + a.price, 0);
-        const totalFlat = flatAddons.reduce((sum, a) => sum + a.price, 0);
+        const totalHourlyAddons = hourlyAddons.reduce((sum, a) => sum + a.price, 0) * booking.duration;
+        const totalFlatAddons = flatAddons.reduce((sum, a) => sum + a.price, 0);
 
-        return (totalHourly * booking.duration) + totalFlat;
+        return discountedStudioTotal + totalHourlyAddons + totalFlatAddons;
     };
 
     const handleNext = () => {
@@ -175,55 +213,26 @@ export default function BookWizard() {
     const submitBooking = async () => {
         setLoading(true);
         try {
-            // 1. Create booking in Square via Edge Function
-            const { data: squareData, error: squareError } = await supabase.functions.invoke('square-booking', {
+            const currentStudio = studios.find(s => s.name === booking.studio);
+            if (!currentStudio) throw new Error('Studio not found');
+
+            // 1. Create Stripe Checkout Session via Edge Function
+            const { data, error } = await supabase.functions.invoke('stripe-checkout', {
                 body: {
-                    appointment_data: {
-                        customer: {
-                            name: booking.customerName,
-                            email: booking.customerEmail
-                        },
-                        booking: {
-                            start_at: `${booking.date}T${booking.time}:00Z`,
-                            location_id: config.locationId,
-                            service_variation_id: config.serviceId,
-                            team_member_id: config.teamMemberId,
-                            duration_minutes: booking.duration * 60
-                        }
+                    booking_data: {
+                        ...booking,
+                        studio_id: currentStudio.id,
+                        totalPrice: calculateTotal()
                     }
                 }
             });
 
-            if (squareError) throw squareError;
+            if (error) throw error;
+            if (!data?.url) throw new Error('Failed to get checkout URL');
 
-            // 2. Log to Database
-            const { error: dbError } = await supabase.from('appointments').insert({
-                square_booking_id: squareData.booking.id,
-                customer_name: booking.customerName,
-                customer_email: booking.customerEmail,
-                plan_type: booking.plan,
-                studio: booking.studio,
-                theme: booking.theme || null,
-                duration_hours: booking.duration,
-                addons: booking.addons,
-                total_price: calculateTotal(),
-                booking_date: booking.date,
-                start_time: booking.time,
-                status: 'confirmed'
-            });
+            // 2. Redirect to Stripe
+            window.location.href = data.url;
 
-            if (dbError) throw dbError;
-
-            // 3. Send Notification
-            await supabase.functions.invoke('send-notification', {
-                body: {
-                    to: booking.customerEmail,
-                    subject: 'Booking Confirmed - Goldbeam Studios',
-                    html: `<h1>Your session is confirmed!</h1><p>Plan: ${booking.plan}</p><p>Total: $${calculateTotal()}</p>`
-                }
-            });
-
-            navigate('/booking-success');
         } catch (error: any) {
             console.error('Booking failed:', error);
             alert('Booking failed: ' + error.message);
@@ -385,6 +394,11 @@ export default function BookWizard() {
                                         onChange={(e) => setBooking(prev => ({ ...prev, date: e.target.value }))}
                                         className="w-full bg-zinc-800 border-none rounded-xl p-4 text-white focus:ring-2 ring-amber-500 outline-none"
                                     />
+                                    {booking.date && blockedDates.includes(booking.date) && (
+                                        <div className="mt-4 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 text-sm italic">
+                                            This date is currently unavailable due to maintenance or holiday. Please select another date.
+                                        </div>
+                                    )}
                                 </div>
                                 <div>
                                     <label className="text-xs font-bold text-gray-500 uppercase mb-4 block">Select Time:</label>
@@ -402,7 +416,7 @@ export default function BookWizard() {
                                                     className={`p-3 rounded-lg text-sm font-bold transition-all ${booking.time === t ? 'bg-amber-500 text-black' : 'bg-zinc-800 text-gray-500 hover:text-white'
                                                         }`}
                                                 >
-                                                    {t}
+                                                    {formatTime(t)}
                                                 </button>
                                             ))}
                                         </div>
@@ -424,8 +438,8 @@ export default function BookWizard() {
                                         <p className="text-xs font-bold text-gray-500 uppercase mb-4">Final Summary</p>
                                         <div className="space-y-3">
                                             <div className="flex justify-between">
-                                                <span className="text-gray-400 capitalize">{booking.plan} Podcast</span>
-                                                <span className="font-bold">${booking.plan === 'audio' ? 170 : booking.plan === 'audio_video' ? 300 : 250}/hr</span>
+                                                <span className="text-gray-400 capitalize">{booking.plan.replace('_', ' + ')} Podcast</span>
+                                                <span className="font-bold">Studio {booking.studio}</span>
                                             </div>
                                             <div className="flex justify-between">
                                                 <span className="text-gray-400">Duration</span>
@@ -477,7 +491,7 @@ export default function BookWizard() {
                                     <div className="flex items-start gap-3 bg-amber-500/5 p-4 rounded-xl border border-amber-500/20">
                                         <ShieldCheck className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
                                         <p className="text-xs text-gray-400 leading-relaxed">
-                                            By proceeding, you agree to our terms. Secure checkout will be processed via Square.
+                                            By proceeding, you agree to our terms. Secure checkout will be processed via Stripe.
                                         </p>
                                     </div>
                                 </div>

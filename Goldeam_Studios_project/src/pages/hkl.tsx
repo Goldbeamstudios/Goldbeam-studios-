@@ -230,7 +230,7 @@ export default function Home() {
 
             <div className="flex flex-col sm:flex-row gap-6 animate-fade-in-delay opacity-0" style={{ animationDelay: '0.6s' }}>
               <Link
-                to="/book"
+                to="/book-wizard"
                 className="group relative flex items-center justify-center gap-3 bg-gradient-to-r from-amber-500 to-amber-600 text-black px-8 py-4 text-lg font-bold uppercase tracking-wider hover:from-amber-400 hover:to-amber-500 transition-all transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-amber-500/50 rounded-lg overflow-hidden"
               >
                 <span className="absolute inset-0 bg-gradient-to-r from-amber-400 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
@@ -366,8 +366,8 @@ export default function Home() {
               <div
                 key={index}
                 className={`stagger-item opacity-0 relative p-8 flex flex-col h-full rounded-lg transition-all duration-500 hover:transform hover:-translate-y-3 group ${plan.popular
-                    ? 'border-2 border-amber-500 bg-zinc-900/80 backdrop-blur-sm shadow-2xl shadow-amber-500/30 scale-105'
-                    : 'border border-amber-500/20 bg-black/50 backdrop-blur-sm hover:border-amber-500/50 hover:shadow-xl hover:shadow-amber-500/20'
+                  ? 'border-2 border-amber-500 bg-zinc-900/80 backdrop-blur-sm shadow-2xl shadow-amber-500/30 scale-105'
+                  : 'border border-amber-500/20 bg-black/50 backdrop-blur-sm hover:border-amber-500/50 hover:shadow-xl hover:shadow-amber-500/20'
                   }`}
               >
                 {/* Animated background gradient */}
@@ -399,8 +399,8 @@ export default function Home() {
                   </ul>
                   <button
                     className={`relative overflow-hidden w-full py-4 text-sm font-bold uppercase tracking-widest transition-all duration-300 rounded-lg group/button ${plan.popular
-                        ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-black hover:from-amber-400 hover:to-amber-500 shadow-lg shadow-amber-500/30 hover:shadow-2xl hover:shadow-amber-500/50'
-                        : 'bg-white text-black hover:bg-amber-400'
+                      ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-black hover:from-amber-400 hover:to-amber-500 shadow-lg shadow-amber-500/30 hover:shadow-2xl hover:shadow-amber-500/50'
+                      : 'bg-white text-black hover:bg-amber-400'
                       }`}
                   >
                     <span className="relative z-10">Select Plan</span>

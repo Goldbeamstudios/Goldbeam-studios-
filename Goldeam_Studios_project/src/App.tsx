@@ -10,7 +10,6 @@ const Home = lazy(() => import('./pages/Home'));
 const HowItWorks = lazy(() => import('./pages/HowItWorks'));
 const Pricing = lazy(() => import('./pages/Pricing'));
 const Studios = lazy(() => import('./pages/Studios'));
-const Book = lazy(() => import('./pages/Book'));
 const Build = lazy(() => import('./pages/Build'));
 const More = lazy(() => import('./pages/More'));
 const Contact = lazy(() => import('./pages/Contact'));
@@ -24,6 +23,8 @@ const BlogPost = lazy(() => import('./pages/BlogPost'));
 const Login = lazy(() => import('./pages/admin/Login'));
 const Dashboard = lazy(() => import('./pages/admin/Dashboard'));
 const Editor = lazy(() => import('./pages/admin/Editor'));
+const AdminSchedule = lazy(() => import('./pages/admin/AdminSchedule'));
+const AdminBookings = lazy(() => import('./pages/admin/AdminBookings'));
 
 // Booking Wizard
 const BookWizard = lazy(() => import('./pages/BookWizard'));
@@ -50,8 +51,10 @@ function App() {
           <Route path="/admin" element={<ProtectedRoute />}>
             <Route element={<AdminLayout />}>
               <Route index element={<Dashboard />} />
+              <Route path="bookings" element={<AdminBookings />} />
               <Route path="posts" element={<Dashboard />} />
               <Route path="editor" element={<Editor />} />
+              <Route path="schedule" element={<AdminSchedule />} />
             </Route>
           </Route>
 
@@ -61,7 +64,6 @@ function App() {
             <Route path="/how-it-works" element={<HowItWorks />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/studios" element={<Studios />} />
-            <Route path="/book" element={<Book />} />
             <Route path="/book-wizard" element={<BookWizard />} />
             <Route path="/booking-success" element={<BookingSuccess />} />
             <Route path="/build" element={<Build />} />

@@ -196,7 +196,7 @@ export default function More() {
             Book your first session and experience professional podcast production.
           </p>
           <Link
-            to="/book"
+            to="/book-wizard"
             className="inline-flex items-center gap-3 bg-gradient-to-r from-amber-500 to-amber-600 text-black px-8 py-4 text-lg font-bold uppercase tracking-wider hover:from-amber-400 hover:to-amber-500 transition-all transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-amber-500/50 rounded-lg"
           >
             Book Now

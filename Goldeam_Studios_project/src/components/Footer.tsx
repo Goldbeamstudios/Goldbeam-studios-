@@ -125,7 +125,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  to="/book"
+                  to="/book-wizard"
                   className="text-amber-500 hover:text-amber-400 transition-colors inline-block py-1 font-semibold"
                 >
                   Book a Session →

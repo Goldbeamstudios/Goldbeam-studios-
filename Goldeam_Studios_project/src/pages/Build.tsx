@@ -179,7 +179,7 @@ export default function Build() {
                 step: 'Step 2',
                 title: 'Book & Prepare',
                 tasks: [
-                  'Secure online booking with Square',
+                  'Secure online booking with Stripe',
                   'Receive pre-session guide',
                   'Coordinate with remote guests',
                   'Plan your content',
