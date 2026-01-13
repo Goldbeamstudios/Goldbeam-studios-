@@ -1,10 +1,8 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Check, Sparkles, Minus, Plus, ShoppingCart } from 'lucide-react';
+import { Check, Sparkles, Minus } from 'lucide-react';
 
 export default function Pricing() {
   const navigate = useNavigate();
-  const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
   const pricingPlans = [
     {
       id: 'audio',
@@ -137,22 +135,6 @@ export default function Pricing() {
   ];
 
 
-  const toggleAddOn = (name: string) => {
-    setSelectedAddOns(prev =>
-      prev.includes(name)
-        ? prev.filter(item => item !== name)
-        : [...prev, name]
-    );
-  };
-
-  const calculateTotal = (basePrice: string) => {
-    const base = parseInt(basePrice.replace('From $', ''));
-    const addOnTotal = selectedAddOns.reduce((sum, name) => {
-      const addon = addOns.find(a => a.name === name);
-      return sum + (addon ? parseInt(addon.price.replace('$', '')) : 0);
-    }, 0);
-    return base + addOnTotal;
-  };
 
   return (
     <div className="bg-black text-white min-h-screen pt-24">
@@ -220,15 +202,6 @@ export default function Pricing() {
                     <p className="text-sm text-gray-300 leading-snug">{plan.bestFor}</p>
                   </div>
                 )}
-                <div className="flex items-baseline mb-8 pt-4 border-t border-white/5">
-                  <div className="flex flex-col">
-                    <span className="text-xs text-gray-500 uppercase font-bold mb-1">Estimated Total</span>
-                    <div className="flex items-baseline">
-                      <span className="text-5xl font-black text-amber-500">${calculateTotal(plan.price)}</span>
-                      <span className="text-gray-400 ml-2">{plan.period}</span>
-                    </div>
-                  </div>
-                </div>
 
                 <button
                   onClick={() => navigate('/book-wizard', { state: { plan: plan.id } })}
@@ -243,39 +216,6 @@ export default function Pricing() {
             ))}
           </div>
 
-          {/* Sticky Total Bar for Mobile/Desktop */}
-          {selectedAddOns.length > 0 && (
-            <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-2xl animate-fade-in-up">
-              <div className="bg-zinc-900/90 backdrop-blur-xl border border-amber-500/50 rounded-2xl p-6 shadow-2xl flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-bold text-amber-500 uppercase tracking-widest mb-1">Multi-Service Selection</p>
-                  <p className="text-sm text-gray-300">
-                    {selectedAddOns.length} Add-on{selectedAddOns.length > 1 ? 's' : ''} Selected
-                  </p>
-                </div>
-                <div className="flex items-center gap-6">
-                  <div className="text-right">
-                    <p className="text-xs text-gray-500 uppercase font-bold">Additional</p>
-                    <p className="text-xl font-black text-white">
-                      +${selectedAddOns.reduce((sum, name) => {
-                        const addon = addOns.find(a => a.name === name);
-                        return sum + (addon ? parseInt(addon.price.replace('$', '')) : 0);
-                      }, 0)}
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => {
-                      const element = document.getElementById('pricing-grid');
-                      element?.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                    className="bg-amber-500 text-black px-6 py-3 rounded-xl font-black uppercase text-xs tracking-widest hover:bg-amber-400 transition-all flex items-center gap-2"
-                  >
-                    Confirm Plans <ShoppingCart className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* Comparison Table */}
           <div className="mt-32 mb-24">
