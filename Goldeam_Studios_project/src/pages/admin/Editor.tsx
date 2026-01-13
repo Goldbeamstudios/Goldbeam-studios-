@@ -124,7 +124,7 @@ export default function Editor() {
                 const { error } = await supabase.from('posts').insert([postData]);
                 if (error) throw error;
             }
-            navigate('/admin');
+            navigate('/admin/posts');
         } catch (error) {
             console.error("Error saving post:", error);
             alert('Failed to save post');
@@ -161,7 +161,7 @@ export default function Editor() {
             {/* Top Bar */}
             <div className="flex items-center justify-between bg-gray-900/50 backdrop-blur-sm p-4 rounded-xl border border-gray-800">
                 <div className="flex items-center gap-4">
-                    <button onClick={() => navigate('/admin')} className="text-gray-400 hover:text-white transition-colors">
+                    <button onClick={() => navigate('/admin/posts')} className="text-gray-400 hover:text-white transition-colors">
                         <ArrowLeft size={20} />
                     </button>
                     <input

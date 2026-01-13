@@ -7,13 +7,12 @@ import {
     Mail,
     Trash2,
     Calendar as CalendarIcon,
-    User,
-    Save,
     RefreshCcw,
     Send,
     Eye,
     Phone,
-    Check
+    Check,
+    User
 } from 'lucide-react';
 import { formatTime } from '../../lib/utils';
 
@@ -95,24 +94,6 @@ const AdminBookings = () => {
             }
         } catch (err) {
             console.error('Error updating status:', err);
-        }
-    };
-
-    const handleSaveNotes = async () => {
-        if (!selectedBooking) return;
-        setIsUpdating(true);
-        try {
-            const { error } = await supabase
-                .from('appointments')
-                .update({ admin_notes: selectedBooking.admin_notes })
-                .eq('id', selectedBooking.id);
-
-            if (error) throw error;
-            setBookings(prev => prev.map(b => b.id === selectedBooking.id ? { ...b, admin_notes: selectedBooking.admin_notes } : b));
-        } catch (err) {
-            console.error('Error saving notes:', err);
-        } finally {
-            setIsUpdating(false);
         }
     };
 
@@ -522,36 +503,7 @@ const AdminBookings = () => {
                                             <p className="text-[10px] font-black text-zinc-600 uppercase">Gross Revenue</p>
                                             <p className="text-3xl font-black text-white">${Number(selectedBooking.total_price).toFixed(2)}</p>
                                         </div>
-                                        <div className="bg-zinc-950 p-4 rounded-2xl border border-zinc-900 space-y-3">
-                                            <div className="flex flex-col gap-1">
-                                                <p className="text-[9px] font-black text-zinc-700 uppercase">Stripe Session</p>
-                                                <p className="text-[10px] font-mono text-zinc-500 truncate">{selectedBooking.stripe_session_id || 'LOCAL_OVERRIDE'}</p>
-                                            </div>
-                                            <div className="flex flex-col gap-1">
-                                                <p className="text-[9px] font-black text-zinc-700 uppercase">Vault Reference</p>
-                                                <p className="text-[10px] font-mono text-zinc-500 truncate">{selectedBooking.stripe_payment_intent_id || 'PENDING_CAPTURE'}</p>
-                                            </div>
-                                        </div>
                                     </div>
-                                </section>
-
-                                <section>
-                                    <div className="flex items-center justify-between mb-3">
-                                        <label className="text-[10px] font-black text-zinc-600 uppercase tracking-widest">Internal Coordination</label>
-                                        <button
-                                            onClick={handleSaveNotes}
-                                            disabled={isUpdating}
-                                            className="text-[10px] font-black text-amber-500 uppercase flex items-center gap-1 hover:text-amber-400 disabled:opacity-30"
-                                        >
-                                            <Save size={12} /> {isUpdating ? 'Storing...' : 'Save Notes'}
-                                        </button>
-                                    </div>
-                                    <textarea
-                                        value={selectedBooking.admin_notes || ''}
-                                        onChange={(e) => setSelectedBooking({ ...selectedBooking, admin_notes: e.target.value })}
-                                        className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl p-4 text-xs text-zinc-300 min-h-[120px] focus:ring-1 ring-amber-500/30 outline-none transition-all placeholder:text-zinc-800"
-                                        placeholder="Add private staff comments for this session..."
-                                    />
                                 </section>
                             </div>
                         </div>

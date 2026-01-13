@@ -25,6 +25,7 @@ const Dashboard = lazy(() => import('./pages/admin/Dashboard'));
 const Editor = lazy(() => import('./pages/admin/Editor'));
 const AdminSchedule = lazy(() => import('./pages/admin/AdminSchedule'));
 const AdminBookings = lazy(() => import('./pages/admin/AdminBookings'));
+const AdminPosts = lazy(() => import('./pages/admin/AdminPosts'));
 
 // Booking Wizard
 const BookWizard = lazy(() => import('./pages/BookWizard'));
@@ -52,7 +53,7 @@ function App() {
             <Route element={<AdminLayout />}>
               <Route index element={<Dashboard />} />
               <Route path="bookings" element={<AdminBookings />} />
-              <Route path="posts" element={<Dashboard />} />
+              <Route path="posts" element={<AdminPosts />} />
               <Route path="editor" element={<Editor />} />
               <Route path="schedule" element={<AdminSchedule />} />
             </Route>
