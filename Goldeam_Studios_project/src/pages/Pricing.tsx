@@ -383,23 +383,6 @@ export default function Pricing() {
                     {addon.period && <span className="text-sm text-gray-400">{addon.period}</span>}
                   </div>
                   <p className="text-sm text-gray-300 mb-4 flex-grow">{addon.description}</p>
-                  <button
-                    onClick={() => toggleAddOn(addon.name)}
-                    className={`mt-6 w-full py-3 text-center text-xs font-bold uppercase tracking-widest border transition-all rounded-lg flex items-center justify-center gap-2 ${selectedAddOns.includes(addon.name)
-                      ? 'bg-amber-500 border-amber-500 text-black'
-                      : 'border-amber-500/30 text-white hover:border-amber-500 hover:bg-amber-500/5'
-                      }`}
-                  >
-                    {selectedAddOns.includes(addon.name) ? (
-                      <>
-                        <Check className="h-4 w-4" /> Selected
-                      </>
-                    ) : (
-                      <>
-                        <Plus className="h-4 w-4" /> Add Service
-                      </>
-                    )}
-                  </button>
                 </div>
               ))}
             </div>
