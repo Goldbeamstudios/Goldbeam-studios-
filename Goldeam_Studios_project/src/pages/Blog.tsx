@@ -45,19 +45,19 @@ export default function Blog() {
     });
 
     return (
-        <div className="bg-black text-white min-h-screen pt-24 text-left">
+        <div className="bg-white dark:bg-black text-zinc-900 dark:text-white min-h-screen pt-24 text-left transition-colors duration-300">
             {/* Hero Section */}
             <section className="py-20 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent"></div>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="text-center max-w-3xl mx-auto">
-                        <h1 className="text-5xl md:text-7xl font-display font-extrabold text-white uppercase mb-6 tracking-tight">
+                        <h1 className="text-5xl md:text-7xl font-display font-extrabold text-zinc-900 dark:text-white uppercase mb-6 tracking-tight">
                             Our{' '}
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-600">
                                 Blog
                             </span>
                         </h1>
-                        <p className="text-xl text-gray-300 leading-relaxed mb-8">
+                        <p className="text-xl text-zinc-600 dark:text-gray-300 leading-relaxed mb-8">
                             Expert tips, guides, and industry insights.
                         </p>
 
@@ -69,7 +69,7 @@ export default function Blog() {
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 placeholder="Search articles..."
-                                className="w-full bg-zinc-900 border border-amber-500/20 text-white pl-12 pr-4 py-4 rounded-lg focus:outline-none focus:border-amber-500 transition-colors"
+                                className="w-full bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-amber-500/20 text-zinc-900 dark:text-white pl-12 pr-4 py-4 rounded-lg focus:outline-none focus:border-amber-500 transition-colors"
                             />
                         </div>
                     </div>
@@ -89,7 +89,7 @@ export default function Blog() {
                                 {filteredPosts.map((post) => (
                                     <article
                                         key={post.id}
-                                        className="group bg-zinc-900 border border-amber-500/20 rounded-2xl overflow-hidden hover:border-amber-500/50 transition-all duration-300 hover:transform hover:-translate-y-2 flex flex-col"
+                                        className="group bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-amber-500/20 rounded-2xl overflow-hidden hover:border-amber-500/50 transition-all duration-300 hover:transform hover:-translate-y-2 flex flex-col shadow-lg shadow-zinc-200/50 dark:shadow-none"
                                     >
                                         <div className="relative h-48 md:h-56 overflow-hidden shrink-0">
                                             <img
@@ -100,16 +100,16 @@ export default function Blog() {
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                                         </div>
                                         <div className="p-6 flex-1 flex flex-col">
-                                            <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
+                                            <div className="flex items-center gap-4 text-sm text-zinc-500 dark:text-gray-400 mb-3">
                                                 <span className="flex items-center gap-1">
                                                     <Calendar className="h-4 w-4" />
                                                     {new Date(post.created_at).toLocaleDateString()}
                                                 </span>
                                             </div>
-                                            <h3 className="text-xl font-display font-extrabold text-white mb-3 group-hover:text-amber-500 transition-colors line-clamp-2 tracking-tight">
+                                            <h3 className="text-xl font-display font-extrabold text-zinc-900 dark:text-white mb-3 group-hover:text-amber-500 transition-colors line-clamp-2 tracking-tight">
                                                 {post.title}
                                             </h3>
-                                            <p className="text-gray-400 mb-4 line-clamp-3 text-sm">{post.excerpt}</p>
+                                            <p className="text-zinc-600 dark:text-gray-400 mb-4 line-clamp-3 text-sm">{post.excerpt}</p>
                                             <div className="mt-auto pt-4">
                                                 <Link
                                                     to={`/blog/${post.slug}`}
@@ -126,7 +126,7 @@ export default function Blog() {
 
                             {filteredPosts.length === 0 && (
                                 <div className="text-center py-20">
-                                    <p className="text-gray-400 text-xl">No articles found.</p>
+                                    <p className="text-zinc-500 dark:text-gray-400 text-xl">No articles found.</p>
                                 </div>
                             )}
                         </>

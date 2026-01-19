@@ -238,19 +238,19 @@ export default function BookWizard() {
     };
 
     return (
-        <div className="bg-black text-white min-h-screen pt-32 pb-20 px-4">
+        <div className="bg-white dark:bg-black text-zinc-900 dark:text-white min-h-screen pt-32 pb-20 px-4 transition-colors duration-300">
             <div className="max-w-4xl mx-auto">
                 {/* Progress Stepper */}
                 <div className="mb-12 flex justify-between items-center relative">
-                    <div className="absolute top-1/2 left-0 w-full h-px bg-zinc-800 z-0"></div>
+                    <div className="absolute top-1/2 left-0 w-full h-px bg-zinc-200 dark:bg-zinc-800 z-0"></div>
                     {['plan', 'studio', 'details', 'schedule', 'confirm'].map((s, idx) => (
                         <div
                             key={s}
                             className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all ${currentStep === s
                                 ? 'bg-amber-500 border-amber-500 text-black shadow-lg shadow-amber-500/30'
                                 : (idx < ['plan', 'studio', 'details', 'schedule', 'confirm'].indexOf(currentStep))
-                                    ? 'bg-zinc-900 border-amber-500 text-amber-500'
-                                    : 'bg-zinc-900 border-zinc-700 text-zinc-500'
+                                    ? 'bg-white dark:bg-zinc-900 border-amber-500 text-amber-500'
+                                    : 'bg-zinc-100 dark:bg-zinc-900 border-zinc-300 dark:border-zinc-700 text-zinc-400 dark:text-zinc-500'
                                 }`}
                         >
                             {idx < ['plan', 'studio', 'details', 'schedule', 'confirm'].indexOf(currentStep) ? <Check className="h-5 w-5" /> : idx + 1}
@@ -258,7 +258,7 @@ export default function BookWizard() {
                     ))}
                 </div>
 
-                <div className="bg-zinc-900/50 backdrop-blur-xl border border-zinc-800 rounded-3xl p-8 md:p-12 shadow-2xl">
+                <div className="bg-white dark:bg-zinc-900/50 backdrop-blur-xl border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 md:p-12 shadow-2xl shadow-zinc-200/50 dark:shadow-black/50">
                     {/* STEP 1: PLAN */}
                     {currentStep === 'plan' && (
                         <div className="animate-fade-in-up">
@@ -274,7 +274,7 @@ export default function BookWizard() {
                                         onClick={() => setBooking(prev => ({ ...prev, plan: p.id as any }))}
                                         className={`p-6 rounded-2xl border-2 transition-all text-left flex flex-col gap-4 ${booking.plan === p.id
                                             ? 'bg-amber-500/10 border-amber-500'
-                                            : 'bg-zinc-800/50 border-transparent hover:border-zinc-600'
+                                            : 'bg-zinc-100 dark:bg-zinc-800/50 border-zinc-200 dark:border-transparent hover:border-zinc-300 dark:hover:border-zinc-600'
                                             }`}
                                     >
                                         <p.icon className={`h-8 w-8 ${booking.plan === p.id ? 'text-amber-500' : 'text-zinc-400'}`} />
@@ -292,31 +292,31 @@ export default function BookWizard() {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                                 <button
                                     onClick={() => setBooking(prev => ({ ...prev, studio: 'A' }))}
-                                    className={`p-6 rounded-2xl border-2 transition-all text-left ${booking.studio === 'A' ? 'bg-amber-500/10 border-amber-500' : 'bg-zinc-800/50 border-transparent'
+                                    className={`p-6 rounded-2xl border-2 transition-all text-left ${booking.studio === 'A' ? 'bg-amber-500/10 border-amber-500' : 'bg-zinc-100 dark:bg-zinc-800/50 border-zinc-200 dark:border-transparent'
                                         }`}
                                 >
                                     <h3 className="font-bold text-xl mb-2">Studio A</h3>
-                                    <p className="text-sm text-gray-400">Large & Professional Space</p>
+                                    <p className="text-sm text-zinc-600 dark:text-gray-400">Large & Professional Space</p>
                                 </button>
                                 <button
                                     onClick={() => setBooking(prev => ({ ...prev, studio: 'B' }))}
-                                    className={`p-6 rounded-2xl border-2 transition-all text-left ${booking.studio === 'B' ? 'bg-amber-500/10 border-amber-500' : 'bg-zinc-800/50 border-transparent'
+                                    className={`p-6 rounded-2xl border-2 transition-all text-left ${booking.studio === 'B' ? 'bg-amber-500/10 border-amber-500' : 'bg-zinc-100 dark:bg-zinc-800/50 border-zinc-200 dark:border-transparent'
                                         }`}
                                 >
                                     <h3 className="font-bold text-xl mb-2">Studio B</h3>
-                                    <p className="text-sm text-gray-400">Compact & Intimate Space</p>
+                                    <p className="text-sm text-zinc-600 dark:text-gray-400">Compact & Intimate Space</p>
                                 </button>
                             </div>
 
                             {booking.studio === 'A' && (
                                 <div className="animate-fade-in">
-                                    <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Select Theme for Studio A:</p>
+                                    <p className="text-xs font-bold text-zinc-500 dark:text-gray-500 uppercase tracking-widest mb-4">Select Theme for Studio A:</p>
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                         {THEMES.map(theme => (
                                             <button
                                                 key={theme.id}
                                                 onClick={() => setBooking(prev => ({ ...prev, theme: theme.id }))}
-                                                className={`p-4 rounded-xl border transition-all text-left ${booking.theme === theme.id ? 'bg-amber-500 text-black font-bold' : 'bg-zinc-800 border-transparent text-gray-400'
+                                                className={`p-4 rounded-xl border transition-all text-left ${booking.theme === theme.id ? 'bg-amber-500 text-black font-bold' : 'bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-transparent text-zinc-600 dark:text-gray-400'
                                                     }`}
                                             >
                                                 {theme.name}
@@ -334,13 +334,13 @@ export default function BookWizard() {
                             <h2 className="text-3xl font-black uppercase mb-8">Session Details</h2>
                             <div className="space-y-12">
                                 <div>
-                                    <label className="text-xs font-bold text-gray-500 uppercase mb-4 block">Booking Duration (Hours):</label>
+                                    <label className="text-xs font-bold text-zinc-500 dark:text-gray-500 uppercase mb-4 block">Booking Duration (Hours):</label>
                                     <div className="flex flex-wrap gap-2">
                                         {[1, 2, 3, 4, 5, 6, 8, 10, 12].map(h => (
                                             <button
                                                 key={h}
                                                 onClick={() => setBooking(prev => ({ ...prev, duration: h }))}
-                                                className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold transition-all ${booking.duration === h ? 'bg-amber-500 text-black' : 'bg-zinc-800 text-gray-400'
+                                                className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold transition-all ${booking.duration === h ? 'bg-amber-500 text-black' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-gray-400'
                                                     }`}
                                             >
                                                 {h}
@@ -350,7 +350,7 @@ export default function BookWizard() {
                                 </div>
 
                                 <div>
-                                    <label className="text-xs font-bold text-gray-500 uppercase mb-4 block">Add-On Services:</label>
+                                    <label className="text-xs font-bold text-zinc-500 dark:text-gray-500 uppercase mb-4 block">Add-On Services:</label>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {ADD_ONS.map(addon => (
                                             <button
@@ -361,7 +361,7 @@ export default function BookWizard() {
                                                         : [...booking.addons, addon.id];
                                                     setBooking(prev => ({ ...prev, addons: newAddons }));
                                                 }}
-                                                className={`p-4 rounded-xl border-2 transition-all flex items-center justify-between ${booking.addons.includes(addon.id) ? 'bg-amber-500/10 border-amber-500' : 'bg-zinc-800/50 border-transparent'
+                                                className={`p-4 rounded-xl border-2 transition-all flex items-center justify-between ${booking.addons.includes(addon.id) ? 'bg-amber-500/10 border-amber-500' : 'bg-zinc-100 dark:bg-zinc-800/50 border-zinc-200 dark:border-transparent'
                                                     }`}
                                             >
                                                 <div className="text-left">
@@ -383,12 +383,13 @@ export default function BookWizard() {
                             <h2 className="text-3xl font-black uppercase mb-8">Pick Time & Date</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div>
-                                    <label className="text-xs font-bold text-gray-500 uppercase mb-4 block">Select Date:</label>
+                                    <label className="text-xs font-bold text-zinc-500 dark:text-gray-500 uppercase mb-4 block">Select Date:</label>
                                     <input
                                         type="date"
+                                        min={new Date().toISOString().split('T')[0]}
                                         value={booking.date}
                                         onChange={(e) => setBooking(prev => ({ ...prev, date: e.target.value }))}
-                                        className="w-full bg-zinc-800 border-none rounded-xl p-4 text-white focus:ring-2 ring-amber-500 outline-none"
+                                        className="w-full bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-none rounded-xl p-4 text-zinc-900 dark:text-white focus:ring-2 ring-amber-500 outline-none"
                                     />
                                     {booking.date && blockedDates.includes(booking.date) && (
                                         <div className="mt-4 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 text-sm italic">
@@ -397,7 +398,7 @@ export default function BookWizard() {
                                     )}
                                 </div>
                                 <div>
-                                    <label className="text-xs font-bold text-gray-500 uppercase mb-4 block">Select Time:</label>
+                                    <label className="text-xs font-bold text-zinc-500 dark:text-gray-500 uppercase mb-4 block">Select Time:</label>
                                     {fetchingSlots ? (
                                         <div className="flex items-center gap-2 text-zinc-500 text-sm">
                                             <Loader2 className="h-4 w-4 animate-spin text-amber-500" />
@@ -409,7 +410,7 @@ export default function BookWizard() {
                                                 <button
                                                     key={t}
                                                     onClick={() => setBooking(prev => ({ ...prev, time: t }))}
-                                                    className={`p-3 rounded-lg text-sm font-bold transition-all ${booking.time === t ? 'bg-amber-500 text-black' : 'bg-zinc-800 text-gray-500 hover:text-white'
+                                                    className={`p-3 rounded-lg text-sm font-bold transition-all ${booking.time === t ? 'bg-amber-500 text-black' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-gray-500 hover:text-zinc-900 dark:hover:text-white'
                                                         }`}
                                                 >
                                                     {formatTime(t)}
@@ -430,20 +431,20 @@ export default function BookWizard() {
                             <h2 className="text-3xl font-black uppercase mb-8">Review & Confirm</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                                 <div className="space-y-6">
-                                    <div className="p-6 bg-zinc-800/50 rounded-2xl border border-zinc-700/50">
-                                        <p className="text-xs font-bold text-gray-500 uppercase mb-4">Final Summary</p>
+                                    <div className="p-6 bg-zinc-100 dark:bg-zinc-800/50 rounded-2xl border border-zinc-200 dark:border-zinc-700/50">
+                                        <p className="text-xs font-bold text-zinc-500 dark:text-gray-500 uppercase mb-4">Final Summary</p>
                                         <div className="space-y-3">
                                             <div className="flex justify-between">
-                                                <span className="text-gray-400 capitalize">{booking.plan.replace('_', ' + ')} Podcast</span>
-                                                <span className="font-bold">Studio {booking.studio}</span>
+                                                <span className="text-zinc-600 dark:text-gray-400 capitalize">{booking.plan.replace('_', ' + ')} Podcast</span>
+                                                <span className="font-bold text-zinc-900 dark:text-white">Studio {booking.studio}</span>
                                             </div>
                                             <div className="flex justify-between">
-                                                <span className="text-gray-400">Duration</span>
-                                                <span className="font-bold">{booking.duration} Hours</span>
+                                                <span className="text-zinc-600 dark:text-gray-400">Duration</span>
+                                                <span className="font-bold text-zinc-900 dark:text-white">{booking.duration} Hours</span>
                                             </div>
                                             <div className="flex justify-between">
-                                                <span className="text-gray-400">Studio</span>
-                                                <span className="font-bold">Studio {booking.studio} {booking.theme ? `(${booking.theme})` : ''}</span>
+                                                <span className="text-zinc-600 dark:text-gray-400">Studio</span>
+                                                <span className="font-bold text-zinc-900 dark:text-white">Studio {booking.studio} {booking.theme ? `(${booking.theme})` : ''}</span>
                                             </div>
                                             {booking.addons.length > 0 && (
                                                 <div className="pt-3 border-t border-zinc-700">
@@ -452,15 +453,15 @@ export default function BookWizard() {
                                                         const addon = ADD_ONS.find(item => item.id === a);
                                                         return (
                                                             <div key={a} className="flex justify-between text-sm">
-                                                                <span className="text-gray-400">{addon?.name}</span>
-                                                                <span className="text-gray-300 font-medium">${addon?.price}</span>
+                                                                <span className="text-zinc-600 dark:text-gray-400">{addon?.name}</span>
+                                                                <span className="text-zinc-500 dark:text-gray-300 font-medium">${addon?.price}</span>
                                                             </div>
                                                         );
                                                     })}
                                                 </div>
                                             )}
-                                            <div className="pt-6 border-t border-zinc-700 flex justify-between items-baseline">
-                                                <span className="text-lg font-bold text-white uppercase">Total Estimate</span>
+                                            <div className="pt-6 border-t border-zinc-200 dark:border-zinc-700 flex justify-between items-baseline">
+                                                <span className="text-lg font-bold text-zinc-900 dark:text-white uppercase">Total Estimate</span>
                                                 <span className="text-3xl font-black text-amber-500">${calculateTotal()}</span>
                                             </div>
                                         </div>
@@ -474,19 +475,19 @@ export default function BookWizard() {
                                             placeholder="Full Name"
                                             value={booking.customerName}
                                             onChange={(e) => setBooking(prev => ({ ...prev, customerName: e.target.value }))}
-                                            className="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-4 outline-none focus:border-amber-500"
+                                            className="w-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl p-4 text-zinc-900 dark:text-white outline-none focus:border-amber-500"
                                         />
                                         <input
                                             type="email"
                                             placeholder="Email Address"
                                             value={booking.customerEmail}
                                             onChange={(e) => setBooking(prev => ({ ...prev, customerEmail: e.target.value }))}
-                                            className="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-4 outline-none focus:border-amber-500"
+                                            className="w-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl p-4 text-zinc-900 dark:text-white outline-none focus:border-amber-500"
                                         />
                                     </div>
                                     <div className="flex items-start gap-3 bg-amber-500/5 p-4 rounded-xl border border-amber-500/20">
                                         <ShieldCheck className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
-                                        <p className="text-xs text-gray-400 leading-relaxed">
+                                        <p className="text-xs text-zinc-600 dark:text-gray-400 leading-relaxed">
                                             By proceeding, you agree to our terms. Secure checkout will be processed via Stripe.
                                         </p>
                                     </div>
@@ -496,11 +497,11 @@ export default function BookWizard() {
                     )}
 
                     {/* Footer Controls */}
-                    <div className="mt-12 flex justify-between items-center pt-8 border-t border-zinc-800">
+                    <div className="mt-12 flex justify-between items-center pt-8 border-t border-zinc-200 dark:border-zinc-800">
                         <button
                             onClick={handleBack}
                             disabled={currentStep === 'plan' || loading}
-                            className="flex items-center gap-2 text-zinc-500 hover:text-white transition-colors disabled:opacity-0"
+                            className="flex items-center gap-2 text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors disabled:opacity-0"
                         >
                             <ChevronLeft className="h-5 w-5" /> Back
                         </button>

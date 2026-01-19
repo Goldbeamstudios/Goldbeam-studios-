@@ -122,13 +122,13 @@ export default function Studios() {
   ];
 
   return (
-    <div className="bg-black text-white min-h-screen transition-colors duration-300">
+    <div className="bg-white dark:bg-black text-zinc-900 dark:text-white min-h-screen transition-colors duration-300">
       {/* Hero Section */}
       <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/50 to-transparent dark:from-black dark:via-black/50 dark:to-transparent"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-5xl md:text-8xl font-black text-white uppercase tracking-tight mb-8 leading-[0.9] text-shadow-lg shadow-black/50 animate-slide-up">
+            <h1 className="text-5xl md:text-8xl font-black text-zinc-900 dark:text-white uppercase tracking-tight mb-8 leading-[0.9] text-shadow-lg shadow-black/50 animate-slide-up">
               Our{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-600">
                 Studios
@@ -153,7 +153,7 @@ export default function Studios() {
                 <div className="relative group rounded-3xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-amber-500/20 aspect-[4/3] md:aspect-[3/2] lg:aspect-square xl:aspect-[4/3]">
                   {/* Sliding Container */}
                   <div
-                    className="flex h-full transition-transform duration-700 ease-out cursor-zoom-in bg-zinc-900"
+                    className="flex h-full transition-transform duration-700 ease-out cursor-zoom-in bg-zinc-100 dark:bg-zinc-900"
                     style={{ transform: `translateX(-${activeTheme * 100}%)` }}
                     onClick={() => {
                       setLightboxStudio('A');
@@ -230,7 +230,7 @@ export default function Studios() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-4">
                     <span className="h-px w-12 bg-amber-500/50"></span>
-                    <h2 className="text-4xl md:text-6xl font-black uppercase text-white leading-[0.9] mb-6">
+                    <h2 className="text-4xl md:text-6xl font-black uppercase text-zinc-900 dark:text-white leading-[0.9] mb-6">
                       {studioA.name}
                     </h2>
                   </div>
@@ -239,13 +239,13 @@ export default function Studios() {
                   </h3>
                 </div>
 
-                <p className="text-xl text-gray-400 mb-8 leading-relaxed font-light">
+                <p className="text-xl text-zinc-600 dark:text-gray-400 mb-8 leading-relaxed font-light">
                   {studioA.description}
                 </p>
 
                 {/* Theme Switcher */}
                 <div className="space-y-4 pt-4">
-                  <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">Select Theme:</p>
+                  <p className="text-xs font-bold text-zinc-500 dark:text-gray-500 uppercase tracking-widest">Select Theme:</p>
                   <div className="flex flex-wrap gap-3">
                     {studioA.themes.map((theme, index) => (
                       <button
@@ -253,7 +253,7 @@ export default function Studios() {
                         onClick={() => setActiveTheme(index)}
                         className={`px-6 py-3 rounded-xl font-bold uppercase text-xs tracking-wider transition-all duration-300 border ${activeTheme === index
                           ? 'bg-amber-500 border-amber-500 text-black shadow-lg shadow-amber-500/40 transform -translate-y-1'
-                          : 'bg-zinc-900 border-amber-500/20 text-gray-300 hover:border-amber-500/50 hover:text-white'
+                          : 'bg-zinc-100 dark:bg-zinc-900 border-amber-500/20 text-zinc-500 dark:text-gray-300 hover:border-amber-500/50 hover:text-zinc-900 dark:hover:text-white'
                           }`}
                       >
                         {theme.name}
@@ -262,10 +262,10 @@ export default function Studios() {
                   </div>
                 </div>
 
-                <div className="p-6 bg-zinc-900 rounded-2xl border border-amber-500/10 space-y-4">
+                <div className="p-6 bg-zinc-100 dark:bg-zinc-900 rounded-2xl border border-amber-500/10 space-y-4">
                   <div className="flex items-center gap-3">
                     <Users className="h-5 w-5 text-amber-500" />
-                    <span className="text-white font-bold">{studioA.themes[activeTheme].capacity}</span>
+                    <span className="text-zinc-900 dark:text-white font-bold">{studioA.themes[activeTheme].capacity}</span>
                   </div>
                   <p className="text-sm text-muted-foreground italic leading-relaxed">
                     {studioA.themes[activeTheme].description}
@@ -276,14 +276,14 @@ export default function Studios() {
                   {studioA.features.slice(0, 6).map((feature, index) => (
                     <div key={index} className="flex items-center gap-3">
                       <Check className="h-4 w-4 text-amber-500 shrink-0" />
-                      <span className="text-sm text-muted-foreground">{feature}</span>
+                      <span className="text-sm text-zinc-600 dark:text-muted-foreground">{feature}</span>
                     </div>
                   ))}
                 </div>
 
                 <button
                   onClick={() => navigate('/book-wizard', { state: { plan: 'general', studio: 'A' } })}
-                  className="inline-flex items-center gap-4 bg-gradient-to-r from-amber-500 to-amber-600 text-black px-10 py-5 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/50 group"
+                  className="inline-flex items-center gap-4 bg-gradient-to-r from-amber-500 to-amber-600 text-black px-10 py-5 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:scale-105 hover:from-amber-400 hover:to-amber-500 hover:shadow-2xl hover:shadow-amber-500/50 group"
                 >
                   Book {studioA.name}
                   <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-2" />
@@ -322,7 +322,7 @@ export default function Studios() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-4">
                     <span className="h-px w-12 bg-amber-500/50"></span>
-                    <h2 className="text-4xl md:text-6xl font-black text-white uppercase leading-tight">
+                    <h2 className="text-4xl md:text-6xl font-black text-zinc-900 dark:text-white uppercase leading-tight">
                       {studioB.name}
                     </h2>
                   </div>
@@ -331,27 +331,27 @@ export default function Studios() {
                   </h3>
                 </div>
 
-                <p className="text-lg text-gray-400 leading-relaxed">
+                <p className="text-lg text-zinc-600 dark:text-gray-400 leading-relaxed">
                   {studioB.description}
                 </p>
 
-                <div className="flex items-center gap-3 p-4 bg-zinc-900 rounded-xl border border-amber-500/10 w-fit">
+                <div className="flex items-center gap-3 p-4 bg-zinc-100 dark:bg-zinc-900 rounded-xl border border-amber-500/10 w-fit">
                   <Users className="h-5 w-5 text-amber-500" />
-                  <span className="text-white font-bold">{studioB.capacity} Capacity</span>
+                  <span className="text-zinc-900 dark:text-white font-bold">{studioB.capacity} Capacity</span>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {studioB.features.map((feature, index) => (
                     <div key={index} className="flex items-center gap-3">
                       <Check className="h-4 w-4 text-amber-500 shrink-0" />
-                      <span className="text-sm text-gray-300">{feature}</span>
+                      <span className="text-sm text-zinc-600 dark:text-gray-300">{feature}</span>
                     </div>
                   ))}
                 </div>
 
                 <button
                   onClick={() => navigate('/book-wizard', { state: { plan: 'audio', studio: 'B' } })}
-                  className="inline-flex items-center gap-4 bg-white text-black px-10 py-5 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:scale-105 hover:bg-amber-500 hover:text-black group"
+                  className="inline-flex items-center gap-4 bg-zinc-900 dark:bg-white text-white dark:text-black px-10 py-5 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:scale-105 hover:bg-amber-500 hover:text-black dark:hover:bg-amber-500 group"
                 >
                   Book {studioB.name}
                   <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-2" />
@@ -364,13 +364,13 @@ export default function Studios() {
       </div>
 
       {/* Amenities Section */}
-      <section className="py-32 bg-black/50 relative">
+      <section className="py-32 bg-zinc-50 dark:bg-black/50 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20 animate-on-scroll opacity-0">
-            <h2 className="text-4xl md:text-5xl font-black text-white uppercase mb-4">
+            <h2 className="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white uppercase mb-4">
               Premium Amenities
             </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
+            <p className="text-zinc-600 dark:text-gray-400 max-w-2xl mx-auto">
               We provide everything you need to focus on your content while we handle the rest.
             </p>
           </div>
@@ -379,7 +379,7 @@ export default function Studios() {
             {amenities.map((amenity, index) => (
               <div
                 key={index}
-                className="animate-on-scroll opacity-0 bg-zinc-900 border border-amber-500/10 p-10 rounded-3xl text-center hover:border-amber-500/50 transition-all duration-500 hover:transform hover:-translate-y-3 group"
+                className="animate-on-scroll opacity-0 bg-zinc-100 dark:bg-zinc-900 border border-amber-500/10 p-10 rounded-3xl text-center hover:border-amber-500/50 transition-all duration-500 hover:transform hover:-translate-y-3 group"
                 style={{ animationDelay: `${index * 150}ms` }}
               >
                 <div className="flex justify-center mb-6">
@@ -387,8 +387,8 @@ export default function Studios() {
                     <amenity.icon className="h-8 w-8 text-black" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-3">{amenity.name}</h3>
-                <p className="text-sm text-gray-400 leading-relaxed">{amenity.description}</p>
+                <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-3">{amenity.name}</h3>
+                <p className="text-sm text-zinc-600 dark:text-gray-400 leading-relaxed">{amenity.description}</p>
               </div>
             ))}
           </div>
@@ -399,10 +399,10 @@ export default function Studios() {
       <section className="py-32 border-t border-amber-500/10 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-          <h2 className="text-4xl md:text-7xl font-black text-white uppercase mb-8 leading-tight">
+          <h2 className="text-4xl md:text-7xl font-black text-zinc-900 dark:text-white uppercase mb-8 leading-tight">
             Ready to <span className="text-amber-500">Record?</span>
           </h2>
-          <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
+          <p className="text-xl text-zinc-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
             Experience the gold standard in production. Book your session today and elevate your content.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -412,7 +412,7 @@ export default function Studios() {
             >
               Book Now
             </button>
-            <button className="border-2 border-amber-500/30 text-white px-12 py-6 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:border-amber-500 hover:bg-amber-500/5">
+            <button className="border-2 border-amber-500/30 text-zinc-900 dark:text-white px-12 py-6 rounded-2xl font-black uppercase tracking-widest transform transition-all hover:border-amber-500 hover:bg-amber-500/5">
               Contact Us
             </button>
           </div>

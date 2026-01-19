@@ -50,7 +50,7 @@ export default function BlogPost() {
 
     if (!post) {
         return (
-            <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center pt-20">
+            <div className="min-h-screen bg-white dark:bg-black text-zinc-900 dark:text-white flex flex-col items-center justify-center pt-20 transition-colors duration-300">
                 <h1 className="text-4xl font-bold mb-4">Post Not Found</h1>
                 <Link to="/blog" className="text-amber-500 hover:text-amber-400 font-bold uppercase flex items-center gap-2">
                     <ArrowLeft size={20} /> Back to Blog
@@ -60,7 +60,7 @@ export default function BlogPost() {
     }
 
     return (
-        <div className="bg-black text-white min-h-screen">
+        <div className="bg-white dark:bg-black text-zinc-900 dark:text-white min-h-screen transition-colors duration-300">
             {/* Hero Image */}
             <div className="relative h-[50vh] min-h-[400px]">
                 <img
@@ -68,13 +68,13 @@ export default function BlogPost() {
                     className="w-full h-full object-cover"
                     alt={post.title}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-zinc-50 dark:from-black via-transparent to-transparent"></div>
                 <div className="absolute bottom-0 left-0 w-full p-4 sm:p-8 md:p-12 max-w-7xl mx-auto">
-                    <Link to="/blog" className="inline-flex items-center gap-2 text-gray-300 hover:text-white mb-6 uppercase tracking-wider text-sm font-bold bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full transition-colors">
+                    <Link to="/blog" className="inline-flex items-center gap-2 text-zinc-900 dark:text-gray-300 hover:text-amber-500 dark:hover:text-white mb-6 uppercase tracking-wider text-sm font-bold bg-white/80 dark:bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full transition-colors">
                         <ArrowLeft size={16} /> Back to Blog
                     </Link>
-                    <h1 className="text-4xl md:text-6xl font-display font-extrabold text-white mb-6 uppercase tracking-tight leading-tight">{post.title}</h1>
-                    <div className="flex items-center gap-4 text-gray-300">
+                    <h1 className="text-4xl md:text-6xl font-display font-extrabold text-zinc-900 dark:text-white mb-6 uppercase tracking-tight leading-tight drop-shadow-lg dark:drop-shadow-none">{post.title}</h1>
+                    <div className="flex items-center gap-4 text-zinc-700 dark:text-gray-300">
                         <span className="flex items-center gap-2">
                             <Calendar size={18} className="text-amber-500" />
                             {new Date(post.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
@@ -85,7 +85,7 @@ export default function BlogPost() {
 
             {/* Content */}
             <div className="max-w-4xl mx-auto px-4 sm:px-6 py-20">
-                <div className="prose-premium max-w-none">
+                <div className="prose-premium prose-zinc dark:prose-invert max-w-none">
                     <ReactMarkdown>{post.content}</ReactMarkdown>
                 </div>
             </div>

@@ -62,7 +62,7 @@ export default function Navbar() {
   return (
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ${isScrolled
-        ? 'bg-background/90 dark:bg-black/90 backdrop-blur-xl border-b border-amber-500/20'
+        ? 'bg-white/90 dark:bg-black/90 backdrop-blur-xl border-b border-amber-500/20'
         : 'bg-transparent'
         }`}
     >
@@ -90,7 +90,9 @@ export default function Navbar() {
                 to={link.path}
                 className={`text-sm font-medium tracking-wider uppercase transition-all duration-300 hover:text-amber-500 ${location.pathname === link.path
                   ? 'text-amber-500'
-                  : 'text-foreground/70 dark:text-gray-300'
+                  : (location.pathname === '/' && !isScrolled)
+                    ? 'text-white/90 hover:text-amber-500'
+                    : 'text-zinc-700 dark:text-gray-300'
                   }`}
               >
                 {link.name}
@@ -103,7 +105,9 @@ export default function Navbar() {
                 onClick={() => setMoreDropdownOpen(!moreDropdownOpen)}
                 className={`flex items-center gap-1 text-sm font-medium tracking-wider uppercase transition-all duration-300 hover:text-amber-500 ${['/location-parking', '/build', '/contact', '/faqs'].includes(location.pathname)
                   ? 'text-amber-500'
-                  : 'text-foreground/70 dark:text-gray-300'
+                  : (location.pathname === '/' && !isScrolled)
+                    ? 'text-white/90 hover:text-amber-500'
+                    : 'text-zinc-700 dark:text-gray-300'
                   }`}
               >
                 More
@@ -118,14 +122,14 @@ export default function Navbar() {
                         key={link.path}
                         to={link.path}
                         onClick={() => setMoreDropdownOpen(false)}
-                        className={`group block px-4 py-3 rounded-xl transition-all duration-300 ${location.pathname === link.path ? 'bg-amber-500/10' : 'hover:bg-white/5'
+                        className={`group block px-4 py-3 rounded-xl transition-all duration-300 ${location.pathname === link.path ? 'bg-amber-500/10' : 'hover:bg-zinc-100 dark:hover:bg-white/5'
                           }`}
                       >
                         <div className="flex items-center justify-between">
-                          <div className={`font-bold text-xs uppercase tracking-widest transition-colors ${location.pathname === link.path ? 'text-amber-500' : 'text-white group-hover:text-amber-500'}`}>{link.name}</div>
+                          <div className={`font-bold text-xs uppercase tracking-widest transition-colors ${location.pathname === link.path ? 'text-amber-500' : 'text-zinc-900 dark:text-white group-hover:text-amber-500'}`}>{link.name}</div>
                           <div className="h-px w-0 bg-amber-500 group-hover:w-8 transition-all duration-500"></div>
                         </div>
-                        <div className="text-gray-400 text-[10px] mt-1 group-hover:text-gray-300 transition-colors uppercase tracking-tight">{link.description}</div>
+                        <div className="text-zinc-500 dark:text-gray-400 text-[10px] mt-1 group-hover:text-zinc-400 dark:group-hover:text-gray-300 transition-colors uppercase tracking-tight">{link.description}</div>
                       </Link>
                     ))}
                   </div>
@@ -139,7 +143,9 @@ export default function Navbar() {
                 onClick={() => setResourcesDropdownOpen(!resourcesDropdownOpen)}
                 className={`flex items-center gap-1 text-sm font-medium tracking-wider uppercase transition-all duration-300 hover:text-amber-500 ${['/resources', '/more'].includes(location.pathname)
                   ? 'text-amber-500'
-                  : 'text-gray-300'
+                  : (location.pathname === '/' && !isScrolled)
+                    ? 'text-white/90 hover:text-amber-500'
+                    : 'text-zinc-700 dark:text-gray-300'
                   }`}
               >
                 Resources
@@ -154,14 +160,14 @@ export default function Navbar() {
                         key={link.path}
                         to={link.path}
                         onClick={() => setResourcesDropdownOpen(false)}
-                        className={`group block px-4 py-3 rounded-xl transition-all duration-300 ${location.pathname === link.path ? 'bg-amber-500/10' : 'hover:bg-white/5'
+                        className={`group block px-4 py-3 rounded-xl transition-all duration-300 ${location.pathname === link.path ? 'bg-amber-500/10' : 'hover:bg-zinc-100 dark:hover:bg-white/5'
                           }`}
                       >
                         <div className="flex items-center justify-between">
-                          <div className={`font-bold text-xs uppercase tracking-widest transition-colors ${location.pathname === link.path ? 'text-amber-500' : 'text-white group-hover:text-amber-500'}`}>{link.name}</div>
+                          <div className={`font-bold text-xs uppercase tracking-widest transition-colors ${location.pathname === link.path ? 'text-amber-500' : 'text-zinc-900 dark:text-white group-hover:text-amber-500'}`}>{link.name}</div>
                           <div className="h-px w-0 bg-amber-500 group-hover:w-8 transition-all duration-500"></div>
                         </div>
-                        <div className="text-gray-400 text-[10px] mt-1 group-hover:text-gray-300 transition-colors uppercase tracking-tight">{link.description}</div>
+                        <div className="text-zinc-500 dark:text-gray-400 text-[10px] mt-1 group-hover:text-zinc-400 dark:group-hover:text-gray-300 transition-colors uppercase tracking-tight">{link.description}</div>
                       </Link>
                     ))}
                   </div>
@@ -187,7 +193,7 @@ export default function Navbar() {
             <ThemeToggle />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-foreground/70 dark:text-gray-300 hover:text-amber-500 focus:outline-none transition-colors"
+              className={`${(location.pathname === '/' && !isScrolled) ? 'text-white' : 'text-zinc-700 dark:text-gray-300'} hover:text-amber-500 focus:outline-none transition-colors`}
             >
               {isMobileMenuOpen ? (
                 <X className="h-8 w-8" />
@@ -201,7 +207,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div
-        className={`lg:hidden absolute top-full left-0 w-full bg-background/95 dark:bg-black/95 backdrop-blur-xl border-b border-amber-500/20 transition-all duration-300 overflow-hidden ${isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+        className={`lg:hidden absolute top-full left-0 w-full bg-white/95 dark:bg-black/95 backdrop-blur-xl border-b border-amber-500/20 transition-all duration-300 overflow-hidden ${isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
           }`}
       >
         <div className="px-6 py-4 space-y-0">
@@ -223,7 +229,7 @@ export default function Navbar() {
           <div className="border-t border-amber-500/20">
             <button
               onClick={() => setMobileMoreDropdownOpen(!mobileMoreDropdownOpen)}
-              className="flex items-center justify-between w-full py-4 text-base font-medium uppercase tracking-wide text-gray-300 hover:text-amber-500 transition-colors"
+              className="flex items-center justify-between w-full py-4 text-base font-medium uppercase tracking-wide text-zinc-600 dark:text-gray-300 hover:text-amber-500 transition-colors"
             >
               <span>More</span>
               {mobileMoreDropdownOpen ? (
@@ -245,11 +251,11 @@ export default function Navbar() {
                   >
                     <div className={`text-sm font-medium uppercase tracking-wide transition-colors py-2 ${location.pathname === link.path
                       ? 'text-amber-500'
-                      : 'text-gray-300 group-hover:text-white'
+                      : 'text-zinc-600 dark:text-gray-300 group-hover:text-zinc-900 dark:group-hover:text-white'
                       }`}>
                       {link.name}
                     </div>
-                    <div className="text-gray-500 text-xs group-hover:text-gray-400 transition-colors">
+                    <div className="text-zinc-500 dark:text-gray-500 text-xs group-hover:text-zinc-400 dark:group-hover:text-gray-400 transition-colors">
                       {link.description}
                     </div>
                   </Link>
@@ -262,7 +268,7 @@ export default function Navbar() {
           <div className="border-t border-amber-500/20">
             <button
               onClick={() => setMobileResourcesDropdownOpen(!mobileResourcesDropdownOpen)}
-              className="flex items-center justify-between w-full py-4 text-base font-medium uppercase tracking-wide text-gray-300 hover:text-amber-500 transition-colors"
+              className="flex items-center justify-between w-full py-4 text-base font-medium uppercase tracking-wide text-zinc-600 dark:text-gray-300 hover:text-amber-500 transition-colors"
             >
               <span>Resources</span>
               {mobileResourcesDropdownOpen ? (
@@ -284,11 +290,11 @@ export default function Navbar() {
                   >
                     <div className={`text-sm font-medium uppercase tracking-wide transition-colors py-2 ${location.pathname === link.path
                       ? 'text-amber-500'
-                      : 'text-gray-300 group-hover:text-white'
+                      : 'text-zinc-600 dark:text-gray-300 group-hover:text-zinc-900 dark:group-hover:text-white'
                       }`}>
                       {link.name}
                     </div>
-                    <div className="text-gray-500 text-xs group-hover:text-gray-400 transition-colors">
+                    <div className="text-zinc-500 dark:text-gray-500 text-xs group-hover:text-zinc-400 dark:group-hover:text-gray-400 transition-colors">
                       {link.description}
                     </div>
                   </Link>

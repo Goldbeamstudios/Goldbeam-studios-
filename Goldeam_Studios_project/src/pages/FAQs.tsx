@@ -76,7 +76,7 @@ export default function FAQs() {
   ];
 
   return (
-    <div className="bg-black text-white min-h-screen pt-24">
+    <div className="bg-white dark:bg-black text-zinc-900 dark:text-white min-h-screen pt-24 transition-colors duration-300">
       {/* Hero Section */}
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent"></div>
@@ -87,7 +87,7 @@ export default function FAQs() {
                 FAQs
               </span>
             </h1>
-            <p className="text-xl text-gray-300 leading-relaxed">
+            <p className="text-xl text-zinc-600 dark:text-gray-300 leading-relaxed">
               Find answers to common questions about our studio, booking process, and services.
             </p>
           </div>
@@ -109,13 +109,13 @@ export default function FAQs() {
                   return (
                     <div
                       key={qIndex}
-                      className="bg-zinc-900 border border-amber-500/20 rounded-xl overflow-hidden hover:border-amber-500/50 transition-colors"
+                      className="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-amber-500/20 rounded-xl overflow-hidden hover:border-amber-500/50 transition-colors"
                     >
                       <button
                         onClick={() => setOpenIndex(isOpen ? null : globalIndex)}
                         className="w-full flex items-center justify-between p-6 text-left"
                       >
-                        <span className="text-lg font-bold text-white pr-8">{faq.q}</span>
+                        <span className="text-lg font-bold text-zinc-900 dark:text-white pr-8">{faq.q}</span>
                         {isOpen ? (
                           <Minus className="h-5 w-5 text-amber-500 shrink-0" />
                         ) : (
@@ -126,7 +126,7 @@ export default function FAQs() {
                         className={`transition-all duration-300 overflow-hidden ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                           }`}
                       >
-                        <div className="px-6 pb-6 text-gray-400 leading-relaxed">{faq.a}</div>
+                        <div className="px-6 pb-6 text-zinc-600 dark:text-gray-400 leading-relaxed">{faq.a}</div>
                       </div>
                     </div>
                   );
@@ -138,12 +138,12 @@ export default function FAQs() {
       </section>
 
       {/* Still Have Questions */}
-      <section className="py-20 border-y border-amber-500/20">
+      <section className="py-20 border-y border-zinc-200 dark:border-amber-500/20 bg-zinc-50 dark:bg-black">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-black text-white uppercase mb-6">
+          <h2 className="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white uppercase mb-6">
             Still Have Questions?
           </h2>
-          <p className="text-xl text-gray-300 mb-8">
+          <p className="text-xl text-zinc-600 dark:text-gray-300 mb-8">
             Can't find what you're looking for? Contact us and we'll be happy to help.
           </p>
           <a

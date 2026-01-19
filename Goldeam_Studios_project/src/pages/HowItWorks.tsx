@@ -54,19 +54,19 @@ export default function HowItWorks() {
   ];
 
   return (
-    <div className="bg-black text-white min-h-screen pt-24">
+    <div className="bg-white dark:bg-black text-zinc-900 dark:text-white min-h-screen pt-24 transition-colors duration-300">
       {/* Hero Section */}
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-5xl md:text-7xl font-black text-white uppercase mb-6 animate-fade-in">
+            <h1 className="text-5xl md:text-7xl font-black text-zinc-900 dark:text-white uppercase mb-6 animate-fade-in">
               How It{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-600">
                 Works
               </span>
             </h1>
-            <p className="text-xl text-gray-300 leading-relaxed">
+            <p className="text-xl text-zinc-600 dark:text-gray-300 leading-relaxed">
               From booking to delivery, we've streamlined every step to make professional
               podcast production effortless.
             </p>
@@ -94,15 +94,15 @@ export default function HowItWorks() {
                       <step.icon className="h-8 w-8 text-black" />
                     </div>
                   </div>
-                  <h2 className="text-4xl md:text-5xl font-black text-white uppercase">
+                  <h2 className="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white uppercase">
                     {step.title}
                   </h2>
-                  <p className="text-xl text-gray-300 leading-relaxed">
+                  <p className="text-xl text-zinc-600 dark:text-gray-300 leading-relaxed">
                     {step.description}
                   </p>
                   <ul className="space-y-3">
                     {step.details.map((detail, dIndex) => (
-                      <li key={dIndex} className="flex items-center gap-3 text-gray-400">
+                      <li key={dIndex} className="flex items-center gap-3 text-zinc-500 dark:text-gray-400">
                         <CheckCircle2 className="h-5 w-5 text-amber-500 shrink-0" />
                         <span>{detail}</span>
                       </li>
@@ -112,7 +112,7 @@ export default function HowItWorks() {
 
                 {/* Visual */}
                 <div className="flex-1 relative">
-                  <div className="aspect-video bg-gradient-to-br from-amber-500/10 to-amber-600/5 rounded-2xl border border-amber-500/20 p-8 flex items-center justify-center hover:border-amber-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/20">
+                  <div className="aspect-video bg-zinc-100 dark:bg-transparent dark:bg-gradient-to-br dark:from-amber-500/10 dark:to-amber-600/5 border border-amber-500/20 rounded-2xl p-8 flex items-center justify-center hover:border-amber-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/20">
                     <step.icon className="h-32 w-32 text-amber-500/30" />
                   </div>
                 </div>
@@ -125,10 +125,10 @@ export default function HowItWorks() {
       {/* CTA Section */}
       <section className="py-20 border-y border-amber-500/20">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-black text-white uppercase mb-6">
+          <h2 className="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white uppercase mb-6">
             Ready to Get Started?
           </h2>
-          <p className="text-xl text-gray-300 mb-8">
+          <p className="text-xl text-zinc-600 dark:text-gray-300 mb-8">
             Book your first session today and experience professional podcast production.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -140,7 +140,7 @@ export default function HowItWorks() {
             </a>
             <Link
               to="/location-parking"
-              className="inline-flex items-center gap-3 border-2 border-amber-500/30 hover:border-amber-500 text-white px-8 py-4 text-lg font-bold uppercase tracking-wider transition-all backdrop-blur-sm hover:bg-amber-500/10 rounded-lg"
+              className="inline-flex items-center gap-3 border-2 border-amber-500/30 hover:border-amber-500 text-zinc-900 dark:text-white px-8 py-4 text-lg font-bold uppercase tracking-wider transition-all backdrop-blur-sm hover:bg-amber-500/10 rounded-lg"
             >
               Location & Parking
               <ArrowRight className="h-5 w-5" />

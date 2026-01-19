@@ -72,19 +72,19 @@ export default function More() {
   ];
 
   return (
-    <div className="bg-black text-white min-h-screen pt-24">
+    <div className="bg-white dark:bg-black text-zinc-900 dark:text-white min-h-screen pt-24 transition-colors duration-300">
       {/* Hero Section */}
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-5xl md:text-7xl font-black text-white uppercase mb-6">
+            <h1 className="text-5xl md:text-7xl font-black text-zinc-900 dark:text-white uppercase mb-6">
               Discover{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-600">
                 More
               </span>
             </h1>
-            <p className="text-xl text-gray-300 leading-relaxed">
+            <p className="text-xl text-zinc-600 dark:text-gray-300 leading-relaxed">
               Everything you need to know about Goldbeam Studios - all in one place.
             </p>
           </div>
@@ -95,10 +95,10 @@ export default function More() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-white uppercase mb-4">
+            <h2 className="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white uppercase mb-4">
               Quick Links
             </h2>
-            <p className="text-gray-400">Navigate to the information you need</p>
+            <p className="text-zinc-600 dark:text-gray-400">Navigate to the information you need</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -106,15 +106,15 @@ export default function More() {
               <Link
                 key={index}
                 to={item.link}
-                className="group bg-zinc-900 border border-amber-500/20 p-8 rounded-2xl hover:border-amber-500/50 transition-all duration-300 hover:transform hover:-translate-y-2"
+                className="group bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-amber-500/20 p-8 rounded-2xl hover:border-amber-500/50 transition-all duration-300 hover:transform hover:-translate-y-2 shadow-lg shadow-zinc-200/50 dark:shadow-none"
               >
                 <div className={`bg-gradient-to-br ${item.color} p-4 rounded-xl w-fit mb-6`}>
                   <item.icon className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-amber-500 transition-colors">
+                <h3 className="text-2xl font-bold text-zinc-900 dark:text-white mb-3 group-hover:text-amber-500 transition-colors">
                   {item.title}
                 </h3>
-                <p className="text-gray-400 mb-4">{item.description}</p>
+                <p className="text-zinc-600 dark:text-gray-400 mb-4">{item.description}</p>
                 <div className="flex items-center gap-2 text-amber-500 font-bold uppercase text-sm group-hover:gap-4 transition-all">
                   Learn More
                   <ArrowRight className="h-4 w-4" />
@@ -126,26 +126,26 @@ export default function More() {
       </section>
 
       {/* Services Overview */}
-      <section className="py-20 bg-zinc-900/50">
+      <section className="py-20 bg-zinc-50 dark:bg-zinc-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-white uppercase mb-4">
+            <h2 className="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white uppercase mb-4">
               Our Services
             </h2>
-            <p className="text-gray-400">Comprehensive podcast production solutions</p>
+            <p className="text-zinc-600 dark:text-gray-400">Comprehensive podcast production solutions</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {services.map((service, index) => (
               <div
                 key={index}
-                className="bg-black border border-amber-500/20 p-8 rounded-2xl hover:border-amber-500/50 transition-all"
+                className="bg-white dark:bg-black border border-zinc-200 dark:border-amber-500/20 p-8 rounded-2xl hover:border-amber-500/50 transition-all shadow-lg shadow-zinc-200/50 dark:shadow-none"
               >
-                <h3 className="text-2xl font-bold text-white mb-3">{service.title}</h3>
-                <p className="text-gray-400 mb-6">{service.description}</p>
+                <h3 className="text-2xl font-bold text-zinc-900 dark:text-white mb-3">{service.title}</h3>
+                <p className="text-zinc-600 dark:text-gray-400 mb-6">{service.description}</p>
                 <ul className="space-y-2">
                   {service.features.map((feature, fIndex) => (
-                    <li key={fIndex} className="flex items-center gap-2 text-gray-300">
+                    <li key={fIndex} className="flex items-center gap-2 text-zinc-600 dark:text-gray-300">
                       <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
                       <span className="text-sm">{feature}</span>
                     </li>
@@ -160,11 +160,11 @@ export default function More() {
       {/* About Section */}
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-4">
-          <div className="bg-zinc-900 border border-amber-500/20 p-12 rounded-2xl">
-            <h2 className="text-4xl md:text-5xl font-black text-white uppercase mb-6 text-center">
+          <div className="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-amber-500/20 p-12 rounded-2xl shadow-xl shadow-zinc-200/50 dark:shadow-none">
+            <h2 className="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white uppercase mb-6 text-center">
               About Goldbeam Studios
             </h2>
-            <div className="space-y-4 text-gray-300 leading-relaxed">
+            <div className="space-y-4 text-zinc-600 dark:text-gray-300 leading-relaxed">
               <p>
                 Goldbeam Studios is a premier podcast production facility offering professional
                 audio engineering, 4K video recording, and live streaming services. We provide
@@ -187,12 +187,12 @@ export default function More() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 border-y border-amber-500/20">
+      <section className="py-20 border-y border-zinc-200 dark:border-amber-500/20 bg-zinc-50 dark:bg-black">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-black text-white uppercase mb-6">
+          <h2 className="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white uppercase mb-6">
             Ready to Create?
           </h2>
-          <p className="text-xl text-gray-300 mb-8">
+          <p className="text-xl text-zinc-600 dark:text-gray-300 mb-8">
             Book your first session and experience professional podcast production.
           </p>
           <Link

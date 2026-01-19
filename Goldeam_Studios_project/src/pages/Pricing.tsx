@@ -137,19 +137,19 @@ export default function Pricing() {
 
 
   return (
-    <div className="bg-black text-white min-h-screen pt-24">
+    <div className="bg-white dark:bg-black text-zinc-900 dark:text-white min-h-screen pt-24 transition-colors duration-300">
       {/* Hero Section */}
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-5xl md:text-7xl font-black text-white uppercase mb-6 animate-fade-in">
+            <h1 className="text-5xl md:text-7xl font-black text-zinc-900 dark:text-white uppercase mb-6 animate-fade-in">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-600">
                 Pricing
               </span>{' '}
               Plans
             </h1>
-            <p className="text-xl text-gray-300 leading-relaxed">
+            <p className="text-xl text-zinc-600 dark:text-gray-300 leading-relaxed">
               Transparent pricing with no hidden fees. All sessions include a professional
               sound engineer.
             </p>
@@ -165,8 +165,8 @@ export default function Pricing() {
               <div
                 key={index}
                 className={`relative p-8 flex flex-col h-full rounded-2xl transition-all duration-300 hover:transform hover:-translate-y-2 ${plan.popular
-                  ? 'border-2 border-amber-500 bg-zinc-900 shadow-2xl shadow-amber-500/30 scale-105'
-                  : 'border border-amber-500/20 bg-black/50 hover:border-amber-500/50'
+                  ? 'border-2 border-amber-500 bg-zinc-100 dark:bg-zinc-900 shadow-2xl shadow-amber-500/30 scale-105'
+                  : 'border border-amber-500/20 bg-white dark:bg-black/50 hover:border-amber-500/50'
                   }`}
               >
                 {plan.popular && (
@@ -175,31 +175,31 @@ export default function Pricing() {
                     Most Popular
                   </div>
                 )}
-                <h3 className="text-xl font-bold text-gray-400 uppercase tracking-widest mb-2">
+                <h3 className="text-xl font-bold text-zinc-500 dark:text-gray-400 uppercase tracking-widest mb-2">
                   {plan.name}
                 </h3>
-                <p className="text-sm text-gray-400 mb-6 italic">{plan.description}</p>
+                <p className="text-sm text-zinc-500 dark:text-gray-400 mb-6 italic">{plan.description}</p>
                 <div className="flex items-baseline mb-8">
-                  <span className="text-5xl font-black text-white">{plan.price}</span>
-                  <span className="text-gray-400 ml-2">{plan.period}</span>
+                  <span className="text-5xl font-black text-zinc-900 dark:text-white">{plan.price}</span>
+                  <span className="text-zinc-500 dark:text-gray-400 ml-2">{plan.period}</span>
                 </div>
                 <ul className="space-y-4 mb-8 flex-1">
                   {plan.features.map((feature, fIndex) => (
-                    <li key={fIndex} className="flex items-start text-gray-300">
+                    <li key={fIndex} className="flex items-start text-zinc-600 dark:text-gray-300">
                       <Check className="h-5 w-5 text-amber-500 mr-3 shrink-0 mt-0.5" />
                       <span className="text-sm">{feature}</span>
                     </li>
                   ))}
                 </ul>
                 {(plan as any).note && (
-                  <p className="text-[10px] text-gray-500 mb-6 italic leading-relaxed">
+                  <p className="text-[10px] text-zinc-400 dark:text-gray-500 mb-6 italic leading-relaxed">
                     Note: {(plan as any).note}
                   </p>
                 )}
                 {plan.bestFor && (
                   <div className="mb-6 pt-4 border-t border-amber-500/10">
-                    <p className="text-xs text-gray-400 uppercase tracking-widest font-bold mb-1">Best for:</p>
-                    <p className="text-sm text-gray-300 leading-snug">{plan.bestFor}</p>
+                    <p className="text-xs text-zinc-400 dark:text-gray-400 uppercase tracking-widest font-bold mb-1">Best for:</p>
+                    <p className="text-sm text-zinc-600 dark:text-gray-300 leading-snug">{plan.bestFor}</p>
                   </div>
                 )}
 
@@ -207,7 +207,7 @@ export default function Pricing() {
                   onClick={() => navigate('/book-wizard', { state: { plan: plan.id } })}
                   className={`w-full py-4 text-center text-sm font-bold uppercase tracking-widest transition-all rounded-lg block ${plan.popular
                     ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-black hover:from-amber-400 hover:to-amber-500 shadow-lg shadow-amber-500/30'
-                    : 'bg-white text-black hover:bg-gray-200'
+                    : 'bg-zinc-100 dark:bg-white text-black hover:bg-zinc-200 dark:hover:bg-gray-200'
                     }`}
                 >
                   Book Plan
@@ -221,21 +221,21 @@ export default function Pricing() {
           <div className="mt-32 mb-24">
             <div className="text-center mb-16">
               <h2 className="text-amber-500 font-bold tracking-[0.2em] uppercase mb-4">Comparison</h2>
-              <h3 className="text-4xl md:text-5xl font-black text-white uppercase mb-8">Detailed Feature Breakdown</h3>
-              <p className="text-gray-400 max-w-2xl mx-auto">Compare our plans side-by-side to find the perfect production package for your content needs.</p>
+              <h3 className="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white uppercase mb-8">Detailed Feature Breakdown</h3>
+              <p className="text-zinc-600 dark:text-gray-400 max-w-2xl mx-auto">Compare our plans side-by-side to find the perfect production package for your content needs.</p>
             </div>
 
             <div className="overflow-x-auto pb-8">
-              <div className="min-w-[900px] border border-amber-500/10 rounded-3xl overflow-hidden bg-zinc-900/30 backdrop-blur-md">
+              <div className="min-w-[900px] border border-amber-500/10 rounded-3xl overflow-hidden bg-white/50 dark:bg-zinc-900/30 backdrop-blur-md">
                 <table className="w-full text-left border-collapse">
                   <thead>
                     <tr className="border-b border-amber-500/10">
-                      <th className="p-8 text-xs font-bold text-gray-400 uppercase tracking-widest bg-black/50 w-1/4">Feature Specs</th>
+                      <th className="p-8 text-xs font-bold text-zinc-500 dark:text-gray-400 uppercase tracking-widest bg-zinc-100/50 dark:bg-black/50 w-1/4">Feature Specs</th>
                       {pricingPlans.map((plan, i) => (
-                        <th key={i} className="p-8 text-center bg-black/50">
+                        <th key={i} className="p-8 text-center bg-zinc-100/50 dark:bg-black/50">
                           <div className="text-amber-500 font-bold text-xs mb-2 uppercase tracking-widest">{plan.name}</div>
-                          <div className="text-white font-black text-3xl mb-1">{plan.price}</div>
-                          <div className="text-gray-500 text-[10px] uppercase tracking-[0.2em]">{plan.period}</div>
+                          <div className="text-zinc-900 dark:text-white font-black text-3xl mb-1">{plan.price}</div>
+                          <div className="text-zinc-500 dark:text-gray-500 text-[10px] uppercase tracking-[0.2em]">{plan.period}</div>
                         </th>
                       ))}
                     </tr>
@@ -244,25 +244,25 @@ export default function Pricing() {
                     {comparisonFeatures.map((feature, i) => (
                       <tr
                         key={i}
-                        className={`group hover:bg-white/[0.02] transition-colors ${i !== comparisonFeatures.length - 1 ? 'border-b border-white/5' : ''
+                        className={`group hover:bg-zinc-50 dark:hover:bg-white/[0.02] transition-colors ${i !== comparisonFeatures.length - 1 ? 'border-b border-zinc-200 dark:border-white/5' : ''
                           }`}
                       >
-                        <td className="p-6 pl-8 text-gray-400 font-medium group-hover:text-white transition-colors text-sm">
+                        <td className="p-6 pl-8 text-zinc-500 dark:text-gray-400 font-medium group-hover:text-zinc-900 dark:group-hover:text-white transition-colors text-sm">
                           {feature.name}
                         </td>
                         {[feature.audio, feature.video, feature.general].map((included, j) => (
-                          <td key={j} className="p-6 text-center border-l border-white/5">
+                          <td key={j} className="p-6 text-center border-l border-zinc-200 dark:border-white/5">
                             <div className="flex justify-center">
                               {included === true ? (
                                 <div className="p-1.5 bg-amber-500/10 rounded-full group-hover:bg-amber-500/20 transition-all">
                                   <Check className="h-4 w-4 text-amber-500" />
                                 </div>
                               ) : included === false ? (
-                                <div className="p-1.5 bg-white/5 rounded-full opacity-20">
-                                  <Minus className="h-4 w-4 text-gray-600" />
+                                <div className="p-1.5 bg-zinc-200/50 dark:bg-white/5 rounded-full opacity-40">
+                                  <Minus className="h-4 w-4 text-zinc-400 dark:text-gray-600" />
                                 </div>
                               ) : (
-                                <span className="text-[10px] font-black uppercase tracking-widest py-1.5 px-4 bg-white/5 text-gray-300 rounded-lg group-hover:bg-amber-500 group-hover:text-black transition-all border border-white/5">
+                                <span className="text-[10px] font-black uppercase tracking-widest py-1.5 px-4 bg-zinc-100 dark:bg-white/5 text-zinc-500 dark:text-gray-300 rounded-lg group-hover:bg-amber-500 group-hover:text-black transition-all border border-zinc-200 dark:border-white/5">
                                   {included}
                                 </span>
                               )}
@@ -274,14 +274,14 @@ export default function Pricing() {
                   </tbody>
                   <tfoot>
                     <tr className="border-t border-amber-500/10">
-                      <td className="p-8 bg-black/50"></td>
+                      <td className="p-8 bg-zinc-100/50 dark:bg-black/50"></td>
                       {pricingPlans.map((plan, i) => (
-                        <td key={i} className="p-8 text-center bg-black/50 border-l border-white/5">
+                        <td key={i} className="p-8 text-center bg-zinc-100/50 dark:bg-black/50 border-l border-zinc-200 dark:border-white/5">
                           <button
                             onClick={() => navigate('/book-wizard', { state: { plan: plan.id } })}
                             className={`inline-block w-full py-4 text-[10px] font-black uppercase tracking-[0.2em] rounded-xl transition-all shadow-lg ${plan.popular
                               ? 'bg-amber-500 text-black hover:bg-amber-400 shadow-amber-500/20'
-                              : 'bg-white/10 text-white hover:bg-white hover:text-black border border-white/10'
+                              : 'bg-zinc-200 dark:bg-white/10 text-zinc-900 dark:text-white hover:bg-zinc-300 dark:hover:bg-white hover:text-black border border-zinc-200 dark:border-white/10'
                               }`}
                           >
                             Get Started
@@ -305,24 +305,24 @@ export default function Pricing() {
           {/* Add-ons */}
           <div className="border-t border-amber-500/20 pt-20">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-black text-white uppercase mb-4">
+              <h2 className="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white uppercase mb-4">
                 Add-On Services
               </h2>
-              <p className="text-gray-400">Enhance your content with professional services</p>
+              <p className="text-zinc-600 dark:text-gray-400">Enhance your content with professional services</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {addOns.map((addon, index) => (
                 <div
                   key={index}
-                  className="bg-zinc-900 border border-amber-500/20 p-6 rounded-xl hover:border-amber-500/50 transition-all duration-300 hover:transform hover:-translate-y-1 h-full flex flex-col"
+                  className="bg-zinc-100 dark:bg-zinc-900 border border-amber-500/20 p-6 rounded-xl hover:border-amber-500/50 transition-all duration-300 hover:transform hover:-translate-y-1 h-full flex flex-col"
                 >
-                  <h3 className="text-xl font-bold text-white mb-2">{addon.name}</h3>
+                  <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">{addon.name}</h3>
                   <div className="flex items-baseline gap-2 mb-3">
                     <p className="text-2xl font-black text-amber-500">{addon.price}</p>
-                    {addon.period && <span className="text-sm text-gray-400">{addon.period}</span>}
+                    {addon.period && <span className="text-sm text-zinc-500 dark:text-gray-400">{addon.period}</span>}
                   </div>
-                  <p className="text-sm text-gray-300 mb-4 flex-grow">{addon.description}</p>
+                  <p className="text-sm text-zinc-600 dark:text-gray-300 mb-4 flex-grow">{addon.description}</p>
                 </div>
               ))}
             </div>
@@ -331,9 +331,9 @@ export default function Pricing() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-zinc-900/50">
+      <section className="py-20 bg-zinc-50 dark:bg-zinc-900/50">
         <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-4xl font-black text-white uppercase mb-12 text-center">
+          <h2 className="text-4xl font-black text-zinc-900 dark:text-white uppercase mb-12 text-center">
             Pricing FAQs
           </h2>
           <div className="space-y-6">
@@ -377,10 +377,10 @@ export default function Pricing() {
             ].map((faq, index) => (
               <div
                 key={index}
-                className="bg-black border border-amber-500/20 p-6 rounded-xl hover:border-amber-500/50 transition-colors"
+                className="bg-white dark:bg-black border border-amber-500/20 p-6 rounded-xl hover:border-amber-500/50 transition-colors"
               >
-                <h3 className="text-lg font-bold text-white mb-2">{faq.q}</h3>
-                <p className="text-gray-400">{faq.a}</p>
+                <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-2">{faq.q}</h3>
+                <p className="text-zinc-600 dark:text-gray-400">{faq.a}</p>
               </div>
             ))}
           </div>

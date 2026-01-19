@@ -68,23 +68,23 @@ export default function Build() {
   ];
 
   return (
-    <div className="bg-black text-white min-h-screen pt-24">
+    <div className="bg-white dark:bg-black text-zinc-900 dark:text-white min-h-screen pt-24 transition-colors duration-300">
       {/* Hero Section */}
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-5xl md:text-7xl font-black text-white uppercase mb-6">
+            <h1 className="text-5xl md:text-7xl font-black text-zinc-900 dark:text-white uppercase mb-6">
               What We{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-600">
                 Offer
               </span>
             </h1>
-            <p className="text-xl text-gray-300 leading-relaxed mb-8">
+            <p className="text-xl text-zinc-600 dark:text-gray-300 leading-relaxed mb-8">
               Professional podcast production services designed to elevate your content.
               From recording to post-production, we've got you covered.
             </p>
-            <div className="flex items-center justify-center gap-6 text-sm text-gray-400">
+            <div className="flex items-center justify-center gap-6 text-sm text-zinc-500 dark:text-gray-400">
               <div className="flex items-center gap-2">
                 <Mic2 className="h-5 w-5 text-amber-500" />
                 <span>Professional Audio</span>
@@ -106,23 +106,23 @@ export default function Build() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-white uppercase mb-4">
+            <h2 className="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white uppercase mb-4">
               Our Services
             </h2>
-            <p className="text-gray-400">Everything you need for professional podcast production</p>
+            <p className="text-zinc-600 dark:text-gray-400">Everything you need for professional podcast production</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {studioFeatures.map((feature, index) => (
               <div
                 key={index}
-                className="bg-zinc-900 border border-amber-500/20 p-8 rounded-2xl hover:border-amber-500/50 transition-all duration-300 hover:transform hover:-translate-y-2"
+                className="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-amber-500/20 p-8 rounded-2xl hover:border-amber-500/50 transition-all duration-300 hover:transform hover:-translate-y-2"
               >
                 <div className={`bg-gradient-to-br ${feature.color} p-4 rounded-xl w-fit mb-6`}>
                   <feature.icon className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-3">{feature.name}</h3>
-                <p className="text-gray-400">{feature.description}</p>
+                <h3 className="text-2xl font-bold text-zinc-900 dark:text-white mb-3">{feature.name}</h3>
+                <p className="text-zinc-600 dark:text-gray-400">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -130,23 +130,23 @@ export default function Build() {
       </section>
 
       {/* Studio Benefits */}
-      <section className="py-20 bg-zinc-900/50">
+      <section className="py-20 bg-zinc-50 dark:bg-zinc-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-white uppercase mb-4">
+            <h2 className="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white uppercase mb-4">
               Why Choose Us
             </h2>
-            <p className="text-gray-400">The Goldbeam Studios advantage</p>
+            <p className="text-zinc-600 dark:text-gray-400">The Goldbeam Studios advantage</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {studioBenefits.map((benefit, index) => (
               <div
                 key={index}
-                className="bg-black border border-amber-500/20 p-6 rounded-xl hover:border-amber-500/50 transition-all"
+                className="bg-white dark:bg-black border border-zinc-200 dark:border-amber-500/20 p-6 rounded-xl hover:border-amber-500/50 transition-all shadow-lg shadow-zinc-200/50 dark:shadow-none"
               >
-                <h3 className="text-xl font-bold text-white mb-2">{benefit.title}</h3>
-                <p className="text-gray-400">{benefit.description}</p>
+                <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">{benefit.title}</h3>
+                <p className="text-zinc-600 dark:text-gray-400">{benefit.description}</p>
               </div>
             ))}
           </div>
@@ -157,10 +157,10 @@ export default function Build() {
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-white uppercase mb-4">
+            <h2 className="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white uppercase mb-4">
               How to Get Started
             </h2>
-            <p className="text-gray-400">Three simple steps to your first session</p>
+            <p className="text-zinc-600 dark:text-gray-400">Three simple steps to your first session</p>
           </div>
 
           <div className="space-y-8">
@@ -198,7 +198,7 @@ export default function Build() {
             ].map((phase, index) => (
               <div
                 key={index}
-                className="bg-zinc-900 border border-amber-500/20 rounded-2xl p-8 hover:border-amber-500/50 transition-all"
+                className="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-amber-500/20 rounded-2xl p-8 hover:border-amber-500/50 transition-all shadow-xl shadow-zinc-200/50 dark:shadow-none"
               >
                 <div className="flex items-start gap-6">
                   <div className="bg-gradient-to-br from-amber-500 to-amber-600 text-black font-black text-2xl w-20 h-20 rounded-xl flex items-center justify-center shrink-0">
@@ -206,10 +206,10 @@ export default function Build() {
                   </div>
                   <div className="flex-1">
                     <div className="text-amber-500 font-bold uppercase mb-2">{phase.step}</div>
-                    <h3 className="text-2xl font-black text-white mb-4">{phase.title}</h3>
+                    <h3 className="text-2xl font-black text-zinc-900 dark:text-white mb-4">{phase.title}</h3>
                     <ul className="space-y-2">
                       {phase.tasks.map((task, tIndex) => (
-                        <li key={tIndex} className="text-gray-400 flex items-center gap-2">
+                        <li key={tIndex} className="text-zinc-600 dark:text-gray-400 flex items-center gap-2">
                           <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
                           {task}
                         </li>

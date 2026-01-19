@@ -127,7 +127,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="bg-black text-white transition-colors duration-300">
+    <div className="bg-white dark:bg-black text-zinc-900 dark:text-white transition-colors duration-300">
       {/* Hero Section */}
       <section
         ref={heroRef}
@@ -194,7 +194,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section ref={featuresRef} className="py-24 bg-black relative overflow-hidden">
+      <section ref={featuresRef} className="py-24 bg-white dark:bg-black relative overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-0 left-1/4 w-full h-full bg-gradient-to-br from-amber-500 to-transparent blur-3xl"></div>
@@ -205,7 +205,7 @@ export default function Home() {
             <h2 className="text-amber-500 font-bold tracking-widest uppercase mb-4 animate-slide-down">
               The Studio
             </h2>
-            <h3 className="text-4xl md:text-5xl font-black text-white uppercase animate-slide-up">
+            <h3 className="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white uppercase animate-slide-up">
               Designed for Creators
             </h3>
           </div>
@@ -214,20 +214,20 @@ export default function Home() {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="animate-on-scroll opacity-0 bg-zinc-900/50 backdrop-blur-sm border border-amber-500/10 p-8 hover:border-amber-500/50 transition-all duration-500 group hover:transform hover:-translate-y-3 hover:shadow-2xl hover:shadow-amber-500/20 rounded-lg relative overflow-hidden"
+                className="animate-on-scroll opacity-0 bg-zinc-100 dark:bg-zinc-900/50 backdrop-blur-sm border border-amber-500/10 p-8 hover:border-amber-500/50 transition-all duration-500 group hover:transform hover:-translate-y-3 hover:shadow-2xl hover:shadow-amber-500/20 rounded-lg relative overflow-hidden"
                 style={{ animationDelay: `${index * 100} ms` }}
               >
                 {/* Shine effect on hover */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-500/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></div>
 
                 <div className="relative z-10">
-                  <div className="text-gray-400 mb-4 group-hover:text-amber-500 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 transform">
+                  <div className="text-gray-600 dark:text-gray-400 mb-4 group-hover:text-amber-500 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 transform">
                     <feature.icon className="h-10 w-10" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-2 uppercase group-hover:text-amber-400 transition-colors">
+                  <h3 className="text-2xl font-bold text-zinc-900 dark:text-white mb-2 uppercase group-hover:text-amber-400 transition-colors">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-400 leading-relaxed">{feature.description}</p>
+                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{feature.description}</p>
                 </div>
               </div>
             ))}
@@ -237,7 +237,7 @@ export default function Home() {
 
       {/* Showcase Gallery with Scroll Reveal */}
       <section className="py-12 relative overflow-hidden">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-zinc-800">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-zinc-200 dark:bg-zinc-800">
           {[
             gallery1,
             gallery2,
@@ -251,7 +251,7 @@ export default function Home() {
           ].map((src, index) => (
             <div
               key={index}
-              className="group relative h-64 md:h-80 overflow-hidden animate-on-scroll opacity-0 bg-black"
+              className="group relative h-64 md:h-80 overflow-hidden animate-on-scroll opacity-0 bg-white dark:bg-black"
               style={{ animationDelay: `${index * 150} ms` }}
             >
               <img
@@ -281,7 +281,7 @@ export default function Home() {
       </section>
 
       {/* Pricing Section */}
-      <section className="py-24 bg-black relative overflow-hidden">
+      <section className="py-24 bg-white dark:bg-black relative overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute bottom-0 right-1/4 w-full h-full bg-gradient-to-tl from-amber-500 to-transparent blur-3xl"></div>
@@ -293,11 +293,11 @@ export default function Home() {
               <h2 className="text-amber-500 font-bold tracking-widest uppercase mb-4">
                 Rates & Packages
               </h2>
-              <h3 className="text-4xl md:text-5xl font-black text-white uppercase">
+              <h3 className="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white uppercase">
                 Simple, Transparent Pricing
               </h3>
             </div>
-            <p className="text-gray-400 max-w-sm md:text-right">
+            <p className="text-gray-600 dark:text-gray-400 max-w-sm md:text-right">
               No hidden fees. All sessions include a sound engineer to handle the technical
               side.
             </p>
@@ -308,8 +308,8 @@ export default function Home() {
               <div
                 key={index}
                 className={`relative p-8 flex flex-col h-full rounded-2xl transition-all duration-500 hover:transform hover:-translate-y-3 group ${plan.popular
-                  ? 'border-2 border-amber-500 bg-zinc-900/80 backdrop-blur-md shadow-[0_20px_50px_rgba(245,158,11,0.2)] scale-105 z-10'
-                  : 'border border-amber-500/10 bg-zinc-900/30 backdrop-blur-sm hover:border-amber-500/40 hover:shadow-2xl hover:shadow-amber-500/10'
+                  ? 'border-2 border-amber-500 bg-white dark:bg-zinc-900/80 backdrop-blur-md shadow-[0_20px_50px_rgba(245,158,11,0.2)] scale-105 z-10'
+                  : 'border border-amber-500/10 bg-zinc-50 dark:bg-zinc-900/30 backdrop-blur-sm hover:border-amber-500/40 hover:shadow-2xl hover:shadow-amber-500/10'
                   } `}
               >
                 {/* Animated background gradient */}
@@ -326,19 +326,19 @@ export default function Home() {
                     {plan.name}
                   </h3>
                   <div className="flex items-baseline mb-6">
-                    <span className="text-5xl font-black text-white group-hover:scale-110 transition-transform origin-left">
+                    <span className="text-5xl font-black text-zinc-900 dark:text-white group-hover:scale-110 transition-transform origin-left">
                       {plan.price}
                     </span>
                     <span className="text-gray-500 ml-2 font-medium">{plan.period}</span>
                   </div>
 
                   {plan.description && (
-                    <p className="text-gray-400 text-sm mb-6 leading-relaxed italic">{plan.description}</p>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-6 leading-relaxed italic">{plan.description}</p>
                   )}
 
                   <ul className="space-y-4 mb-8 flex-1">
                     {plan.features.map((feature, fIndex) => (
-                      <li key={fIndex} className="flex items-start text-gray-300 group-hover:text-white transition-colors">
+                      <li key={fIndex} className="flex items-start text-gray-700 dark:text-gray-300 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors">
                         <div className="p-1 bg-amber-500/10 rounded-full mr-3 mt-0.5 group-hover:bg-amber-500/20 transition-colors">
                           <Check className="h-3 w-3 text-amber-500" />
                         </div>
@@ -348,9 +348,9 @@ export default function Home() {
                   </ul>
 
                   {plan.bestFor && (
-                    <div className="mb-8 p-4 bg-black/50 rounded-xl border border-amber-500/5">
+                    <div className="mb-8 p-4 bg-zinc-100 dark:bg-black/50 rounded-xl border border-amber-500/5">
                       <p className="text-[10px] text-amber-500/60 uppercase tracking-widest font-black mb-2">Perfect For</p>
-                      <p className="text-xs text-gray-400 leading-relaxed font-medium">{plan.bestFor}</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{plan.bestFor}</p>
                     </div>
                   )}
 
@@ -358,7 +358,7 @@ export default function Home() {
                     onClick={() => navigate('/book-wizard', { state: { plan: plan.name === 'Audio Only' ? 'audio' : plan.name === 'Audio + Video' ? 'audio_video' : 'general' } })}
                     className={`relative overflow-hidden w-full py-4 text-center text-xs font-black uppercase tracking-[0.2em] transition-all duration-300 rounded-xl group/btn block ${plan.popular
                       ? 'bg-amber-500 text-black hover:bg-amber-400 shadow-lg shadow-amber-500/20'
-                      : 'bg-white text-black hover:bg-amber-500 hover:text-black border border-amber-500/10'
+                      : 'bg-zinc-200 dark:bg-white text-black hover:bg-amber-500 hover:text-black border border-amber-500/10'
                       } `}
                   >
                     <span className="relative z-10">Secure Your Slot</span>
@@ -372,7 +372,7 @@ export default function Home() {
       </section>
 
       {/* Trust Banner */}
-      <section className="py-20 border-y border-amber-500/20 relative overflow-hidden bg-black">
+      <section className="py-20 border-y border-amber-500/20 relative overflow-hidden bg-zinc-50 dark:bg-black">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-500/5 to-transparent animate-shimmer"></div>
 
         <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
@@ -397,7 +397,7 @@ export default function Home() {
       </section>
 
       {/* Location Section */}
-      <section className="py-32 bg-black relative overflow-hidden">
+      <section className="py-32 bg-white dark:bg-black relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,rgba(245,158,11,0.05),transparent_50%)]"></div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -406,7 +406,7 @@ export default function Home() {
               <MapPin className="h-3 w-3 text-amber-500" />
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-500">Find Your Way</span>
             </div>
-            <h3 className="text-5xl md:text-7xl font-black text-white uppercase mb-8 leading-[0.9] tracking-tighter">
+            <h3 className="text-5xl md:text-7xl font-black text-zinc-900 dark:text-white uppercase mb-8 leading-[0.9] tracking-tighter">
               Located steps from <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600">
                 Woodbine Station
@@ -418,7 +418,7 @@ export default function Home() {
           </div>
 
           <div className="animate-on-scroll opacity-0 delay-200 w-full max-w-6xl mx-auto group">
-            <div className="relative p-2 bg-zinc-900 border border-amber-500/10 rounded-[3rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.5)]">
+            <div className="relative p-2 bg-zinc-100 dark:bg-zinc-900 border border-amber-500/10 rounded-[3rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.5)]">
               <div className="relative h-[550px] rounded-[2.5rem] overflow-hidden">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2885.667503461284!2d-79.3090!3d43.6860!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4cc7766099dc3%3A0x63806a644171221b!2sWoodbine!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca"
