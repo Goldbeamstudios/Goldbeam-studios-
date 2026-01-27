@@ -482,7 +482,7 @@ const AdminBookings = () => {
                                     <label className="text-[10px] font-black text-zinc-600 uppercase tracking-widest block mb-4 border-b border-zinc-900 pb-2">Session Technicals</label>
                                     <div className="grid grid-cols-2 gap-4">
                                         <div className="p-5 bg-zinc-900 rounded-2xl border border-zinc-800 text-center">
-                                            <p className="text-[9px] font-black text-zinc-600 uppercase tracking-widest mb-1">Space</p>
+                                            <p className="text-[9px] font-black text-zinc-600 uppercase tracking-widest mb-1">Studio</p>
                                             <p className="text-xl font-black text-white tracking-widest uppercase">{selectedBooking.studio}</p>
                                         </div>
                                         <div className="p-5 bg-zinc-900 rounded-2xl border border-zinc-800 text-center">

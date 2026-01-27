@@ -166,6 +166,8 @@ export default function AdminSchedule() {
     const handleSaveWorkingHour = async () => {
         if (!editingHour) return;
         setSaving(true);
+        setError(null);
+        console.log('Attempting to update working hour:', editingHour);
         try {
             const { error } = await supabase
                 .from('studio_working_hours')
@@ -175,11 +177,16 @@ export default function AdminSchedule() {
                     is_closed: editingHour.is_closed
                 })
                 .eq('id', editingHour.id);
+
             if (error) throw error;
-            setWorkingHours(prev => prev.map(h => h.id === editingHour.id ? editingHour : h));
+
+            console.log('Update successful, refreshing data...');
+            if (selectedStudio) await fetchStudioData(selectedStudio);
             setIsEditHourOpen(false);
-        } catch (err) {
-            console.error(err);
+            setEditingHour(null);
+        } catch (err: any) {
+            console.error('Update failed:', err);
+            setError(err.message || 'Failed to update working hours');
         } finally {
             setSaving(false);
         }
@@ -620,6 +627,14 @@ export default function AdminSchedule() {
                                             ))}
                                         </div>
                                     </div>
+                                </div>
+                            )}
+
+                            {error && (
+                                <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl">
+                                    <p className="text-[10px] font-black uppercase text-red-500 tracking-widest text-center">
+                                        Update Error: {error}
+                                    </p>
                                 </div>
                             )}
 

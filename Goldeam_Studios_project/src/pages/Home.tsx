@@ -1,4 +1,4 @@
-import { ArrowRight, Play, Mic2, Video, Cast, Sliders, Coffee, Wifi, Check, MapPin } from 'lucide-react';
+import { ArrowRight, Play, Mic2, Video, Cast, Sliders, Coffee, Wifi, MapPin } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import bg from '../assets/banner_three.jpeg';
@@ -42,7 +42,7 @@ export default function Home() {
       icon: Mic2,
       title: 'Pro Audio',
       description:
-        'Shure SM7B microphones and RØDECaster Pro II interfaces deliver broadcast-quality sound for podcasts, interviews, and voice recording.',
+        'Shure SM7B microphones and RØDECaster Pro II deliver broadcast-quality sound for podcasts, interviews, and voice recordings.',
     },
     {
       icon: Video,
@@ -76,55 +76,7 @@ export default function Home() {
     },
   ];
 
-  const pricingPlans = [
-    {
-      name: 'Audio Only',
-      price: '$170',
-      period: '/ hour',
-      description: 'Perfect for audio-focused podcasts, interviews, and voiceovers.',
-      features: [
-        'Dedicated audio-only studio (up to 2 people)',
-        'Professional sound engineer',
-        'Acoustically treated room',
-        'Raw WAV & MP3 files',
-        'File delivery within 24 hours',
-      ],
-      bestFor: 'Audio podcasts, interviews, voice recording',
-      popular: false,
-    },
-    {
-      name: 'Audio + Video',
-      price: '$300',
-      period: '/ hour',
-      description: 'A cinematic podcast experience designed for creators who want a professional visual presence.',
-      features: [
-        'Multi-camera 4K video setup',
-        'Live multi-angle switching',
-        'Professional studio lighting',
-        'On-site camera operator / technician',
-        'Custom set and color configuration',
-        'Live-cut program video + program audio',
-        'File delivery within 24 hours',
-      ],
-      bestFor: 'Video podcasts, YouTube shows, branded content',
-      popular: true,
-    },
-    {
-      name: 'General Content',
-      price: '$250',
-      period: '/ hour',
-      description: 'Designed for content beyond podcasts, including educational videos, interviews, product demos, and brand content.',
-      features: [
-        'Full studio access',
-        'Professional camera operator / studio technician',
-        'Studio lighting and camera setup',
-        'Live-cut program video + program audio',
-        'File delivery within 24 hours',
-      ],
-      bestFor: 'Creators, educators, businesses, agencies, and brands',
-      popular: false,
-    },
-  ];
+
 
   return (
     <div className="bg-white dark:bg-black text-zinc-900 dark:text-white transition-colors duration-300">
@@ -166,8 +118,7 @@ export default function Home() {
             </h1>
 
             <p className="text-xl text-gray-300 mb-10 max-w-2xl leading-relaxed animate-fade-in-delay">
-              Premier podcast production facility. Professional audio engineering, 4K video
-              recording, and live streaming services in a state-of-the-art studio.
+              Record podcasts, videos, and interviews in a premium Toronto studio
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6 animate-fade-in-delay-2">
@@ -280,96 +231,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section className="py-24 bg-white dark:bg-black relative overflow-hidden">
-        {/* Background decoration */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute bottom-0 right-1/4 w-full h-full bg-gradient-to-tl from-amber-500 to-transparent blur-3xl"></div>
-        </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6 animate-on-scroll opacity-0">
-            <div className="max-w-2xl">
-              <h2 className="text-amber-500 font-bold tracking-widest uppercase mb-4">
-                Rates & Packages
-              </h2>
-              <h3 className="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white uppercase">
-                Simple, Transparent Pricing
-              </h3>
-            </div>
-            <p className="text-gray-600 dark:text-gray-400 max-w-sm md:text-right">
-              No hidden fees. All sessions include a sound engineer to handle the technical
-              side.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {pricingPlans.map((plan, index) => (
-              <div
-                key={index}
-                className={`relative p-8 flex flex-col h-full rounded-2xl transition-all duration-500 hover:transform hover:-translate-y-3 group ${plan.popular
-                  ? 'border-2 border-amber-500 bg-white dark:bg-zinc-900/80 backdrop-blur-md shadow-[0_20px_50px_rgba(245,158,11,0.2)] scale-105 z-10'
-                  : 'border border-amber-500/10 bg-zinc-50 dark:bg-zinc-900/30 backdrop-blur-sm hover:border-amber-500/40 hover:shadow-2xl hover:shadow-amber-500/10'
-                  } `}
-              >
-                {/* Animated background gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
-
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-amber-500 to-amber-600 text-black text-[10px] font-bold px-6 py-1.5 uppercase tracking-[0.2em] rounded-full shadow-lg shadow-amber-500/50 z-20">
-                    Most Popular
-                  </div>
-                )}
-
-                <div className="relative z-10 flex flex-col h-full">
-                  <h3 className="text-sm font-bold text-amber-500/80 uppercase tracking-[0.2em] mb-4 group-hover:text-amber-500 transition-colors">
-                    {plan.name}
-                  </h3>
-                  <div className="flex items-baseline mb-6">
-                    <span className="text-5xl font-black text-zinc-900 dark:text-white group-hover:scale-110 transition-transform origin-left">
-                      {plan.price}
-                    </span>
-                    <span className="text-gray-500 ml-2 font-medium">{plan.period}</span>
-                  </div>
-
-                  {plan.description && (
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-6 leading-relaxed italic">{plan.description}</p>
-                  )}
-
-                  <ul className="space-y-4 mb-8 flex-1">
-                    {plan.features.map((feature, fIndex) => (
-                      <li key={fIndex} className="flex items-start text-gray-700 dark:text-gray-300 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors">
-                        <div className="p-1 bg-amber-500/10 rounded-full mr-3 mt-0.5 group-hover:bg-amber-500/20 transition-colors">
-                          <Check className="h-3 w-3 text-amber-500" />
-                        </div>
-                        <span className="text-sm leading-tight">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {plan.bestFor && (
-                    <div className="mb-8 p-4 bg-zinc-100 dark:bg-black/50 rounded-xl border border-amber-500/5">
-                      <p className="text-[10px] text-amber-500/60 uppercase tracking-widest font-black mb-2">Perfect For</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{plan.bestFor}</p>
-                    </div>
-                  )}
-
-                  <button
-                    onClick={() => navigate('/book-wizard', { state: { plan: plan.name === 'Audio Only' ? 'audio' : plan.name === 'Audio + Video' ? 'audio_video' : 'general' } })}
-                    className={`relative overflow-hidden w-full py-4 text-center text-xs font-black uppercase tracking-[0.2em] transition-all duration-300 rounded-xl group/btn block ${plan.popular
-                      ? 'bg-amber-500 text-black hover:bg-amber-400 shadow-lg shadow-amber-500/20'
-                      : 'bg-zinc-200 dark:bg-white text-black hover:bg-amber-500 hover:text-black border border-amber-500/10'
-                      } `}
-                  >
-                    <span className="relative z-10">Secure Your Slot</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-amber-600 opacity-0 group-hover/btn:opacity-100 transition-opacity"></div>
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Trust Banner */}
       <section className="py-20 border-y border-amber-500/20 relative overflow-hidden bg-zinc-50 dark:bg-black">

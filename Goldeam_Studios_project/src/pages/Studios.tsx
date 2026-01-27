@@ -46,26 +46,26 @@ export default function Studios() {
 
   const studioA = {
     name: 'Studio A',
-    subtitle: 'General Content Studio',
-    description: '(Studio A) Our largest and most versatile studio, designed for high-end visual content and professional productions that require flexibility, variety, and space.',
+    subtitle: 'Multi-Purpose Production Studio',
+    description: '(Studio A) Our largest and most versatile studio, designed for high-end video content and professional productions that require flexibility, variety, and space.',
     themes: [
       {
         name: 'Signature',
         image: studioOne,
         capacity: 'Up to 4 people',
-        description: 'A polished, modern setup that represents the core Goldbeam Studio look. Ideal for podcasts, interviews, panels, and branded content.',
+        description: 'A modern, symmetrical studio setup with comfortable seating, professional microphones, and warm ambient lighting. The acoustically treated backdrop and neutral tones create a calm, premium look ideal for podcasts, interviews, panels, and branded conversations.',
       },
       {
-        name: 'Oasis',
+        name: 'Sahara',
         image: studioThree,
         capacity: 'Up to 4 people',
-        description: 'A warm, relaxed environment designed for conversational content, storytelling, and educational videos with a softer, lifestyle feel.',
+        description: 'A warm, intimate setup with soft lighting and neutral tones, designed for relaxed podcasts, interviews, and conversational content.',
       },
       {
         name: 'Chroma',
         image: studioFour,
         capacity: 'Up to 2 people',
-        description: 'A minimalist white backdrop enhanced with RGB lighting, allowing you to create custom color moods and branded looks without post-production effects.',
+        description: 'A bold, modern setup with rich color accents and balanced lighting—ideal for video podcasts, interviews, and visually expressive content.',
       },
     ],
     features: [
@@ -86,7 +86,7 @@ export default function Studios() {
     subtitle: 'Compact Production Studio',
     capacity: 'Up to 2 people',
     image: studioTwo,
-    description: '(Studio B) Our smaller, streamlined studio designed for focused recordings and efficient content creation. It offers professional quality in a more intimate setting.',
+    description: '(Studio B) A compact studio designed for focused audio and efficient content creation, offering professional quality in a more intimate setting.',
     features: [
       'Professional audio setup',
       'Studio lighting',
@@ -102,22 +102,22 @@ export default function Studios() {
     {
       icon: Wifi,
       name: 'High-Speed Fiber Internet',
-      description: 'Reliable uploads, livestreams & remote guests'
+      description: 'Reliable, high-speed internet for live streaming, uploads, and remote guests.'
     },
     {
       icon: Coffee,
       name: 'Refreshments',
-      description: 'Complimentary coffee, water & energy drinks'
+      description: 'Complimentary coffee, water, and light refreshments during your session.'
     },
     {
       icon: Mic2,
       name: 'Professional Equipment',
-      description: 'Broadcast-quality cameras, lighting & audio'
+      description: 'Broadcast-quality cameras, microphones, lighting, and studio tools.'
     },
     {
       icon: Video,
       name: '4K Video Capture',
-      description: 'High-resolution, multi-camera recording'
+      description: 'High-resolution, multi-camera recording for professional video production.'
     },
   ];
 

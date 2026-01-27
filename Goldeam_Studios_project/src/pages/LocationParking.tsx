@@ -76,7 +76,7 @@ export default function LocationParking() {
                                 </div>
 
                                 <div className="p-6 bg-amber-500/5 dark:bg-amber-500/5 border-l-4 border-amber-500 rounded-r-2xl italic text-zinc-700 dark:text-gray-300">
-                                    "Located in the heart of East York, our studio is easily accessible from any part of the city."
+                                    "Located in the heart of East York, just steps from Woodbine Station."
                                 </div>
                             </div>
 
@@ -137,14 +137,14 @@ export default function LocationParking() {
                             {
                                 icon: Car,
                                 title: 'Street Parking',
-                                desc: 'Ample street parking is available along Danforth Ave and adjacent side streets.',
+                                desc: 'Ample street parking is available along Danforth Ave and nearby side streets.',
                                 note: 'Ideal for short sessions (under 2 hrs).',
                                 highlight: 'Free / Metered'
                             },
                             {
                                 icon: Info,
                                 title: 'Paid Parking',
-                                desc: 'Multiple public parking lots are situated within a 200m radius of the studio.',
+                                desc: 'Multiple public parking lots are available within a 200m radius of the studio.',
                                 note: 'Recommended for half or full-day bookings.',
                                 highlight: 'Secure Lots'
                             }
@@ -199,7 +199,7 @@ export default function LocationParking() {
                                         <div className="flex items-center gap-4 px-8 py-4 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-amber-500/10 rounded-2xl shadow-lg dark:shadow-none">
                                             <Clock className="h-10 w-10 text-amber-500" />
                                             <div className="text-left">
-                                                <span className="block text-3xl font-black text-zinc-900 dark:text-white italic leading-tight transition-colors">5–7 MINS</span>
+                                                <span className="block text-3xl font-black text-zinc-900 dark:text-white italic leading-tight transition-colors">3 MINS</span>
                                                 <span className="text-[10px] font-black uppercase tracking-widest text-amber-500/60">WALKING DISTANCE</span>
                                             </div>
                                         </div>
@@ -236,7 +236,7 @@ export default function LocationParking() {
                                 </div>
                                 <h4 className="text-2xl font-black uppercase text-zinc-900 dark:text-white">Early Check-in</h4>
                                 <p className="text-zinc-600 dark:text-gray-400 leading-relaxed">
-                                    We recommend arriving **15 minutes early** to ensure your technical setup is perfect before recording begins.
+                                    We recommend arriving about 15 minutes early to ensure your technical setup is ready before recording begins.
                                 </p>
                             </div>
                             <div className="group space-y-4 p-8 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-amber-500/10 rounded-3xl hover:border-amber-500/30 transition-all">

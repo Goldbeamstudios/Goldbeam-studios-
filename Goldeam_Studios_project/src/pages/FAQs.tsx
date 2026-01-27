@@ -10,7 +10,7 @@ export default function FAQs() {
       questions: [
         {
           q: 'How do I book a session?',
-          a: 'You can book a session directly through our website using Stripe. Choose your preferred date, time, and studio, then complete the secure payment.',
+          a: 'You can book a session directly through our website. Choose your preferred date, time, and studio, then complete secure payment powered by Stripe.',
         },
         {
           q: 'How far in advance should I book?',
@@ -18,7 +18,7 @@ export default function FAQs() {
         },
         {
           q: 'Can I cancel or reschedule?',
-          a: 'Yes, you can reschedule up to 24 hours before your session at no charge. Cancellations within 24 hours are subject to a 50% fee.',
+          a: 'Yes, you can reschedule up to 24 hours before your session at no charge. Cancellations made within 24 hours of the session are subject to a 50% fee.',
         },
       ],
     },
@@ -27,7 +27,7 @@ export default function FAQs() {
       questions: [
         {
           q: 'What equipment is included?',
-          a: 'All sessions include professional microphones (Shure SM7B), audio interface, headphones, and a sound engineer. Video sessions include 4K cameras, lighting, and live switching.',
+          a: 'All sessions include professional microphones (Shure SM7B), audio interface, headphones, and an on-site sound engineer.',
         },
         {
           q: 'Can I bring my own equipment?',
@@ -35,7 +35,7 @@ export default function FAQs() {
         },
         {
           q: 'Do you provide technical support?',
-          a: 'Yes, a professional sound engineer is included with every session to handle all technical aspects.',
+          a: 'Yes, a professional sound engineer is included with every session to handle all technical aspects, so you can focus on your content.',
         },
       ],
     },
@@ -44,7 +44,7 @@ export default function FAQs() {
       questions: [
         {
           q: 'How long does a typical session last?',
-          a: 'Most sessions are 2-3 hours, but you can book for as little as 1 hour or as long as you need.',
+          a: 'Most sessions are 2–3 hours, but you can book as little as 1 hour or extend your session as needed.',
         },
         {
           q: 'When will I receive my files?',
@@ -52,7 +52,7 @@ export default function FAQs() {
         },
         {
           q: 'What file formats do you provide?',
-          a: 'Audio: WAV and MP3. Video: MP4 (H.264). We can accommodate special format requests.',
+          a: 'Audio: WAV and MP3. Video: MP4 (H.264). Special format requests can be accommodated upon request.',
         },
       ],
     },
@@ -61,15 +61,15 @@ export default function FAQs() {
       questions: [
         {
           q: 'What payment methods do you accept?',
-          a: 'We accept all major credit cards, debit cards, and ACH payments through Stripe.',
+          a: 'We accept all major credit cards and debit cards through Stripe. Secure online payment is required at the time of booking.',
         },
         {
           q: 'Are there any hidden fees?',
-          a: 'No hidden fees. The price you see includes the studio, equipment, and engineer. Additional services like editing are clearly listed.',
+          a: 'No hidden fees. The price you see includes the studio, equipment, and on-site engineer. Optional add-on services, such as editing, are clearly listed.',
         },
         {
           q: 'Do you offer discounts?',
-          a: 'Yes! We offer monthly packages with discounted rates. Contact us for custom bulk booking discounts.',
+          a: 'Yes. We offer monthly packages at discounted rates. Custom pricing may also be available for bulk or recurring bookings—please contact us for details.',
         },
       ],
     },

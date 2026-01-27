@@ -10,7 +10,7 @@ export default function Build() {
     },
     {
       icon: Video,
-      name: '4K Video Production',
+      name: '4K Video Recording',
       description: 'Multi-camera setup with professional lighting',
       color: 'from-orange-500 to-red-500',
     },
@@ -59,7 +59,7 @@ export default function Build() {
     },
     {
       title: 'Fast Delivery',
-      description: 'Files delivered within 24 hours',
+      description: 'Files delivered within 24 hours (non-edited)',
     },
     {
       title: 'All-Inclusive',
@@ -81,8 +81,7 @@ export default function Build() {
               </span>
             </h1>
             <p className="text-xl text-zinc-600 dark:text-gray-300 leading-relaxed mb-8">
-              Professional podcast production services designed to elevate your content.
-              From recording to post-production, we've got you covered.
+              Professional podcast and content production services designed to elevate your brand from recording to post-production.
             </p>
             <div className="flex items-center justify-center gap-6 text-sm text-zinc-500 dark:text-gray-400">
               <div className="flex items-center gap-2">
@@ -167,10 +166,10 @@ export default function Build() {
             {[
               {
                 step: 'Step 1',
-                title: 'Choose Your Package',
+                title: 'Choose Your Session',
                 tasks: [
                   'Select audio-only or video production',
-                  'Pick hourly or monthly plan',
+                  'Pick hourly plan',
                   'Choose your preferred studio',
                   'Select date and time',
                 ],
@@ -179,7 +178,7 @@ export default function Build() {
                 step: 'Step 2',
                 title: 'Book & Prepare',
                 tasks: [
-                  'Secure online booking with Stripe',
+                  'Secure online booking powered by Stripe',
                   'Receive pre-session guide',
                   'Coordinate with remote guests',
                   'Plan your content',

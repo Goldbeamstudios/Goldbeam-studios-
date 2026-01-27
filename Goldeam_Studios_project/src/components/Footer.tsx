@@ -20,8 +20,7 @@ export default function Footer() {
             </Link>
             <h4 className="text-lg font-bold text-zinc-900 dark:text-white uppercase mb-6">About Us</h4>
             <p className="text-zinc-600 dark:text-gray-400 leading-relaxed mb-6">
-              Premier podcast production facility offering professional audio engineering,
-              4K video recording, and live streaming services in Toronto.
+              Premium podcast and video production studio offering professional audio, 4K video recording, and live streaming services in Toronto.
             </p>
             <div className="flex space-x-4">
               <a
@@ -129,12 +128,12 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-amber-500/20 pt-8 flex flex-col md:flex-row justify-between items-center text-zinc-500 dark:text-gray-500 text-sm">
-          <p className="mb-4 md:mb-0">&copy; 2025 Goldbeam Studios. All rights reserved.</p>
+          <p className="mb-4 md:mb-0">&copy; 2026 Goldbeam Studios. All rights reserved.</p>
           <Link
             to="https://wa.me/251913901952"
             className="text-amber-500 hover:text-amber-400 transition-colors"
           >
-            Powered by Haileab
+            Powered by Haileab shimels
           </Link>
         </div>
       </div>

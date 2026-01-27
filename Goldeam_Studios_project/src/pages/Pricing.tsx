@@ -6,18 +6,17 @@ export default function Pricing() {
   const pricingPlans = [
     {
       id: 'audio',
-      name: 'Audio-Only Podcast',
+      name: 'Audio-Only Recording',
       price: 'From $170',
       period: '/ hour',
-      description: 'Perfect for audio-focused podcasts, interviews, and voiceovers. Hosted in Studio B.',
+      description: '',
       features: [
-        'Dedicated audio-only studio (Studio B)',
-        'Professional sound engineer',
-        'Multi-hour discounts up to 40%',
-        'Raw WAV & MP3 files',
+        'Professional audio mixing (EQ, compression)',
+        'Broadcast-quality microphones',
+        'Multi-track recording & backup',
         'File delivery within 24 hours',
       ],
-      bestFor: 'Audio podcasts, interviews, voice recording',
+      bestFor: 'Podcasts, voiceovers, audiobooks, interviews, and spoken-word content',
       popular: false,
       gradient: 'from-gray-500 to-gray-600',
     },
@@ -26,17 +25,16 @@ export default function Pricing() {
       name: 'Audio + Video Podcast',
       price: 'From $250',
       period: '/ hour',
-      description: 'A cinematic podcast experience. Choose between Studio A (Premium) or Studio B (Standard).',
+      description: '',
       features: [
         'Multi-camera 4K video setup',
-        'Multi-hour discounts up to 40%',
+        'Live multi-angle switching',
         'Professional studio lighting',
-        'On-site camera operator / technician',
-        'Custom set and color configuration',
-        'Live-cut program video + program audio',
+        'On-site camera operator & technician',
+        'Custom set and theme configuration',
         'File delivery within 24 hours',
       ],
-      bestFor: 'Video podcasts, YouTube shows, branded content',
+      bestFor: 'Video podcasts, multi-camera interviews, talk shows, and on-camera conversations.',
       popular: true,
       gradient: 'from-amber-500 to-amber-600',
       note: 'Rates: Studio A ($300/hr), Studio B ($250/hr). Discounts apply for 2+ hours.',
@@ -46,15 +44,15 @@ export default function Pricing() {
       name: 'General Content',
       price: 'From $200',
       period: '/ hour',
-      description: 'Designed for educational videos, product demos, and brand content.',
+      description: '',
       features: [
-        'Full studio access (Studio A or B)',
-        'Professional camera operator',
-        'Multi-hour discounts up to 40%',
-        'Live-cut program video + program audio',
+        'Flexible camera setups',
+        'Professional audio capture',
+        'Studio lighting and backdrop options',
+        'Multi-track audio & video recording',
         'File delivery within 24 hours',
       ],
-      bestFor: 'Creators, educators, and businesses',
+      bestFor: 'Educational videos, branded content, online courses, presentations, and training material.',
       popular: false,
       gradient: 'from-amber-600 to-orange-600',
       note: 'Rates: Studio A ($250/hr), Studio B ($200/hr). Discounts apply for 2+ hours.',
@@ -82,7 +80,7 @@ export default function Pricing() {
       name: 'ISO Recording',
       price: '$75',
       period: 'per hour',
-      description: 'Individual camera ISO files and isolated audio tracks. Includes all camera ISO files + isolated audio tracks.',
+      description: 'Individual audio tracks for each mic, delivered as separate WAV files.',
     },
     {
       name: 'Basic Video Edit',
@@ -106,7 +104,7 @@ export default function Pricing() {
       name: 'Social Media Clips',
       price: '$90',
       period: '(5 clips)',
-      description: '5 short vertical clips (30–60s) optimized for Reels, TikTok, and Shorts.',
+      description: 'Short-form vertical clips optimized for Instagram, TikTok, and YouTube Shorts.',
     },
     {
       name: 'Show Notes & Timestamps',
@@ -118,7 +116,7 @@ export default function Pricing() {
       name: 'Teleprompter',
       price: '$50',
       period: 'per session',
-      description: 'Hardware setup, script loading, and formatting. On-site operation included.',
+      description: 'Script support with professional teleprompter setup and operation.',
     },
     {
       name: 'On-Set Display / TV Monitor',
@@ -210,7 +208,7 @@ export default function Pricing() {
                     : 'bg-zinc-100 dark:bg-white text-black hover:bg-zinc-200 dark:hover:bg-gray-200'
                     }`}
                 >
-                  Book Plan
+                  BOOK A SESSION
                 </button>
               </div>
             ))}

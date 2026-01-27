@@ -106,7 +106,7 @@ serve(async (req) => {
             line_items: [
                 {
                     price_data: {
-                        currency: 'usd',
+                        currency: 'cad',
                         product_data: {
                             name: `${plan.toUpperCase()} Session - Studio ${studio}`,
                             description: `${duration} hour(s) on ${date} at ${time}. ${addons.length > 0 ? `Add-ons: ${addons.join(', ')}` : ''}`,

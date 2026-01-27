@@ -8,7 +8,7 @@ export default function HowItWorks() {
       number: '01',
       title: 'Book Your Session',
       description:
-        'Choose your preferred date and time. Select from audio-only or full video production packages.',
+        'Choose your preferred date and time. Select from audio-only or audio + video packages.',
       details: [
         'Instant online booking',
         'Flexible scheduling',
@@ -20,7 +20,7 @@ export default function HowItWorks() {
       number: '02',
       title: 'Prepare Your Content',
       description:
-        'We send you a pre-session checklist and studio guide. Arrive 15 minutes early for setup.',
+        'We’ll send you a pre-session checklist and studio guide. Arrive 15 minutes early and we’ll handle the rest.',
       details: [
         'Content planning guide',
         'Technical requirements',
@@ -32,7 +32,7 @@ export default function HowItWorks() {
       number: '03',
       title: 'Record in Studio',
       description:
-        'Our engineer handles all technical aspects. You focus on creating great content.',
+        'Our engineer handles all technical aspects so you can focus on creating great content.',
       details: [
         'Professional audio mixing',
         '4K video recording',
@@ -44,7 +44,7 @@ export default function HowItWorks() {
       number: '04',
       title: 'Receive Your Files',
       description:
-        'Get high-quality files delivered within 24 hours. Optional editing services available.',
+        'Get high-quality files delivered within 24 hours. Optional editing services are available.',
       details: [
         'Cloud delivery',
         'Multiple formats',

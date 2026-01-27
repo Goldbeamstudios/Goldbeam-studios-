@@ -121,9 +121,9 @@ export default function Contact() {
                     <div>
                       <h3 className="text-zinc-900 dark:text-white font-bold mb-1">Address</h3>
                       <p className="text-zinc-600 dark:text-gray-400">
-                        123 Creative Ave, Suite 400
+                        2017B Danforth Ave
                         <br />
-                        Chicago, IL 60607
+                        Toronto, ON M4C 1J7M4
                       </p>
                     </div>
                   </div>
@@ -133,7 +133,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="text-zinc-900 dark:text-white font-bold mb-1">Phone</h3>
-                      <p className="text-zinc-600 dark:text-gray-400">(312) 555-0123</p>
+                      <p className="text-zinc-600 dark:text-gray-400">(289) 943-3216</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
@@ -142,7 +142,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="text-zinc-900 dark:text-white font-bold mb-1">Email</h3>
-                      <p className="text-zinc-600 dark:text-gray-400">hello@goldbeamstudios.com</p>
+                      <p className="text-zinc-600 dark:text-gray-400">contact@goldbeamstudios.com</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
@@ -152,9 +152,7 @@ export default function Contact() {
                     <div>
                       <h3 className="text-zinc-900 dark:text-white font-bold mb-1">Hours</h3>
                       <p className="text-zinc-600 dark:text-gray-400">
-                        Mon - Fri: 9:00 AM - 10:00 PM
-                        <br />
-                        Sat - Sun: 10:00 AM - 8:00 PM
+                        Mon – Sun 7:00 AM – 9:00 PM
                       </p>
                     </div>
                   </div>
