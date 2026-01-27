@@ -55,7 +55,7 @@ export default function BookWizard() {
     const [studios, setStudios] = useState<Studio[]>([]);
     const [blockedDates, setBlockedDates] = useState<{ blocked_date: string; reason: string }[]>([]);
     const [validationError, setValidationError] = useState<string | null>(null);
-    const { serverTime } = useServerTime();
+    const { serverTime, getETDateString, getETTimeString } = useServerTime();
 
     // Scroll to top when component mounts
     useEffect(() => {
@@ -92,7 +92,7 @@ export default function BookWizard() {
         if (serverTime && !booking.date) {
             setBooking(prev => ({
                 ...prev,
-                date: serverTime.toISOString().split('T')[0]
+                date: getETDateString(serverTime)
             }));
         }
     }, [serverTime, booking.date]);
@@ -450,7 +450,7 @@ export default function BookWizard() {
                                     <label className="text-xs font-bold text-zinc-500 dark:text-gray-500 uppercase mb-4 block">Select Date:</label>
                                     <input
                                         type="date"
-                                        min={new Date().toISOString().split('T')[0]}
+                                        min={serverTime ? getETDateString(serverTime) : new Date().toISOString().split('T')[0]}
                                         value={booking.date}
                                         onChange={(e) => setBooking(prev => ({ ...prev, date: e.target.value }))}
                                         className="w-full bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-none rounded-xl p-4 text-zinc-900 dark:text-white focus:ring-2 ring-amber-500 outline-none"
@@ -477,21 +477,30 @@ export default function BookWizard() {
                                     ) : availableSlots.length > 0 ? (
                                         <div className="space-y-6">
                                             <div className="grid grid-cols-3 gap-2">
-                                                {availableSlots.map(t => {
-                                                    const selected = isSlotSelected(t);
-                                                    return (
-                                                        <button
-                                                            key={t}
-                                                            onClick={() => handleSlotClick(t)}
-                                                            className={`p-3 rounded-lg text-sm font-bold transition-all border ${selected
-                                                                ? 'bg-amber-500 border-amber-600 text-black shadow-lg shadow-amber-500/20'
-                                                                : 'bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-transparent text-zinc-600 dark:text-gray-500 hover:border-amber-500/50 hover:text-zinc-900 dark:hover:text-white'
-                                                                }`}
-                                                        >
-                                                            {formatTime(t)}
-                                                        </button>
-                                                    );
-                                                })}
+                                                {availableSlots
+                                                    .filter(t => {
+                                                        // If it's today in ET, filter out past times
+                                                        if (serverTime && booking.date === getETDateString(serverTime)) {
+                                                            const currentETTime = getETTimeString(serverTime);
+                                                            return t > currentETTime;
+                                                        }
+                                                        return true;
+                                                    })
+                                                    .map(t => {
+                                                        const selected = isSlotSelected(t);
+                                                        return (
+                                                            <button
+                                                                key={t}
+                                                                onClick={() => handleSlotClick(t)}
+                                                                className={`p-3 rounded-lg text-sm font-bold transition-all border ${selected
+                                                                    ? 'bg-amber-500 border-amber-600 text-black shadow-lg shadow-amber-500/20'
+                                                                    : 'bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-transparent text-zinc-600 dark:text-gray-500 hover:border-amber-500/50 hover:text-zinc-900 dark:hover:text-white'
+                                                                    }`}
+                                                            >
+                                                                {formatTime(t)}
+                                                            </button>
+                                                        );
+                                                    })}
                                             </div>
 
                                             {booking.time && (
