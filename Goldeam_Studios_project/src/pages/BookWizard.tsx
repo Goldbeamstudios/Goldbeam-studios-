@@ -54,6 +54,7 @@ export default function BookWizard() {
     const [availableSlots, setAvailableSlots] = useState<string[]>([]);
     const [studios, setStudios] = useState<Studio[]>([]);
     const [blockedDates, setBlockedDates] = useState<{ blocked_date: string; reason: string }[]>([]);
+    const [validationError, setValidationError] = useState<string | null>(null);
     const { serverTime } = useServerTime();
 
     // Scroll to top when component mounts
@@ -235,6 +236,7 @@ export default function BookWizard() {
     };
 
     const handleNext = () => {
+        setValidationError(null);
         if (currentStep === 'plan') {
             if (booking.plan === 'audio') {
                 setBooking(prev => ({ ...prev, studio: 'B', theme: '' }));
@@ -245,6 +247,10 @@ export default function BookWizard() {
         } else if (currentStep === 'details') {
             setCurrentStep('schedule');
         } else if (currentStep === 'schedule') {
+            if (!booking.date || !booking.time) {
+                setValidationError('Please select both a date and a time range to continue.');
+                return;
+            }
             setCurrentStep('confirm');
         }
     };
@@ -601,12 +607,25 @@ export default function BookWizard() {
                         </div>
                     )}
 
+                    {/* Validation Toast */}
+                    {validationError && (
+                        <div className="fixed bottom-32 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-bottom-4 duration-300">
+                            <div className="bg-red-500 text-white px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-white/20 backdrop-blur-xl">
+                                <Zap className="h-4 w-4 fill-white" />
+                                <span className="text-xs font-black uppercase tracking-widest">{validationError}</span>
+                                <button onClick={() => setValidationError(null)} className="ml-2 hover:opacity-50">
+                                    <Loader2 className="h-3 w-3 rotate-45" />
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Footer Controls */}
                     <div className="mt-12 flex justify-between items-center pt-8 border-t border-zinc-200 dark:border-zinc-800">
                         <button
                             onClick={handleBack}
                             disabled={currentStep === 'plan' || loading}
-                            className="flex items-center gap-2 text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors disabled:opacity-0"
+                            className="flex items-center gap-2 text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-all disabled:opacity-0 cursor-pointer disabled:cursor-default"
                         >
                             <ChevronLeft className="h-5 w-5" /> Back
                         </button>
@@ -615,7 +634,10 @@ export default function BookWizard() {
                             <button
                                 onClick={submitBooking}
                                 disabled={loading || !booking.customerName || !booking.customerEmail}
-                                className="bg-amber-500 text-black px-10 py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-amber-400 transition-all flex items-center gap-2 disabled:opacity-50"
+                                className={`px-10 py-4 rounded-2xl font-black uppercase tracking-widest transition-all flex items-center gap-2 shadow-xl shadow-amber-500/20 ${loading || !booking.customerName || !booking.customerEmail
+                                    ? 'bg-zinc-200 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-600 scale-95 cursor-not-allowed border border-transparent'
+                                    : 'bg-amber-500 text-black hover:bg-amber-400 hover:-translate-y-0.5 cursor-pointer active:scale-95'
+                                    }`}
                             >
                                 {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Confirm Booking'}
                                 <ChevronRight className="h-5 w-5" />
@@ -624,7 +646,10 @@ export default function BookWizard() {
                             <button
                                 onClick={handleNext}
                                 disabled={loading}
-                                className="bg-amber-500 text-black px-10 py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-amber-400 transition-all flex items-center gap-2"
+                                className={`px-10 py-4 rounded-2xl font-black uppercase tracking-widest transition-all flex items-center gap-2 cursor-pointer active:scale-95 ${currentStep === 'schedule' && (!booking.date || !booking.time)
+                                    ? 'bg-amber-500 opacity-60'
+                                    : 'bg-amber-500 text-black hover:bg-amber-400 hover:-translate-y-0.5 shadow-xl shadow-amber-500/20'
+                                    }`}
                             >
                                 Next Step
                                 <ChevronRight className="h-5 w-5" />
