@@ -1,17 +1,12 @@
-
-import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
+import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
-import Stripe from 'https://esm.sh/stripe@12.0.0?target=deno'
-
-const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '', {
-    apiVersion: '2022-11-15',
-    httpClient: Stripe.createFetchHttpClient(),
-})
+import Stripe from "https://esm.sh/stripe@18.5.0";
 
 const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+    "Access-Control-Allow-Methods": "POST, OPTIONS, GET"
+};
 
 serve(async (req) => {
     if (req.method === 'OPTIONS') {
@@ -19,7 +14,8 @@ serve(async (req) => {
     }
 
     try {
-        const { booking_data } = await req.json()
+        const requestBody = await req.text();
+        const { booking_data } = JSON.parse(requestBody);
         const {
             plan,
             studio,
@@ -31,10 +27,11 @@ serve(async (req) => {
             time,
             customerName,
             customerEmail,
-            totalPrice
         } = booking_data
 
-        // 1. Calculate Total Price on Backend to avoid tampering
+        console.log(`=== CHECKOUT STARTED FOR ${customerEmail} ===`);
+
+        // 1. Calculate Total Price on Backend
         const calculateBackendTotal = () => {
             let baseRate = 0;
             if (plan === 'audio') baseRate = 170;
@@ -72,6 +69,11 @@ serve(async (req) => {
         };
 
         const finalPrice = calculateBackendTotal();
+        console.log(`Calculated total price: ${finalPrice} CAD`);
+
+        const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || '', {
+            apiVersion: "2024-11-20.acacia"
+        });
 
         // 2. Initialize Supabase Client
         const supabaseClient = createClient(
@@ -79,27 +81,37 @@ serve(async (req) => {
             Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
         )
 
-        // 2. Double Check Availability (Backend Validation) using tsrange
-        const startTime = time;
-        const endTime = new Date(new Date(`1970-01-01T${time}:00`).getTime() + duration * 60 * 60 * 1000).toTimeString().split(' ')[0];
+        // 3. Robust Availability Check (Backend Validation) using tsrange
+        // Format: YYYY-MM-DD HH:mm:ss
+        const startTs = `${date} ${time.length === 5 ? time + ':00' : time}`;
+        const endTsDate = new Date(new Date(`${date}T${time}:00`).getTime() + duration * 60 * 60 * 1000);
+        const endTs = `${endTsDate.toISOString().split('T')[0]} ${endTsDate.toTimeString().split(' ')[0]}`;
+
+        console.log(`Checking availability for range: [${startTs}, ${endTs})`);
 
         const { data: existing, error: checkError } = await supabaseClient
             .from('appointments')
             .select('id')
             .eq('studio_id', studio_id)
-            .eq('status', 'confirmed')
-            .filter('booking_range', 'ov', `[${date} ${startTime}, ${date} ${endTime})`)
+            .neq('status', 'cancelled') // Prevent even pending overlaps
+            .filter('booking_range', 'ov', `[${startTs}, ${endTs})`)
             .maybeSingle()
 
-        if (checkError) throw checkError
+        if (checkError) {
+            console.error('Availability check failed:', checkError);
+            throw new Error(`Availability check error: ${checkError.message}`);
+        }
+
         if (existing) {
+            console.warn('Blocking checkout: Slot already taken.');
             return new Response(JSON.stringify({ error: 'This time slot is no longer available.' }), {
                 headers: { ...corsHeaders, 'Content-Type': 'application/json' },
                 status: 400,
             })
         }
 
-        // 3. Create Stripe Checkout Session
+        // 4. Create Stripe Checkout Session
+        console.log('Creating Stripe Session...');
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             customer_email: customerEmail,
@@ -111,7 +123,7 @@ serve(async (req) => {
                             name: `${plan.toUpperCase()} Session - Studio ${studio}`,
                             description: `${duration} hour(s) on ${date} at ${time}. ${addons.length > 0 ? `Add-ons: ${addons.join(', ')}` : ''}`,
                         },
-                        unit_amount: Math.round(finalPrice * 100), // Stripe expects cents
+                        unit_amount: Math.round(finalPrice * 100),
                     },
                     quantity: 1,
                 },
@@ -133,12 +145,14 @@ serve(async (req) => {
             },
         })
 
+        console.log(`Success: Session created - ${session.id}`);
+
         return new Response(JSON.stringify({ id: session.id, url: session.url }), {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
             status: 200,
         })
     } catch (error) {
-        console.error('Stripe Checkout Error:', error)
+        console.error('Edge Function Catch Block:', error)
         return new Response(JSON.stringify({ error: error.message }), {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
             status: 400,

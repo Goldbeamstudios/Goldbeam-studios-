@@ -71,10 +71,10 @@ export default function BookWizard() {
     };
 
     const [booking, setBooking] = useState<BookingState>(() => {
-        const planFromState = location.state?.plan;
+        const planFromState = location.state?.plan || 'audio_video';
         console.log('Initializing BookWizard with plan:', planFromState);
         return {
-            plan: planFromState || 'audio_video',
+            plan: planFromState,
             studio: 'A',
             theme: 'signature',
             duration: 1,
