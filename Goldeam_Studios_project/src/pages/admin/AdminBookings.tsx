@@ -15,6 +15,7 @@ import {
     User
 } from 'lucide-react';
 import { formatTime } from '../../lib/utils';
+import ConfirmDialog from '../../components/ConfirmDialog';
 
 type BookingStatus = 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled';
 
@@ -53,6 +54,17 @@ const AdminBookings = () => {
     const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
     const [isUpdating, setIsUpdating] = useState(false);
+    const [confirmDialog, setConfirmDialog] = useState<{
+        isOpen: boolean;
+        title: string;
+        message: string;
+        onConfirm: () => void;
+    }>({
+        isOpen: false,
+        title: '',
+        message: '',
+        onConfirm: () => { }
+    });
 
     useEffect(() => {
         fetchBookings();
@@ -98,36 +110,48 @@ const AdminBookings = () => {
     };
 
     const handleDeleteBooking = async (id: string) => {
-        if (!confirm('Permanently delete this booking? This cannot be undone.')) return;
-        try {
-            const { error } = await supabase
-                .from('appointments')
-                .delete()
-                .eq('id', id);
+        setConfirmDialog({
+            isOpen: true,
+            title: 'Delete Booking',
+            message: 'Are you sure you want to permanently delete this booking? This action cannot be undone and will remove the record from your management hub.',
+            onConfirm: async () => {
+                try {
+                    const { error } = await supabase
+                        .from('appointments')
+                        .delete()
+                        .eq('id', id);
 
-            if (error) throw error;
-            setBookings(prev => prev.filter(b => b.id !== id));
-            setSelectedIds(prev => prev.filter(itemId => itemId !== id));
-            if (selectedBooking?.id === id) setSelectedBooking(null);
-        } catch (err) {
-            console.error('Error deleting:', err);
-        }
+                    if (error) throw error;
+                    setBookings(prev => prev.filter(b => b.id !== id));
+                    setSelectedIds(prev => prev.filter(itemId => itemId !== id));
+                    if (selectedBooking?.id === id) setSelectedBooking(null);
+                } catch (err) {
+                    console.error('Error deleting:', err);
+                }
+            }
+        });
     };
 
     const deleteBulk = async () => {
-        if (!confirm(`Delete ${selectedIds.length} bookings?`)) return;
-        try {
-            const { error } = await supabase
-                .from('appointments')
-                .delete()
-                .in('id', selectedIds);
+        setConfirmDialog({
+            isOpen: true,
+            title: 'Bulk Delete',
+            message: `Are you sure you want to delete ${selectedIds.length} select bookings? This will permanently erase these records from the database.`,
+            onConfirm: async () => {
+                try {
+                    const { error } = await supabase
+                        .from('appointments')
+                        .delete()
+                        .in('id', selectedIds);
 
-            if (error) throw error;
-            setBookings(prev => prev.filter(b => !selectedIds.includes(b.id)));
-            setSelectedIds([]);
-        } catch (err) {
-            console.error('Bulk delete error:', err);
-        }
+                    if (error) throw error;
+                    setBookings(prev => prev.filter(b => !selectedIds.includes(b.id)));
+                    setSelectedIds([]);
+                } catch (err) {
+                    console.error('Bulk delete error:', err);
+                }
+            }
+        });
     };
 
     const toggleSelectAll = () => {
@@ -527,6 +551,14 @@ const AdminBookings = () => {
                     </div>
                 </div>
             )}
+
+            <ConfirmDialog
+                isOpen={confirmDialog.isOpen}
+                onClose={() => setConfirmDialog(prev => ({ ...prev, isOpen: false }))}
+                onConfirm={confirmDialog.onConfirm}
+                title={confirmDialog.title}
+                message={confirmDialog.message}
+            />
         </div>
     );
 };

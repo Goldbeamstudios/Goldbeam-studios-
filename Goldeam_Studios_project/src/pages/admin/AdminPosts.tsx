@@ -13,6 +13,7 @@ import {
     BookOpen
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import ConfirmDialog from '../../components/ConfirmDialog';
 
 interface Post {
     id: string;
@@ -31,6 +32,17 @@ const AdminPosts = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [filter, setFilter] = useState<'all' | 'published' | 'draft'>('all');
     const [isDeleting, setIsDeleting] = useState<string | null>(null);
+    const [confirmDialog, setConfirmDialog] = useState<{
+        isOpen: boolean;
+        title: string;
+        message: string;
+        onConfirm: () => void;
+    }>({
+        isOpen: false,
+        title: '',
+        message: '',
+        onConfirm: () => { }
+    });
 
     useEffect(() => {
         fetchPosts();
@@ -54,18 +66,23 @@ const AdminPosts = () => {
     };
 
     const handleDelete = async (id: string, title: string) => {
-        if (!window.confirm(`Are you sure you want to delete "${title}"?`)) return;
-
-        setIsDeleting(id);
-        try {
-            const { error } = await supabase.from('posts').delete().eq('id', id);
-            if (error) throw error;
-            setPosts(posts.filter(p => p.id !== id));
-        } catch (error) {
-            console.error('Error deleting post:', error);
-        } finally {
-            setIsDeleting(null);
-        }
+        setConfirmDialog({
+            isOpen: true,
+            title: 'Delete Story',
+            message: `Are you sure you want to delete "${title}"? This will permanently remove the story from Goldbeam's editorial vault.`,
+            onConfirm: async () => {
+                setIsDeleting(id);
+                try {
+                    const { error } = await supabase.from('posts').delete().eq('id', id);
+                    if (error) throw error;
+                    setPosts(prev => prev.filter(p => p.id !== id));
+                } catch (error) {
+                    console.error('Error deleting post:', error);
+                } finally {
+                    setIsDeleting(null);
+                }
+            }
+        });
     };
 
     const togglePublished = async (post: Post) => {
@@ -253,6 +270,14 @@ const AdminPosts = () => {
                     </div>
                 </div>
             )}
+
+            <ConfirmDialog
+                isOpen={confirmDialog.isOpen}
+                onClose={() => setConfirmDialog(prev => ({ ...prev, isOpen: false }))}
+                onConfirm={confirmDialog.onConfirm}
+                title={confirmDialog.title}
+                message={confirmDialog.message}
+            />
         </div>
     );
 };

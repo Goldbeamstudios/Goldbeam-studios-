@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { formatTime, cn } from '../../lib/utils';
 import { useServerTime } from '../../hooks/useServerTime';
+import ConfirmDialog from '../../components/ConfirmDialog';
 
 interface Studio {
     id: string;
@@ -96,6 +97,17 @@ export default function AdminSchedule() {
     const [editingHour, setEditingHour] = useState<WorkingHour | null>(null);
     const [newBlockedDate, setNewBlockedDate] = useState({ date: '', reason: '' });
     const [newBlockedSlot, setNewBlockedSlot] = useState({ day: 1, hour: '09', minute: '00', period: 'AM', reason: '' });
+    const [confirmDialog, setConfirmDialog] = useState<{
+        isOpen: boolean;
+        title: string;
+        message: string;
+        onConfirm: () => void;
+    }>({
+        isOpen: false,
+        title: '',
+        message: '',
+        onConfirm: () => { }
+    });
 
     useEffect(() => {
         fetchStudios();
@@ -211,9 +223,15 @@ export default function AdminSchedule() {
     };
 
     const handleDeleteBlockedDate = async (id: string) => {
-        if (!confirm('Remove this block?')) return;
-        await supabase.from('blocked_dates').delete().eq('id', id);
-        fetchGlobalBlockedDates();
+        setConfirmDialog({
+            isOpen: true,
+            title: 'Remove Block',
+            message: 'Are you sure you want to remove this global date block? This will immediately reopen the studio for bookings on this date.',
+            onConfirm: async () => {
+                await supabase.from('blocked_dates').delete().eq('id', id);
+                fetchGlobalBlockedDates();
+            }
+        });
     };
 
     const handleAddBlockedSlot = async () => {
@@ -241,9 +259,15 @@ export default function AdminSchedule() {
     };
 
     const handleDeleteBlockedSlot = async (id: string) => {
-        if (!confirm('Remove this block?')) return;
-        await supabase.from('blocked_slots').delete().eq('id', id);
-        if (selectedStudio) fetchStudioData(selectedStudio);
+        setConfirmDialog({
+            isOpen: true,
+            title: 'Remove Slot Restriction',
+            message: 'Are you sure you want to remove this recurring slot restriction? This will reopen this specific time window for future bookings.',
+            onConfirm: async () => {
+                await supabase.from('blocked_slots').delete().eq('id', id);
+                if (selectedStudio) fetchStudioData(selectedStudio);
+            }
+        });
     };
 
     return (
@@ -745,6 +769,8 @@ export default function AdminSchedule() {
                                 </div>
                             </div>
 
+                            {/* Restriction Reason Hidden as requested */}
+                            {/* 
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black text-zinc-600 uppercase tracking-widest ml-1">Restriction Reason</label>
                                 <input
@@ -755,6 +781,7 @@ export default function AdminSchedule() {
                                     className="w-full bg-zinc-900 border border-zinc-900 rounded-2xl p-5 text-sm text-zinc-400 focus:ring-1 ring-amber-500/50 outline-none transition-all"
                                 />
                             </div>
+                            */}
 
                             <button
                                 onClick={handleAddBlockedSlot}
@@ -767,6 +794,14 @@ export default function AdminSchedule() {
                     </div>
                 </div>
             )}
+
+            <ConfirmDialog
+                isOpen={confirmDialog.isOpen}
+                onClose={() => setConfirmDialog(prev => ({ ...prev, isOpen: false }))}
+                onConfirm={confirmDialog.onConfirm}
+                title={confirmDialog.title}
+                message={confirmDialog.message}
+            />
         </div>
     );
 }

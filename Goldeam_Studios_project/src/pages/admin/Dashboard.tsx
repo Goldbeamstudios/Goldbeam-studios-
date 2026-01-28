@@ -4,6 +4,7 @@ import { supabase } from '../../lib/supabase';
 import { Plus, Pencil, Trash2, Calendar, Search, Zap, User, Check, FileText } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import type { Appointment } from '../../types/supabase';
+import ConfirmDialog from '../../components/ConfirmDialog';
 
 interface Post {
     id: string;
@@ -24,6 +25,17 @@ export default function Dashboard() {
     const [activeTab, setActiveTab] = useState<'posts' | 'appointments'>(
         (isPostsPage ? 'posts' : 'appointments') as 'posts' | 'appointments'
     );
+    const [confirmDialog, setConfirmDialog] = useState<{
+        isOpen: boolean;
+        title: string;
+        message: string;
+        onConfirm: () => void;
+    }>({
+        isOpen: false,
+        title: '',
+        message: '',
+        onConfirm: () => { }
+    });
 
     useEffect(() => {
         fetchData();
@@ -50,15 +62,20 @@ export default function Dashboard() {
     };
 
     const handleDeletePost = async (id: string, title: string) => {
-        if (!window.confirm(`Are you sure you want to delete "${title}"? This action cannot be undone.`)) return;
-
-        try {
-            const { error } = await supabase.from('posts').delete().eq('id', id);
-            if (error) throw error;
-            setPosts(posts.filter(post => post.id !== id));
-        } catch (error) {
-            console.error('Error deleting post:', error);
-        }
+        setConfirmDialog({
+            isOpen: true,
+            title: 'Delete Story',
+            message: `Are you sure you want to delete "${title}"? This action cannot be undone and will remove the post from your editorial inventory.`,
+            onConfirm: async () => {
+                try {
+                    const { error } = await supabase.from('posts').delete().eq('id', id);
+                    if (error) throw error;
+                    setPosts(prev => prev.filter(post => post.id !== id));
+                } catch (error) {
+                    console.error('Error deleting post:', error);
+                }
+            }
+        });
     };
 
     const filteredPosts = posts.filter(post =>
@@ -274,6 +291,14 @@ export default function Dashboard() {
                     </div>
                 </div>
             </div>
+
+            <ConfirmDialog
+                isOpen={confirmDialog.isOpen}
+                onClose={() => setConfirmDialog(prev => ({ ...prev, isOpen: false }))}
+                onConfirm={confirmDialog.onConfirm}
+                title={confirmDialog.title}
+                message={confirmDialog.message}
+            />
         </div>
     );
 }
