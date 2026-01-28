@@ -4,6 +4,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import AdminLayout from './layouts/AdminLayout';
 import MainLayout from './layouts/MainLayout';
 import Loading from './components/Loading';
+import ScrollToTop from './components/ScrollToTop';
 
 // Lazy load pages
 const Home = lazy(() => import('./pages/Home'));
@@ -44,6 +45,7 @@ const NotFound = () => (
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Suspense fallback={<Loading />}>
         <Routes>
           {/* Admin Routes - No MainLayout (No Navbar/Footer) */}
