@@ -5,7 +5,7 @@ import {
     ChevronLeft, Loader2, Music, Video, Zap, ShieldCheck
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
-import { formatTime } from '../lib/utils';
+import { formatTime, cn } from '../lib/utils';
 import { useServerTime } from '../hooks/useServerTime';
 
 type Step = 'plan' | 'studio' | 'details' | 'schedule' | 'confirm';
@@ -54,6 +54,7 @@ export default function BookWizard() {
     const [availableSlots, setAvailableSlots] = useState<string[]>([]);
     const [studios, setStudios] = useState<Studio[]>([]);
     const [blockedDates, setBlockedDates] = useState<{ blocked_date: string; reason: string }[]>([]);
+    const [workingHours, setWorkingHours] = useState<{ start_time: string; end_time: string } | null>(null);
     const [validationError, setValidationError] = useState<string | null>(null);
     const { serverTime, getETDateString, getETTimeString } = useServerTime();
 
@@ -112,15 +113,35 @@ export default function BookWizard() {
 
         setFetchingSlots(true);
         try {
+            // 1. Fetch Working Hours for this day
+            const dateObj = new Date(booking.date + 'T00:00:00');
+            const dayOfWeek = dateObj.getDay();
+
+            const { data: hoursData, error: hoursError } = await supabase
+                .from('studio_working_hours')
+                .select('start_time, end_time, is_closed')
+                .eq('studio_id', currentStudio.id)
+                .eq('day_of_week', dayOfWeek)
+                .single();
+
+            if (!hoursError && hoursData && !hoursData.is_closed) {
+                setWorkingHours({
+                    start_time: hoursData.start_time,
+                    end_time: hoursData.end_time
+                });
+            } else {
+                setWorkingHours(null);
+            }
+
+            // 2. Fetch Available Slots
             const { data, error } = await supabase.rpc('get_available_slots', {
                 p_studio_id: currentStudio.id,
                 p_date: booking.date,
-                p_duration: 1 // Always fetch 1-hour slots to show all possibilities
+                p_duration: 1
             });
 
             if (error) throw error;
 
-            // Map time objects/strings to HH:mm format
             const freeSlots = data?.map((slot: { slot_time: string }) => {
                 const parts = slot.slot_time.split(':');
                 return `${parts[0]}:${parts[1]}`;
@@ -128,7 +149,6 @@ export default function BookWizard() {
 
             setAvailableSlots(freeSlots);
 
-            // Clear selected time if it's no longer available
             if (booking.time && !freeSlots.includes(booking.time)) {
                 setBooking(prev => ({ ...prev, time: '' }));
             }
@@ -148,28 +168,28 @@ export default function BookWizard() {
 
     // Calculate total price accurately
     const handleSlotClick = (time: string) => {
+        // If clicking a blocked slot, do nothing (should be disabled in UI anyway)
+        if (!availableSlots.includes(time)) return;
+
         if (!booking.time) {
             setBooking(prev => ({ ...prev, time, duration: 1 }));
             return;
         }
 
-        const slots = availableSlots;
-        const startIdx = slots.indexOf(booking.time);
-        const clickIdx = slots.indexOf(time);
+        // Generate all hours between start and click to check for gaps
+        const startHour = parseInt(booking.time.split(':')[0]);
+        const clickHour = parseInt(time.split(':')[0]);
 
-        if (clickIdx === -1) return;
-
-        // If clicking the current start time, clear selection
         if (time === booking.time) {
             setBooking(prev => ({ ...prev, time: '', duration: 1 }));
             return;
         }
 
         // If clicking a selected slot (not the start), deselect it and subsequent ones
-        const isCurrentlySelected = clickIdx >= startIdx && clickIdx < (startIdx + booking.duration);
+        const isCurrentlySelected = isSlotSelected(time);
         if (isCurrentlySelected) {
-            const newDuration = clickIdx - startIdx;
-            if (newDuration === 0) {
+            const newDuration = clickHour - startHour;
+            if (newDuration <= 0) {
                 setBooking(prev => ({ ...prev, time: '', duration: 1 }));
             } else {
                 setBooking(prev => ({ ...prev, duration: newDuration }));
@@ -177,29 +197,25 @@ export default function BookWizard() {
             return;
         }
 
-        // If clicking the slot immediately following current selection, expand
-        const nextIdx = startIdx + booking.duration;
-        if (clickIdx === nextIdx) {
+        // Expansion logic (must be contiguous and NO GAPS)
+        const isNext = clickHour === startHour + booking.duration;
+        const isPrev = clickHour === startHour - 1;
+
+        if (isNext) {
             setBooking(prev => ({ ...prev, duration: prev.duration + 1 }));
-            return;
-        }
-
-        // If clicking the slot immediately preceding current selection, expand backwards
-        if (clickIdx === startIdx - 1) {
+        } else if (isPrev) {
             setBooking(prev => ({ ...prev, time, duration: prev.duration + 1 }));
-            return;
+        } else {
+            // Jump selection (reset to new slot)
+            setBooking(prev => ({ ...prev, time, duration: 1 }));
         }
-
-        // Otherwise (non-contiguous), reset selection to start at new slot
-        setBooking(prev => ({ ...prev, time, duration: 1 }));
     };
 
     const isSlotSelected = (time: string) => {
         if (!booking.time) return false;
-        const slots = availableSlots;
-        const startIdx = slots.indexOf(booking.time);
-        const currentIdx = slots.indexOf(time);
-        return currentIdx >= startIdx && currentIdx < (startIdx + booking.duration);
+        const startHour = parseInt(booking.time.split(':')[0]);
+        const currentHour = parseInt(time.split(':')[0]);
+        return currentHour >= startHour && currentHour < (startHour + booking.duration);
     };
 
     const calculateTotal = () => {
@@ -472,35 +488,62 @@ export default function BookWizard() {
                                     {fetchingSlots ? (
                                         <div className="flex items-center gap-2 text-zinc-500 text-sm">
                                             <Loader2 className="h-4 w-4 animate-spin text-amber-500" />
-                                            Fetching available times...
+                                            Syncing Studio Schedule...
                                         </div>
-                                    ) : availableSlots.length > 0 ? (
+                                    ) : workingHours ? (
                                         <div className="space-y-6">
                                             <div className="grid grid-cols-3 gap-2">
-                                                {availableSlots
-                                                    .filter(t => {
-                                                        // If it's today in ET, filter out past times
+                                                {(() => {
+                                                    const startH = parseInt(workingHours.start_time.split(':')[0]);
+                                                    const endH = parseInt(workingHours.end_time.split(':')[0]);
+                                                    const slotsCount = endH - startH;
+                                                    const allDaySlots = Array.from({ length: slotsCount }, (_, i) => {
+                                                        const h = startH + i;
+                                                        return `${h.toString().padStart(2, '0')}:00`;
+                                                    });
+
+                                                    return allDaySlots.map(t => {
+                                                        const isAvailable = availableSlots.includes(t);
+                                                        const selected = isSlotSelected(t);
+
+                                                        // Filter for today's past times
                                                         if (serverTime && booking.date === getETDateString(serverTime)) {
                                                             const currentETTime = getETTimeString(serverTime);
-                                                            return t > currentETTime;
+                                                            if (t <= currentETTime) return null;
                                                         }
-                                                        return true;
-                                                    })
-                                                    .map(t => {
-                                                        const selected = isSlotSelected(t);
+
+                                                        if (!isAvailable) {
+                                                            return (
+                                                                <div
+                                                                    key={t}
+                                                                    className="relative group cursor-not-allowed"
+                                                                >
+                                                                    <div className="h-full w-full p-3 rounded-2xl bg-zinc-100 dark:bg-zinc-800/40 border border-zinc-200/50 dark:border-zinc-800 text-zinc-500 dark:text-zinc-400 font-bold text-center overflow-hidden">
+                                                                        <div className="absolute inset-0 opacity-[0.05] dark:opacity-[0.08] pointer-events-none"
+                                                                            style={{ backgroundImage: 'repeating-linear-gradient(45deg, currentColor 0, currentColor 1px, transparent 0, transparent 50%)', backgroundSize: '10px 10px' }}></div>
+                                                                        <span className="relative z-10 text-[10px] sm:text-xs font-bold uppercase tracking-widest opacity-90 transition-opacity">Reserved</span>
+                                                                        <div className="text-[10px] font-bold opacity-40 mt-0.5">{formatTime(t)}</div>
+                                                                    </div>
+                                                                </div>
+                                                            );
+                                                        }
+
                                                         return (
                                                             <button
                                                                 key={t}
                                                                 onClick={() => handleSlotClick(t)}
-                                                                className={`p-3 rounded-lg text-sm font-bold transition-all border ${selected
-                                                                    ? 'bg-amber-500 border-amber-600 text-black shadow-lg shadow-amber-500/20'
-                                                                    : 'bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-transparent text-zinc-600 dark:text-gray-500 hover:border-amber-500/50 hover:text-zinc-900 dark:hover:text-white'
-                                                                    }`}
+                                                                className={cn(
+                                                                    "p-3 rounded-2xl text-sm font-bold transition-all border outline-none group",
+                                                                    selected
+                                                                        ? "bg-amber-500 border-amber-600 text-black shadow-xl shadow-amber-500/20 scale-[0.98]"
+                                                                        : "bg-zinc-100 dark:bg-zinc-800/50 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-gray-500 hover:border-amber-500 hover:text-zinc-900 dark:hover:text-white"
+                                                                )}
                                                             >
-                                                                {formatTime(t)}
+                                                                <span className="block">{formatTime(t)}</span>
                                                             </button>
                                                         );
-                                                    })}
+                                                    }).filter(Boolean);
+                                                })()}
                                             </div>
 
                                             {booking.time && (
@@ -528,7 +571,10 @@ export default function BookWizard() {
                                             )}
                                         </div>
                                     ) : (
-                                        <p className="text-sm text-zinc-600 italic">No available slots for this date.</p>
+                                        <div className="p-12 text-center bg-zinc-50 dark:bg-zinc-900/50 rounded-[32px] border-2 border-dashed border-zinc-200 dark:border-zinc-800">
+                                            <p className="text-zinc-400 dark:text-zinc-600 text-xs font-black uppercase tracking-widest">Studio Restricted</p>
+                                            <p className="text-[10px] text-zinc-500 mt-1">No operational windows defined for this date.</p>
+                                        </div>
                                     )}
                                 </div>
                             </div>
