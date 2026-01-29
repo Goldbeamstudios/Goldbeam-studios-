@@ -113,6 +113,14 @@ export default function BookWizard() {
 
         setFetchingSlots(true);
         try {
+            // 0. Check if this date is blocked (Holiday)
+            const isBlocked = blockedDates.some(d => d.blocked_date === booking.date);
+            if (isBlocked) {
+                setWorkingHours(null);
+                setAvailableSlots([]);
+                return;
+            }
+
             // 1. Fetch Working Hours for this day
             const dateObj = new Date(booking.date + 'T00:00:00');
             const dayOfWeek = dateObj.getDay();
