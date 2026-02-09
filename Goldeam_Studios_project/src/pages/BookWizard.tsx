@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
     Check, ChevronRight,
-    ChevronLeft, Loader2, Music, Video, Zap, ShieldCheck, Sparkles, Monitor
+    ChevronLeft, Loader2, Music, Video, Zap, ShieldCheck, Sparkles
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { formatTime, cn } from '../lib/utils';

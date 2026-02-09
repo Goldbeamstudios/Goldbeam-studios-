@@ -311,7 +311,7 @@ export default function Home() {
             Trusted by Creators From
           </p>
           <div className="flex flex-wrap justify-center gap-12 md:gap-24 opacity-40 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-700">
-            {['SPOTIFY', 'APPLE', 'YOUTUBE', 'AUDIBLE'].map((brand, index) => (
+            {['SPOTIFY', 'APPLE', 'YOUTUBE', 'AUDIBLE'].map((brand) => (
               <span key={brand} className="text-2xl font-black hover:text-amber-500 hover:scale-110 transition-all duration-300 cursor-default">
                 {brand}
               </span>
