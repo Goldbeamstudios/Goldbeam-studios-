@@ -2,11 +2,29 @@ import { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
     Check, ChevronRight,
-    ChevronLeft, Loader2, Music, Video, Zap, ShieldCheck
+    ChevronLeft, Loader2, Music, Video, Zap, ShieldCheck, Sparkles, Monitor
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { formatTime, cn } from '../lib/utils';
 import { useServerTime } from '../hooks/useServerTime';
+
+// --- PREVIEW IMAGES ---
+// Signature
+import sig1 from '../assets/Themes/Signature/Studio-Page-Signature/signature.jpg';
+import sig2 from '../assets/Themes/Signature/Studio-Page-Signature/signature-four-people-setup-1.jpg';
+import sig3 from '../assets/Themes/Signature/Studio-Page-Signature/signature-white-chair-blue-light-1.jpg';
+// Sahara
+import sah1 from '../assets/Themes/Sahara/sahara-white-chair-1.jpg';
+import sah2 from '../assets/Themes/Sahara/sahara-white-chair-2.jpg';
+import sah3 from '../assets/Themes/Sahara/sahara-white-chair-3.jpg';
+// Chroma
+import chr1 from '../assets/Themes/Chroma/chroma-orange-chair-1.jpg';
+import chr2 from '../assets/Themes/Chroma/chroma-white-chair-1.jpg';
+import chr3 from '../assets/Themes/Chroma/chroma-white-chair-2.jpg';
+// Studio B
+import stub1 from '../assets/Themes/Studio_B/studio-b-1.jpg';
+import stub2 from '../assets/Themes/Studio_B/studio-b-2.jpg';
+import stub3 from '../assets/Themes/Studio_B/studio-b-3.jpg';
 
 type Step = 'plan' | 'studio' | 'details' | 'schedule' | 'confirm';
 
@@ -20,6 +38,7 @@ interface BookingState {
     time: string;
     customerName: string;
     customerEmail: string;
+    customerPhone: string;
 }
 
 const ADD_ONS = [
@@ -56,6 +75,7 @@ export default function BookWizard() {
     const [blockedDates, setBlockedDates] = useState<{ blocked_date: string; reason: string }[]>([]);
     const [workingHours, setWorkingHours] = useState<{ start_time: string; end_time: string } | null>(null);
     const [validationError, setValidationError] = useState<string | null>(null);
+    const [previewImageIndex, setPreviewImageIndex] = useState(0);
     const { serverTime, getETDateString, getETTimeString } = useServerTime();
 
     // Scroll to top when component mounts
@@ -85,6 +105,7 @@ export default function BookWizard() {
             time: '',
             customerName: '',
             customerEmail: '',
+            customerPhone: '',
         };
     });
 
@@ -97,6 +118,11 @@ export default function BookWizard() {
             }));
         }
     }, [serverTime, booking.date]);
+
+    // Reset preview index when studio or theme changes
+    useEffect(() => {
+        setPreviewImageIndex(0);
+    }, [booking.studio, booking.theme]);
 
     const fetchStudios = async () => {
         const { data, error } = await supabase.from('studios').select('*').eq('is_active', true);
@@ -319,6 +345,21 @@ export default function BookWizard() {
         }
     };
 
+    // Form Validation Logic
+    const isEmailValid = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const isPhoneValid = (phone: string) => {
+        // Canada/US (NANP) Phone Validation
+        // Matches: (555) 555-5555, 555-555-5555, 5555555555, +1 555...
+        const nanpRegex = /^(\+?1[-.\s]?)?\(?[2-9][0-9]{2}\)?[-.\s]?[2-9][0-9]{2}[-.\s]?[0-9]{4}$/;
+        return nanpRegex.test(phone.trim());
+    };
+
+    const isFormValid = () => {
+        return booking.customerName.trim().length > 0 &&
+            isEmailValid(booking.customerEmail) &&
+            isPhoneValid(booking.customerPhone);
+    };
+
     return (
         <div className="bg-white dark:bg-black text-zinc-900 dark:text-white min-h-screen pt-32 pb-20 px-4 transition-colors duration-300">
             <div className="max-w-4xl mx-auto">
@@ -406,7 +447,7 @@ export default function BookWizard() {
                             {booking.studio === 'A' && (
                                 <div className="animate-fade-in">
                                     <p className="text-xs font-bold text-zinc-500 dark:text-gray-500 uppercase tracking-widest mb-4">Select Theme for Studio A:</p>
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
                                         {THEMES.map(theme => (
                                             <button
                                                 key={theme.id}
@@ -420,6 +461,106 @@ export default function BookWizard() {
                                     </div>
                                 </div>
                             )}
+
+                            {/* DYNAMIC VISUAL PREVIEW */}
+                            <div className="mt-8 animate-fade-in">
+                                <p className="text-xs font-bold text-zinc-500 dark:text-gray-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+                                    <Sparkles className="h-3 w-3 text-amber-500" />
+                                    Visual Preview
+                                </p>
+                                <div className="relative group rounded-3xl overflow-hidden border border-amber-500/20 shadow-2xl shadow-amber-500/10 aspect-video md:aspect-[21/9] bg-zinc-100 dark:bg-zinc-900">
+                                    {/* Background Decor */}
+                                    <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent pointer-events-none"></div>
+
+                                    {/* Image Logic */}
+                                    {(() => {
+                                        let images = [stub1, stub2, stub3];
+                                        let displayName = "Studio B";
+                                        let displayTag = "Fixed Setup";
+
+                                        if (booking.studio === 'A') {
+                                            displayTag = "Customizable";
+                                            if (booking.theme === 'signature') {
+                                                images = [sig1, sig2, sig3];
+                                                displayName = "Studio A - Signature";
+                                            } else if (booking.theme === 'sahara') {
+                                                images = [sah1, sah2, sah3];
+                                                displayName = "Studio A - Sahara";
+                                            } else if (booking.theme === 'chroma') {
+                                                images = [chr1, chr2, chr3];
+                                                displayName = "Studio A - Chroma";
+                                            }
+                                        }
+
+                                        const currentImg = images[previewImageIndex % images.length];
+
+                                        const nextPrev = (dir: number) => {
+                                            setPreviewImageIndex(prev => (prev + dir + images.length) % images.length);
+                                        };
+
+                                        return (
+                                            <>
+                                                <img
+                                                    key={currentImg} // Force re-animation on source change
+                                                    src={currentImg}
+                                                    alt={displayName}
+                                                    className="w-full h-full object-cover animate-fade-in duration-700"
+                                                />
+
+                                                {/* Navigation arrows */}
+                                                <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                    <button
+                                                        onClick={() => nextPrev(-1)}
+                                                        className="p-2 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-white hover:bg-amber-500 hover:text-black transition-all"
+                                                    >
+                                                        <ChevronLeft size={20} />
+                                                    </button>
+                                                    <button
+                                                        onClick={() => nextPrev(1)}
+                                                        className="p-2 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-white hover:bg-amber-500 hover:text-black transition-all"
+                                                    >
+                                                        <ChevronRight size={20} />
+                                                    </button>
+                                                </div>
+
+                                                {/* Overlay Info */}
+                                                <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                                                    <div className="flex items-center justify-between">
+                                                        <div>
+                                                            <h4 className="text-white font-black uppercase text-xl md:text-2xl tracking-tight leading-none">
+                                                                {displayName}
+                                                            </h4>
+                                                            <div className="flex items-center gap-3 mt-2">
+                                                                <p className="text-amber-500/90 text-[10px] font-black uppercase tracking-widest">
+                                                                    {displayTag}
+                                                                </p>
+                                                                <div className="flex gap-1">
+                                                                    {images.map((_, i) => (
+                                                                        <div
+                                                                            key={i}
+                                                                            className={cn(
+                                                                                "h-1 rounded-full transition-all",
+                                                                                previewImageIndex === i ? "w-4 bg-amber-500" : "w-1 bg-white/20"
+                                                                            )}
+                                                                        />
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="hidden md:flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full">
+                                                            <Sparkles className="h-3 w-3 text-amber-500" />
+                                                            <span className="text-[10px] font-bold text-white uppercase tracking-widest">Premium Space</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </>
+                                        );
+                                    })()}
+
+                                    {/* Premium Border Highlight */}
+                                    <div className="absolute inset-0 border-[8px] border-white/5 pointer-events-none"></div>
+                                </div>
+                            </div>
                         </div>
                     )}
 
@@ -644,20 +785,48 @@ export default function BookWizard() {
 
                                 <div className="space-y-6">
                                     <div className="space-y-4">
-                                        <input
-                                            type="text"
-                                            placeholder="Full Name"
-                                            value={booking.customerName}
-                                            onChange={(e) => setBooking(prev => ({ ...prev, customerName: e.target.value }))}
-                                            className="w-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl p-4 text-zinc-900 dark:text-white outline-none focus:border-amber-500"
-                                        />
-                                        <input
-                                            type="email"
-                                            placeholder="Email Address"
-                                            value={booking.customerEmail}
-                                            onChange={(e) => setBooking(prev => ({ ...prev, customerEmail: e.target.value }))}
-                                            className="w-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl p-4 text-zinc-900 dark:text-white outline-none focus:border-amber-500"
-                                        />
+                                        <div className="relative">
+                                            <input
+                                                type="text"
+                                                placeholder="Full Name"
+                                                value={booking.customerName}
+                                                onChange={(e) => setBooking(prev => ({ ...prev, customerName: e.target.value }))}
+                                                className={cn(
+                                                    "w-full bg-zinc-100 dark:bg-zinc-800 border rounded-xl p-4 text-zinc-900 dark:text-white outline-none focus:border-amber-500 transition-colors",
+                                                    booking.customerName.length > 0 ? "border-zinc-200 dark:border-zinc-700" : "border-red-500/50"
+                                                )}
+                                            />
+                                        </div>
+                                        <div className="relative">
+                                            <input
+                                                type="email"
+                                                placeholder="Email Address"
+                                                value={booking.customerEmail}
+                                                onChange={(e) => setBooking(prev => ({ ...prev, customerEmail: e.target.value }))}
+                                                className={cn(
+                                                    "w-full bg-zinc-100 dark:bg-zinc-800 border rounded-xl p-4 text-zinc-900 dark:text-white outline-none focus:border-amber-500 transition-colors",
+                                                    booking.customerEmail.length > 0 && !isEmailValid(booking.customerEmail) ? "border-red-500" : "border-zinc-200 dark:border-zinc-700"
+                                                )}
+                                            />
+                                            {booking.customerEmail.length > 0 && !isEmailValid(booking.customerEmail) && (
+                                                <p className="text-[10px] text-red-500 mt-1 ml-2 font-bold uppercase tracking-widest">Please enter a valid email address</p>
+                                            )}
+                                        </div>
+                                        <div className="relative">
+                                            <input
+                                                type="tel"
+                                                placeholder="Canada Phone (e.g. 555-012-3456)"
+                                                value={booking.customerPhone}
+                                                onChange={(e) => setBooking(prev => ({ ...prev, customerPhone: e.target.value }))}
+                                                className={cn(
+                                                    "w-full bg-zinc-100 dark:bg-zinc-800 border rounded-xl p-4 text-zinc-900 dark:text-white outline-none focus:border-amber-500 transition-colors",
+                                                    booking.customerPhone.length > 0 && !isPhoneValid(booking.customerPhone) ? "border-red-500" : "border-zinc-200 dark:border-zinc-700"
+                                                )}
+                                            />
+                                            {booking.customerPhone.length > 0 && !isPhoneValid(booking.customerPhone) && (
+                                                <p className="text-[10px] text-red-500 mt-1 ml-2 font-bold uppercase tracking-widest">Please enter a valid Canada phone number</p>
+                                            )}
+                                        </div>
                                     </div>
                                     <div className="flex items-start gap-3 bg-amber-500/5 p-4 rounded-xl border border-amber-500/20">
                                         <ShieldCheck className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
@@ -696,8 +865,8 @@ export default function BookWizard() {
                         {currentStep === 'confirm' ? (
                             <button
                                 onClick={submitBooking}
-                                disabled={loading || !booking.customerName || !booking.customerEmail}
-                                className={`px-10 py-4 rounded-2xl font-black uppercase tracking-widest transition-all flex items-center gap-2 shadow-xl shadow-amber-500/20 ${loading || !booking.customerName || !booking.customerEmail
+                                disabled={loading || !isFormValid()}
+                                className={`px-10 py-4 rounded-2xl font-black uppercase tracking-widest transition-all flex items-center gap-2 shadow-xl shadow-amber-500/20 ${loading || !isFormValid()
                                     ? 'bg-zinc-200 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-600 scale-95 cursor-not-allowed border border-transparent'
                                     : 'bg-amber-500 text-black hover:bg-amber-400 hover:-translate-y-0.5 cursor-pointer active:scale-95'
                                     }`}

@@ -2,47 +2,46 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sparkles, Users, Wifi, Coffee, Mic2, Video, Check, ArrowRight, ChevronLeft, ChevronRight, X, Maximize2 } from 'lucide-react';
 
-// Import images
-import studioOne from '../assets/images/studio/studo_one.jpeg';
-import studioTwo from '../assets/images/studio/studo_two.jpg';
-import studioThree from '../assets/images/studio/stuido-three.jpeg';
-import studioFour from '../assets/images/studio/studio_four.jpg';
+// --- IMAGE IMPORTS ---
+
+// Signature Theme (11 images)
+import sig0 from '../assets/Themes/Signature/Studio-Page-Signature/signature.jpg';
+import sig1 from '../assets/Themes/Signature/Studio-Page-Signature/signature-four-people-setup-1.jpg';
+import sig2 from '../assets/Themes/Signature/Studio-Page-Signature/signature-four-people-setup-2.jpg';
+import sig3 from '../assets/Themes/Signature/Studio-Page-Signature/signature-four-people-setup-3.jpg';
+import sig4 from '../assets/Themes/Signature/Studio-Page-Signature/signature-orange-chair-blue-light-1.jpg';
+import sig5 from '../assets/Themes/Signature/Studio-Page-Signature/signature-white-chair-blue-light-1.jpg';
+import sig6 from '../assets/Themes/Signature/Studio-Page-Signature/signature-white-chair-blue-light-2.jpg';
+import sig7 from '../assets/Themes/Signature/Studio-Page-Signature/signature-white-chair-blue-light-3.jpg';
+import sig8 from '../assets/Themes/Signature/Studio-Page-Signature/signature-white-chair-warm-light-1.jpg';
+import sig9 from '../assets/Themes/Signature/Studio-Page-Signature/signature-white-chair-warm-light-2.jpg';
+import sig10 from '../assets/Themes/Signature/Studio-Page-Signature/signature-white-chair-warm-light-3.jpg';
+
+// Sahara Theme (3 images)
+import sah1 from '../assets/Themes/Sahara/sahara-white-chair-1.jpg';
+import sah2 from '../assets/Themes/Sahara/sahara-white-chair-2.jpg';
+import sah3 from '../assets/Themes/Sahara/sahara-white-chair-3.jpg';
+
+// Chroma Theme (6 images)
+import chr1 from '../assets/Themes/Chroma/chroma-orange-chair-1.jpg';
+import chr2 from '../assets/Themes/Chroma/chroma-orange-chair-2.jpg';
+import chr3 from '../assets/Themes/Chroma/chroma-orange-chair-3.jpg';
+import chr4 from '../assets/Themes/Chroma/chroma-white-chair-1.jpg';
+import chr5 from '../assets/Themes/Chroma/chroma-white-chair-2.jpg';
+import chr6 from '../assets/Themes/Chroma/chroma-white-chair-3.jpg';
+
+// Studio B (3 images)
+import stub1 from '../assets/Themes/Studio_B/studio-b-1.jpg';
+import stub2 from '../assets/Themes/Studio_B/studio-b-2.jpg';
+import stub3 from '../assets/Themes/Studio_B/studio-b-3.jpg';
 
 export default function Studios() {
   const navigate = useNavigate();
   const [activeTheme, setActiveTheme] = useState(0);
+  const [activeImageA, setActiveImageA] = useState(0);
+  const [activeImageB, setActiveImageB] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [lightboxStudio, setLightboxStudio] = useState<'A' | 'B'>('A');
-
-  const nextSlide = (e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    setActiveTheme((prev) => (prev + 1) % studioA.themes.length);
-  };
-
-  const prevSlide = (e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    setActiveTheme((prev) => (prev - 1 + studioA.themes.length) % studioA.themes.length);
-  };
-
-  useEffect(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -100px 0px',
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-fade-in-up');
-        }
-      });
-    }, observerOptions);
-
-    const animatedElements = document.querySelectorAll('.animate-on-scroll');
-    animatedElements.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, [activeTheme]); // Re-observe when theme changes as elements might re-render
 
   const studioA = {
     name: 'Studio A',
@@ -51,19 +50,19 @@ export default function Studios() {
     themes: [
       {
         name: 'Signature',
-        image: studioOne,
+        images: [sig0, sig1, sig2, sig3, sig4, sig5, sig6, sig7, sig8, sig9, sig10],
         capacity: 'Up to 4 people',
         description: 'A modern, symmetrical studio setup with comfortable seating, professional microphones, and warm ambient lighting. The acoustically treated backdrop and neutral tones create a calm, premium look ideal for podcasts, interviews, panels, and branded conversations.',
       },
       {
         name: 'Sahara',
-        image: studioThree,
+        images: [sah1, sah2, sah3],
         capacity: 'Up to 4 people',
         description: 'A warm, intimate setup with soft lighting and neutral tones, designed for relaxed podcasts, interviews, and conversational content.',
       },
       {
         name: 'Chroma',
-        image: studioFour,
+        images: [chr1, chr2, chr3, chr4, chr5, chr6],
         capacity: 'Up to 2 people',
         description: 'A bold, modern setup with rich color accents and balanced lighting—ideal for video podcasts, interviews, and visually expressive content.',
       },
@@ -85,7 +84,7 @@ export default function Studios() {
     name: 'Studio B',
     subtitle: 'Compact Production Studio',
     capacity: 'Up to 2 people',
-    image: studioTwo,
+    images: [stub1, stub2, stub3],
     description: '(Studio B) A compact studio designed for focused audio and efficient content creation, offering professional quality in a more intimate setting.',
     features: [
       'Professional audio setup',
@@ -97,6 +96,52 @@ export default function Studios() {
     optionalSetup: 'Green screen recording available upon request',
     bestFor: 'Solo podcasts, interviews, voice recordings, short-form content, and creators who need a clean, distraction-free space.',
   };
+
+  const currentTheme = studioA.themes[activeTheme];
+
+  const nextImageA = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setActiveImageA((prev) => (prev + 1) % currentTheme.images.length);
+  };
+
+  const prevImageA = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setActiveImageA((prev) => (prev - 1 + currentTheme.images.length) % currentTheme.images.length);
+  };
+
+  const nextImageB = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setActiveImageB((prev) => (prev + 1) % studioB.images.length);
+  };
+
+  const prevImageB = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setActiveImageB((prev) => (prev - 1 + studioB.images.length) % studioB.images.length);
+  };
+
+  useEffect(() => {
+    setActiveImageA(0); // Reset image index when switching theme
+  }, [activeTheme]);
+
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px',
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in-up');
+        }
+      });
+    }, observerOptions);
+
+    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+    animatedElements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, [activeTheme]);
 
   const amenities = [
     {
@@ -150,22 +195,28 @@ export default function Studios() {
             <div className="flex flex-col lg:flex-row gap-16 items-center">
               {/* Image Side - Carousel */}
               <div className="flex-1 w-full order-1">
-                <div className="relative group rounded-3xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-amber-500/20 aspect-[4/3] md:aspect-[3/2] lg:aspect-square xl:aspect-[4/3]">
+                <div className="relative group rounded-3xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-amber-500/20 aspect-[4/3] md:aspect-[3/2] lg:aspect-square xl:aspect-[4/3] bg-zinc-100 dark:bg-zinc-900">
                   {/* Sliding Container */}
                   <div
-                    className="flex h-full transition-transform duration-700 ease-out cursor-zoom-in bg-zinc-100 dark:bg-zinc-900"
-                    style={{ transform: `translateX(-${activeTheme * 100}%)` }}
+                    className="flex h-full transition-transform duration-700 ease-out cursor-zoom-in"
+                    style={{ transform: `translateX(-${activeImageA * 100}%)` }}
                     onClick={() => {
                       setLightboxStudio('A');
                       setIsLightboxOpen(true);
                     }}
                   >
-                    {studioA.themes.map((theme, idx) => (
-                      <div key={idx} className="min-w-full h-full relative">
+                    {currentTheme.images.map((img, idx) => (
+                      <div key={idx} className="min-w-full h-full relative bg-zinc-100 dark:bg-zinc-900">
+                        {/* Placeholder gradient */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-amber-600/5"></div>
+
                         <img
-                          src={theme.image}
-                          alt={`${studioA.name} - ${theme.name}`}
+                          src={img}
+                          alt={`${studioA.name} - ${currentTheme.name} Shot ${idx + 1}`}
                           className="w-full h-full object-cover"
+                          loading={idx === 0 ? "eager" : "lazy"}
+                          fetchPriority={idx === 0 ? "high" : "low"}
+                          decoding="async"
                         />
                         {/* Hover Overlay */}
                         <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -183,16 +234,16 @@ export default function Studios() {
                   {/* Navigation Arrows */}
                   <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 flex justify-between items-center z-20 pointer-events-none">
                     <button
-                      onClick={prevSlide}
+                      onClick={prevImageA}
                       className="p-3 rounded-full bg-black/40 backdrop-blur-md border border-amber-500/30 text-white hover:bg-amber-500 hover:text-black transition-all duration-300 pointer-events-auto shadow-xl group/btn"
-                      aria-label="Previous theme"
+                      aria-label="Previous image"
                     >
                       <ChevronLeft className="h-6 w-6 transition-transform group-hover/btn:-translate-x-1" />
                     </button>
                     <button
-                      onClick={nextSlide}
+                      onClick={nextImageA}
                       className="p-3 rounded-full bg-black/40 backdrop-blur-md border border-amber-500/30 text-white hover:bg-amber-500 hover:text-black transition-all duration-300 pointer-events-auto shadow-xl group/btn"
-                      aria-label="Next theme"
+                      aria-label="Next image"
                     >
                       <ChevronRight className="h-6 w-6 transition-transform group-hover/btn:translate-x-1" />
                     </button>
@@ -203,21 +254,21 @@ export default function Studios() {
                     <div className="bg-black/60 backdrop-blur-md border border-amber-500/30 px-6 py-2 rounded-full flex items-center gap-2">
                       <Sparkles className="h-4 w-4 text-amber-500" />
                       <span className="text-xs font-bold uppercase tracking-[0.2em] text-white">
-                        {studioA.themes[activeTheme].name} Theme
+                        {currentTheme.name} Theme
                       </span>
                     </div>
                   </div>
 
                   {/* Indicators */}
                   <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-                    {studioA.themes.map((_, idx) => (
+                    {currentTheme.images.map((_, idx) => (
                       <button
                         key={idx}
                         onClick={(e) => {
                           e.stopPropagation();
-                          setActiveTheme(idx);
+                          setActiveImageA(idx);
                         }}
-                        className={`h-1.5 transition-all duration-300 rounded-full ${activeTheme === idx ? 'w-8 bg-amber-500' : 'w-2 bg-white/30 hover:bg-white/50'}`}
+                        className={`h-1.5 transition-all duration-300 rounded-full ${activeImageA === idx ? 'w-8 bg-amber-500' : 'w-2 bg-white/30 hover:bg-white/50'}`}
                         aria-label={`Go to slide ${idx + 1}`}
                       />
                     ))}
@@ -263,12 +314,17 @@ export default function Studios() {
                 </div>
 
                 <div className="p-6 bg-zinc-100 dark:bg-zinc-900 rounded-2xl border border-amber-500/10 space-y-4">
-                  <div className="flex items-center gap-3">
-                    <Users className="h-5 w-5 text-amber-500" />
-                    <span className="text-zinc-900 dark:text-white font-bold">{studioA.themes[activeTheme].capacity}</span>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Users className="h-5 w-5 text-amber-500" />
+                      <span className="text-zinc-900 dark:text-white font-bold">{currentTheme.capacity}</span>
+                    </div>
+                    <div className="bg-amber-500/10 text-amber-500 text-[10px] font-black px-2 py-1 rounded uppercase tracking-widest border border-amber-500/20">
+                      Standard: SM7B + 4K
+                    </div>
                   </div>
                   <p className="text-sm text-muted-foreground italic leading-relaxed">
-                    {studioA.themes[activeTheme].description}
+                    {currentTheme.description}
                   </p>
                 </div>
 
@@ -295,25 +351,76 @@ export default function Studios() {
           {/* Studio B */}
           <section className="animate-on-scroll opacity-0">
             <div className="flex flex-col lg:flex-row-reverse gap-16 items-center">
-              {/* Image Side */}
+              {/* Image Side - Carousel for Studio B */}
               <div className="flex-1 w-full lg:order-2">
-                <div className="relative group rounded-3xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-amber-500/20">
-                  <img
-                    src={studioB.image}
-                    alt={studioB.name}
-                    className="w-full h-[400px] md:h-[550px] object-cover transition-all duration-700 group-hover:scale-105 cursor-zoom-in"
+                <div className="relative group rounded-3xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-amber-500/20 aspect-[4/3] md:aspect-[3/2] lg:aspect-square xl:aspect-[4/3] bg-zinc-100 dark:bg-zinc-900">
+                  {/* Sliding Container */}
+                  <div
+                    className="flex h-full transition-transform duration-700 ease-out cursor-zoom-in"
+                    style={{ transform: `translateX(-${activeImageB * 100}%)` }}
                     onClick={() => {
                       setLightboxStudio('B');
                       setIsLightboxOpen(true);
                     }}
-                  />
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
-                    <div className="bg-black/40 backdrop-blur-md p-4 rounded-full border border-white/20">
-                      <Maximize2 className="h-6 w-6 text-white" />
-                    </div>
+                  >
+                    {studioB.images.map((img, idx) => (
+                      <div key={idx} className="min-w-full h-full relative bg-zinc-100 dark:bg-zinc-900">
+                        {/* Placeholder gradient */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-amber-600/5"></div>
+
+                        <img
+                          src={img}
+                          alt={`${studioB.name} Shot ${idx + 1}`}
+                          className="w-full h-full object-cover"
+                          loading={idx === 0 ? "eager" : "lazy"}
+                          fetchPriority={idx === 0 ? "high" : "low"}
+                          decoding="async"
+                        />
+                        {/* Hover Overlay */}
+                        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                          <div className="bg-black/40 backdrop-blur-md p-4 rounded-full border border-white/20">
+                            <Maximize2 className="h-6 w-6 text-white" />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
+
+                  {/* Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
+
+                  {/* Navigation Arrows */}
+                  <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 flex justify-between items-center z-20 pointer-events-none">
+                    <button
+                      onClick={prevImageB}
+                      className="p-3 rounded-full bg-black/40 backdrop-blur-md border border-amber-500/30 text-white hover:bg-amber-500 hover:text-black transition-all duration-300 pointer-events-auto shadow-xl group/btn"
+                      aria-label="Previous image"
+                    >
+                      <ChevronLeft className="h-6 w-6 transition-transform group-hover/btn:-translate-x-1" />
+                    </button>
+                    <button
+                      onClick={nextImageB}
+                      className="p-3 rounded-full bg-black/40 backdrop-blur-md border border-amber-500/30 text-white hover:bg-amber-500 hover:text-black transition-all duration-300 pointer-events-auto shadow-xl group/btn"
+                      aria-label="Next image"
+                    >
+                      <ChevronRight className="h-6 w-6 transition-transform group-hover/btn:translate-x-1" />
+                    </button>
+                  </div>
+
+                  {/* Indicators */}
+                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+                    {studioB.images.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActiveImageB(idx);
+                        }}
+                        className={`h-1.5 transition-all duration-300 rounded-full ${activeImageB === idx ? 'w-8 bg-amber-500' : 'w-2 bg-white/30 hover:bg-white/50'}`}
+                        aria-label={`Go to slide ${idx + 1}`}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
 
@@ -418,6 +525,7 @@ export default function Studios() {
           </div>
         </div>
       </section>
+
       {/* Lightbox Modal */}
       {isLightboxOpen && (
         <div
@@ -432,24 +540,19 @@ export default function Studios() {
             <X size={40} strokeWidth={1.5} />
           </button>
 
-          {/* Navigation Arrows - Only for Studio A */}
-          {lightboxStudio === 'A' && (
-            <>
-              <button
-                onClick={prevSlide}
-                className="absolute left-8 p-6 rounded-full bg-white/5 hover:bg-white/10 text-white transition-all z-[110] border border-white/10 hidden md:block"
-              >
-                <ChevronLeft size={32} />
-              </button>
-
-              <button
-                onClick={nextSlide}
-                className="absolute right-8 p-6 rounded-full bg-white/5 hover:bg-white/10 text-white transition-all z-[110] border border-white/10 hidden md:block"
-              >
-                <ChevronRight size={32} />
-              </button>
-            </>
-          )}
+          {/* Navigation Arrows */}
+          <button
+            onClick={lightboxStudio === 'A' ? nextImageA : nextImageB}
+            className="absolute right-8 p-6 rounded-full bg-white/5 hover:bg-white/10 text-white transition-all z-[110] border border-white/10 hidden md:block"
+          >
+            <ChevronRight size={32} />
+          </button>
+          <button
+            onClick={lightboxStudio === 'A' ? prevImageA : prevImageB}
+            className="absolute left-8 p-6 rounded-full bg-white/5 hover:bg-white/10 text-white transition-all z-[110] border border-white/10 hidden md:block"
+          >
+            <ChevronLeft size={32} />
+          </button>
 
           {/* Image Container */}
           <div
@@ -457,38 +560,36 @@ export default function Studios() {
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src={lightboxStudio === 'A' ? studioA.themes[activeTheme].image : studioB.image}
-              alt={lightboxStudio === 'A' ? `${studioA.name} - ${studioA.themes[activeTheme].name}` : studioB.name}
+              src={lightboxStudio === 'A' ? currentTheme.images[activeImageA] : studioB.images[activeImageB]}
+              alt={lightboxStudio === 'A' ? `${studioA.name} - ${currentTheme.name}` : studioB.name}
               className="w-full h-full object-contain rounded-xl shadow-2xl animate-fade-in-up"
             />
 
             {/* Info Overlay */}
             <div className="mt-8 text-center space-y-2">
               <h3 className="text-2xl font-black uppercase text-amber-500 tracking-wider">
-                {lightboxStudio === 'A' ? `${studioA.name} - ${studioA.themes[activeTheme].name}` : `${studioB.name} - ${studioB.subtitle}`}
+                {lightboxStudio === 'A' ? `${studioA.name} - ${currentTheme.name}` : `${studioB.name} - ${studioB.subtitle}`}
               </h3>
               <p className="text-muted-foreground font-medium">
-                {lightboxStudio === 'A' ? studioA.themes[activeTheme].capacity : studioB.capacity}
+                {lightboxStudio === 'A' ? currentTheme.capacity : studioB.capacity}
               </p>
             </div>
 
-            {/* Mobile Navigation - Only for Studio A */}
-            {lightboxStudio === 'A' && (
-              <div className="flex gap-4 mt-8 md:hidden">
-                <button
-                  onClick={prevSlide}
-                  className="p-4 rounded-full bg-white/5 border border-white/10 text-white"
-                >
-                  <ChevronLeft size={24} />
-                </button>
-                <button
-                  onClick={nextSlide}
-                  className="p-4 rounded-full bg-white/5 border border-white/10 text-white"
-                >
-                  <ChevronRight size={24} />
-                </button>
-              </div>
-            )}
+            {/* Mobile Navigation */}
+            <div className="flex gap-4 mt-8 md:hidden">
+              <button
+                onClick={lightboxStudio === 'A' ? prevImageA : prevImageB}
+                className="p-4 rounded-full bg-white/5 border border-white/10 text-white"
+              >
+                <ChevronLeft size={24} />
+              </button>
+              <button
+                onClick={lightboxStudio === 'A' ? nextImageA : nextImageB}
+                className="p-4 rounded-full bg-white/5 border border-white/10 text-white"
+              >
+                <ChevronRight size={24} />
+              </button>
+            </div>
           </div>
         </div>
       )}

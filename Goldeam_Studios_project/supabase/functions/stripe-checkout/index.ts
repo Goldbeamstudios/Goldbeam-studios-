@@ -27,6 +27,7 @@ serve(async (req) => {
             time,
             customerName,
             customerEmail,
+            customerPhone,
         } = booking_data
 
         console.log(`=== CHECKOUT STARTED FOR ${customerEmail} ===`);
@@ -142,6 +143,7 @@ serve(async (req) => {
                 time,
                 customerName,
                 customerEmail,
+                customerPhone,
             },
         })
 

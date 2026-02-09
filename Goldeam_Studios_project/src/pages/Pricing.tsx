@@ -72,7 +72,8 @@ export default function Pricing() {
     { name: 'Live-Cut Program Video', audio: false, video: true, general: true },
     { name: 'Program Audio', audio: true, video: true, general: true },
     { name: 'File Delivery (24 Hours)', audio: true, video: true, general: true },
-    { name: 'Producer', audio: false, video: true, general: true },
+    { name: 'On-Site Sound Engineer', audio: true, video: true, general: true },
+    { name: 'Rapid Support', audio: true, video: true, general: true },
   ];
 
   const addOns = [
@@ -148,8 +149,8 @@ export default function Pricing() {
               Plans
             </h1>
             <p className="text-xl text-zinc-600 dark:text-gray-300 leading-relaxed">
-              Transparent pricing with no hidden fees. All sessions include a professional
-              sound engineer.
+              Transparent pricing with no hidden fees. All sessions include a <strong>professional
+                sound engineer</strong> at no extra cost.
             </p>
           </div>
         </div>

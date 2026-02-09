@@ -1,4 +1,4 @@
-
+import { Helmet } from 'react-helmet-async';
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
@@ -9,6 +9,7 @@ interface Post {
     id: string;
     title: string;
     content: string;
+    excerpt?: string;
     image_url: string;
     created_at: string;
 }
@@ -61,6 +62,13 @@ export default function BlogPost() {
 
     return (
         <div className="bg-white dark:bg-black text-zinc-900 dark:text-white min-h-screen transition-colors duration-300">
+            <Helmet>
+                <title>{`${post.title} | Goldbeam Studios Blog`}</title>
+                <meta name="description" content={post.excerpt || post.content.substring(0, 160)} />
+                <meta property="og:title" content={`${post.title} | Goldbeam Studios`} />
+                <meta property="og:description" content={post.excerpt || post.content.substring(0, 160)} />
+                <meta property="og:image" content={post.image_url} />
+            </Helmet>
             {/* Hero Image */}
             <div className="relative h-[50vh] min-h-[400px]">
                 <img

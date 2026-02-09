@@ -1,5 +1,6 @@
 import { Plus, Minus } from 'lucide-react';
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 export default function FAQs() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -75,8 +76,28 @@ export default function FAQs() {
     },
   ];
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.flatMap(cat => cat.questions).map(faq => ({
+      "@type": "Question",
+      "name": faq.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.a
+      }
+    }))
+  };
+
   return (
     <div className="bg-white dark:bg-black text-zinc-900 dark:text-white min-h-screen pt-24 transition-colors duration-300">
+      <Helmet>
+        <title>FAQs | Goldbeam Studios - Your Questions Answered</title>
+        <meta name="description" content="Find answers to common questions about booking, equipment, production, and pricing at Goldbeam Studios Toronto." />
+        <script type="application/ld+json">
+          {JSON.stringify(faqSchema)}
+        </script>
+      </Helmet>
       {/* Hero Section */}
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent"></div>

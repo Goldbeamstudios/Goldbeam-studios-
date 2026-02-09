@@ -17,27 +17,36 @@ serve(async (req) => {
     }
 
     try {
-        const { to, template_name, variables, appointment_id } = await req.json()
+        const { to, template_name, variables, subject: directSubject, html: directHtml, appointment_id } = await req.json()
         const supabase = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!)
 
-        // 1. Fetch Template
-        const { data: template, error: tempError } = await supabase
-            .from('email_templates')
-            .select('*')
-            .eq('name', template_name)
-            .single()
+        let html = directHtml
+        let subject = directSubject
+        let templateId = null
 
-        if (tempError || !template) throw new Error(`Template ${template_name} not found`)
+        // 1. Fetch Template if name provided
+        if (template_name) {
+            const { data: template, error: tempError } = await supabase
+                .from('email_templates')
+                .select('*')
+                .eq('name', template_name)
+                .single()
 
-        // 2. Variable Substitution
-        let html = template.html_content
-        let subject = template.subject
+            if (tempError || !template) throw new Error(`Template ${template_name} not found`)
 
-        Object.entries(variables || {}).forEach(([key, value]) => {
-            const regex = new RegExp(`{{${key}}}`, 'g')
-            html = html.replace(regex, String(value))
-            subject = subject.replace(regex, String(value))
-        })
+            html = template.html_content
+            subject = template.subject
+            templateId = template.id
+
+            // 2. Variable Substitution
+            Object.entries(variables || {}).forEach(([key, value]) => {
+                const regex = new RegExp(`{{${key}}}`, 'g')
+                html = html.replace(regex, String(value))
+                subject = subject.replace(regex, String(value))
+            })
+        }
+
+        if (!html || !subject) throw new Error('Missing email content (template or direct html/subject)')
 
         // 3. Send Email via Resend
         const response = await fetch('https://api.resend.com/emails', {
@@ -59,7 +68,7 @@ serve(async (req) => {
         // 4. Log Email
         await supabase.from('email_logs').insert({
             recipient: to,
-            template_id: template.id,
+            template_id: templateId,
             appointment_id: appointment_id || null,
             status: response.ok ? 'sent' : 'failed',
             error_message: response.ok ? null : JSON.stringify(resData)

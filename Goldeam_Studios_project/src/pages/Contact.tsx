@@ -1,4 +1,5 @@
-import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
+import { supabase } from '../lib/supabase';
+import { Loader2, CheckCircle, AlertCircle, MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
 import { useState } from 'react';
 
 export default function Contact() {
@@ -8,11 +9,72 @@ export default function Contact() {
     phone: '',
     message: '',
   });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<{
+    name?: string;
+    email?: string;
+    phone?: string;
+    message?: string;
+  }>({});
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Canada/US (NANP) Phone Validation
+  const isPhoneValid = (phone: string) => {
+    if (!phone) return true; // Phone is optional
+    const nanpRegex = /^(\+?1[-.\s]?)?\(?[2-9][0-9]{2}\)?[-.\s]?[2-9][0-9]{2}[-.\s]?[0-9]{4}$/;
+    return nanpRegex.test(phone.trim());
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Add form submission logic here
+    const errors: typeof fieldErrors = {};
+
+    // Name Validation
+    if (!formData.name.trim()) {
+      errors.name = 'Name is required';
+    }
+
+    // Email Validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim() || !emailRegex.test(formData.email)) {
+      errors.email = 'Valid email is required';
+    }
+
+    // Phone Validation
+    if (formData.phone && !isPhoneValid(formData.phone)) {
+      errors.phone = 'Invalid phone format (e.g. 555-555-5555)';
+    }
+
+    // Message Validation
+    if (!formData.message.trim()) {
+      errors.message = 'Message is required';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
+
+    setStatus('loading');
+
+    try {
+      const { error } = await supabase.functions.invoke('contact-handler', {
+        body: formData
+      });
+
+      if (error) throw error;
+
+      setStatus('success');
+      setFormData({ name: '', email: '', phone: '', message: '' });
+
+      // Reset success message after 5 seconds
+      setTimeout(() => setStatus('idle'), 5000);
+
+    } catch (error: any) {
+      console.error('Contact form error:', error);
+      setStatus('error');
+      setErrorMessage(error.message || 'Failed to send message. Please try again.');
+    }
   };
 
   return (
@@ -45,66 +107,134 @@ export default function Contact() {
               <h2 className="text-3xl font-black text-zinc-900 dark:text-white uppercase mb-6">
                 Send Us a Message
               </h2>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label className="block text-sm font-bold text-zinc-700 dark:text-gray-400 uppercase mb-2">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full bg-white dark:bg-black border border-zinc-300 dark:border-amber-500/20 text-zinc-900 dark:text-white px-4 py-3 rounded-lg focus:outline-none focus:border-amber-500 transition-colors"
-                    placeholder="Your Name"
-                    required
-                  />
+
+              {status === 'success' ? (
+                <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-8 text-center animate-in fade-in zoom-in duration-300">
+                  <div className="bg-green-100 dark:bg-green-800/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle className="h-8 w-8 text-green-600 dark:text-green-400" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-zinc-900 dark:text-white mb-2">Message Sent!</h3>
+                  <p className="text-zinc-600 dark:text-zinc-400">
+                    Thank you for contacting Goldbeam Studios. We've received your message and will get back to you shortly.
+                  </p>
+                  <button
+                    onClick={() => setStatus('idle')}
+                    className="mt-6 text-amber-500 font-bold hover:text-amber-600 transition-colors"
+                  >
+                    Send another message
+                  </button>
                 </div>
-                <div>
-                  <label className="block text-sm font-bold text-zinc-700 dark:text-gray-400 uppercase mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full bg-white dark:bg-black border border-zinc-300 dark:border-amber-500/20 text-zinc-900 dark:text-white px-4 py-3 rounded-lg focus:outline-none focus:border-amber-500 transition-colors"
-                    placeholder="your@email.com"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-zinc-700 dark:text-gray-400 uppercase mb-2">
-                    Phone
-                  </label>
-                  <input
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full bg-white dark:bg-black border border-zinc-300 dark:border-amber-500/20 text-zinc-900 dark:text-white px-4 py-3 rounded-lg focus:outline-none focus:border-amber-500 transition-colors"
-                    placeholder="(555) 123-4567"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-zinc-700 dark:text-gray-400 uppercase mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    rows={6}
-                    className="w-full bg-white dark:bg-black border border-zinc-300 dark:border-amber-500/20 text-zinc-900 dark:text-white px-4 py-3 rounded-lg focus:outline-none focus:border-amber-500 transition-colors"
-                    placeholder="Tell us about your project..."
-                    required
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-black px-8 py-4 text-lg font-bold uppercase tracking-wider hover:from-amber-400 hover:to-amber-500 transition-all rounded-lg flex items-center justify-center gap-2"
-                >
-                  <Send className="h-5 w-5" />
-                  Send Message
-                </button>
-              </form>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {status === 'error' && (
+                    <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4 rounded-lg flex items-start gap-3">
+                      <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400 shrink-0 mt-0.5" />
+                      <p className="text-sm text-red-600 dark:text-red-400">{errorMessage}</p>
+                    </div>
+                  )}
+
+                  <div>
+                    <label className="block text-sm font-bold text-zinc-700 dark:text-gray-400 uppercase mb-2">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) => {
+                        setFormData({ ...formData, name: e.target.value });
+                        if (fieldErrors.name) setFieldErrors({ ...fieldErrors, name: undefined });
+                      }}
+                      className={`w-full bg-white dark:bg-black border ${fieldErrors.name ? 'border-red-500' : 'border-zinc-300 dark:border-amber-500/20'
+                        } text-zinc-900 dark:text-white px-4 py-3 rounded-lg focus:outline-none focus:border-amber-500 transition-colors`}
+                      placeholder="Your Name"
+                      required
+                      disabled={status === 'loading'}
+                    />
+                    {fieldErrors.name && (
+                      <p className="text-red-500 text-xs mt-1">{fieldErrors.name}</p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-zinc-700 dark:text-gray-400 uppercase mb-2">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => {
+                        setFormData({ ...formData, email: e.target.value });
+                        if (fieldErrors.email) setFieldErrors({ ...fieldErrors, email: undefined });
+                      }}
+                      className={`w-full bg-white dark:bg-black border ${fieldErrors.email ? 'border-red-500' : 'border-zinc-300 dark:border-amber-500/20'
+                        } text-zinc-900 dark:text-white px-4 py-3 rounded-lg focus:outline-none focus:border-amber-500 transition-colors`}
+                      placeholder="your@email.com"
+                      required
+                      disabled={status === 'loading'}
+                    />
+                    {fieldErrors.email && (
+                      <p className="text-red-500 text-xs mt-1">{fieldErrors.email}</p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-zinc-700 dark:text-gray-400 uppercase mb-2">
+                      Phone
+                    </label>
+                    <input
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => {
+                        setFormData({ ...formData, phone: e.target.value });
+                        if (fieldErrors.phone) setFieldErrors({ ...fieldErrors, phone: undefined });
+                      }}
+                      className={`w-full bg-white dark:bg-black border ${fieldErrors.phone ? 'border-red-500' : 'border-zinc-300 dark:border-amber-500/20'
+                        } text-zinc-900 dark:text-white px-4 py-3 rounded-lg focus:outline-none focus:border-amber-500 transition-colors`}
+                      placeholder="(555) 123-4567"
+                      disabled={status === 'loading'}
+                    />
+                    {fieldErrors.phone && (
+                      <p className="text-red-500 text-xs mt-1">{fieldErrors.phone}</p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-zinc-700 dark:text-gray-400 uppercase mb-2">
+                      Message
+                    </label>
+                    <textarea
+                      value={formData.message}
+                      onChange={(e) => {
+                        setFormData({ ...formData, message: e.target.value });
+                        if (fieldErrors.message) setFieldErrors({ ...fieldErrors, message: undefined });
+                      }}
+                      rows={6}
+                      className={`w-full bg-white dark:bg-black border ${fieldErrors.message ? 'border-red-500' : 'border-zinc-300 dark:border-amber-500/20'
+                        } text-zinc-900 dark:text-white px-4 py-3 rounded-lg focus:outline-none focus:border-amber-500 transition-colors`}
+                      placeholder="Tell us about your project..."
+                      required
+                      disabled={status === 'loading'}
+                    />
+                    {fieldErrors.message && (
+                      <p className="text-red-500 text-xs mt-1">{fieldErrors.message}</p>
+                    )}
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={status === 'loading'}
+                    className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-black px-8 py-4 text-lg font-bold uppercase tracking-wider hover:from-amber-400 hover:to-amber-500 transition-all rounded-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {status === 'loading' ? (
+                      <>
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="h-5 w-5" />
+                        Send Message
+                      </>
+                    )}
+                  </button>
+                </form>
+              )}
             </div>
 
             {/* Contact Info */}

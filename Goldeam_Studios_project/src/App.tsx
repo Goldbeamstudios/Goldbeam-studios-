@@ -19,6 +19,8 @@ const LocationParking = lazy(() => import('./pages/LocationParking'));
 const Resources = lazy(() => import('./pages/Resources'));
 const Blog = lazy(() => import('./pages/Blog'));
 const BlogPost = lazy(() => import('./pages/BlogPost'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 
 // Admin pages
 const Login = lazy(() => import('./pages/admin/Login'));
@@ -79,6 +81,10 @@ function App() {
             {/* Blog Routes */}
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
+
+            {/* Legal Routes */}
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
           </Route>
 
           {/* Fallback 404 Route */}

@@ -1,21 +1,56 @@
-import { ArrowRight, Play, Mic2, Video, Cast, Sliders, Coffee, Wifi, MapPin } from 'lucide-react';
+import { ArrowRight, Play, Mic2, Video, Cast, Sliders, Coffee, Wifi, MapPin, X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import bg from '../assets/banner_three.jpeg';
-import gallery1 from '../assets/banner_four.jpeg';
-import gallery2 from '../assets/banner_six.jpg';
-import gallery3 from '../assets/banner_two.png';
-import gallery4 from '../assets/banner.jpeg';
-import gallery5 from '../assets/banner_five.jpeg';
-import gallery6 from '../assets/banner_three.jpeg';
-import gallery7 from '../assets/images/studio/photo_studio.jpg';
-import gallery8 from '../assets/images/studio/photo_studio1.jpg';
-import gallery9 from '../assets/images/studio/photo_studio2.jpeg';
+
+// Import gallery images
+import gall1 from '../assets/Themes/Gallery/1-gallery-lobby-1.jpg';
+import gall2 from '../assets/Themes/Gallery/2-gallery-lobby-2.jpg';
+import gall3 from '../assets/Themes/Gallery/3-gallery-hallway-1.jpg';
+import gall4 from '../assets/Themes/Gallery/4-gallery-hallway-2.jpg';
+import gall5 from '../assets/Themes/Gallery/5-gallery-beverage-1.jpg';
+import gall6 from '../assets/Themes/Gallery/6-gallery-beverage-2.jpg';
+import gall7 from '../assets/Themes/Gallery/7-gallery-washroom.jpg';
+import gall8 from '../assets/Themes/Gallery/8-gallery-storage.jpg';
+import gall9 from '../assets/Themes/Gallery/9-gallery-change-room-1.jpg';
+import gall10 from '../assets/Themes/Gallery/10-gallery-change-room-2.jpg';
+import gall11 from '../assets/Themes/Gallery/11-gallery-change-room-3.jpg';
+import gall12 from '../assets/Themes/Gallery/12-gallery-change-room-4.jpg';
+import gall13 from '../assets/Themes/Gallery/13-gallery-equipment-1.jpg';
+import gall14 from '../assets/Themes/Gallery/14-gallery-equipment-2.jpg';
+import gall15 from '../assets/Themes/Gallery/15-gallery-equipment-3.jpg';
+import gall17 from '../assets/Themes/Gallery/17-gallery-studio-2.jpg';
+import gall18 from '../assets/Themes/Gallery/18-gallery-studio-3.jpg';
+import gall19 from '../assets/Themes/Gallery/19-gallery-studio-4.jpg';
+import gall20 from '../assets/Themes/Gallery/20-gallery-studio-5.jpg';
+
+const ALL_GALLERY_IMAGES = [
+  gall1, gall2, gall3, gall4, gall5, gall6, gall7, gall8, gall9, gall10,
+  gall11, gall12, gall13, gall14, gall15, gall17, gall18, gall19, gall20, gall20
+];
 
 export default function Home() {
   const navigate = useNavigate();
   const heroRef = useRef<HTMLDivElement>(null);
   const featuresRef = useRef<HTMLDivElement>(null);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+
+  const openLightbox = (index: number) => {
+    setActiveImageIndex(index);
+    setIsLightboxOpen(true);
+  };
+
+  const nextImage = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setActiveImageIndex((prev) => (prev + 1) % ALL_GALLERY_IMAGES.length);
+  };
+
+  const prevImage = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setActiveImageIndex((prev) => (prev - 1 + ALL_GALLERY_IMAGES.length) % ALL_GALLERY_IMAGES.length);
+  };
 
   useEffect(() => {
     const observerOptions = {
@@ -76,16 +111,55 @@ export default function Home() {
     },
   ];
 
-
-
   return (
     <div className="bg-white dark:bg-black text-zinc-900 dark:text-white transition-colors duration-300">
+      <Helmet>
+        <title>Goldbeam Studios | Podcast & Video Studio Toronto</title>
+        <meta name="description" content="Elevate your voice at Goldbeam Studios. The premier Toronto podcast studio for high-quality audio and 4K video recording." />
+        <link rel="canonical" href="https://goldbeamstudios.com/" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Goldbeam Studios",
+            "image": "https://goldbeamstudios.com/assets/images/GoldBeam_Logo_PNG_06.png",
+            "@id": "https://goldbeamstudios.com",
+            "url": "https://goldbeamstudios.com",
+            "telephone": "(289) 943-3216",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "2017 Danforth Avenue, 2nd Floor",
+              "addressLocality": "Toronto",
+              "addressRegion": "ON",
+              "postalCode": "M4C 1J7",
+              "addressCountry": "CA"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": 43.6860,
+              "longitude": -79.3090
+            },
+            "openingHoursSpecification": {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": [
+                "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+              ],
+              "opens": "09:00",
+              "closes": "21:00"
+            },
+            "sameAs": [
+              "https://www.instagram.com/goldbeamstudios",
+              "https://twitter.com/goldbeamstudios",
+              "https://facebook.com/goldbeamstudios"
+            ]
+          })}
+        </script>
+      </Helmet>
       {/* Hero Section */}
       <section
         ref={heroRef}
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
       >
-        {/* Background */}
         <div className="absolute inset-0 z-0">
           <img
             src={bg}
@@ -93,10 +167,7 @@ export default function Home() {
             className="w-full h-full object-cover object-center"
             fetchPriority="high"
           />
-
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/20 to-transparent"></div>
-
-          {/* Animated gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-amber-600/10 animate-pulse-slow"></div>
         </div>
 
@@ -122,13 +193,18 @@ export default function Home() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6 animate-fade-in-delay-2">
-              <button
-                onClick={() => navigate('/book-wizard')}
-                className="group flex items-center justify-center gap-3 bg-gradient-to-r from-amber-500 to-amber-600 text-black px-8 py-4 text-lg font-bold uppercase tracking-wider hover:from-amber-400 hover:to-amber-500 transition-all transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-amber-500/50 rounded-lg"
-              >
-                Book A Session
-                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </button>
+              <div className="relative group">
+                <button
+                  onClick={() => navigate('/book-wizard')}
+                  className="group flex items-center justify-center gap-3 bg-gradient-to-r from-amber-500 to-amber-600 text-black px-8 py-4 text-lg font-bold uppercase tracking-wider hover:from-amber-400 hover:to-amber-500 transition-all transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-amber-500/50 rounded-lg"
+                >
+                  Book A Session
+                  <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </button>
+                <div className="absolute -top-3 -right-3 bg-black border border-amber-500 text-amber-500 text-[10px] font-black px-2 py-1 rounded uppercase tracking-tighter animate-bounce">
+                  Engineer Included
+                </div>
+              </div>
 
               <button className="flex items-center justify-center gap-3 border-2 border-amber-500/30 hover:border-amber-500 text-white px-8 py-4 text-lg font-bold uppercase tracking-wider transition-all backdrop-blur-sm hover:bg-amber-500/10 rounded-lg">
                 <Play className="h-5 w-5 fill-current" />
@@ -137,8 +213,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-        {/* Scroll indicator */}
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
           <div className="w-[2px] h-16 bg-gradient-to-b from-transparent via-amber-500 to-transparent"></div>
         </div>
@@ -146,7 +220,6 @@ export default function Home() {
 
       {/* Features Section */}
       <section ref={featuresRef} className="py-24 bg-white dark:bg-black relative overflow-hidden">
-        {/* Background decoration */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-0 left-1/4 w-full h-full bg-gradient-to-br from-amber-500 to-transparent blur-3xl"></div>
         </div>
@@ -168,9 +241,7 @@ export default function Home() {
                 className="animate-on-scroll opacity-0 bg-zinc-100 dark:bg-zinc-900/50 backdrop-blur-sm border border-amber-500/10 p-8 hover:border-amber-500/50 transition-all duration-500 group hover:transform hover:-translate-y-3 hover:shadow-2xl hover:shadow-amber-500/20 rounded-lg relative overflow-hidden"
                 style={{ animationDelay: `${index * 100} ms` }}
               >
-                {/* Shine effect on hover */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-500/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></div>
-
                 <div className="relative z-10">
                   <div className="text-gray-600 dark:text-gray-400 mb-4 group-hover:text-amber-500 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 transform">
                     <feature.icon className="h-10 w-10" />
@@ -186,25 +257,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Showcase Gallery with Scroll Reveal */}
-      <section className="py-12 relative overflow-hidden">
+      {/* Showcase Gallery with Scroll Reveal - Reverted to Old Design */}
+      <section className="py-12 relative overflow-hidden bg-white dark:bg-black">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-zinc-200 dark:bg-zinc-800">
-          {[
-            gallery1,
-            gallery2,
-            gallery3,
-            gallery4,
-            gallery5,
-            gallery6,
-            gallery7,
-            gallery8,
-            gallery9,
-          ].map((src, index) => (
+          {ALL_GALLERY_IMAGES.map((src, index) => (
             <div
               key={index}
-              className="group relative h-64 md:h-80 overflow-hidden animate-on-scroll opacity-0 bg-white dark:bg-black"
-              style={{ animationDelay: `${index * 150} ms` }}
+              className="group relative aspect-square md:aspect-[4/3] overflow-hidden animate-on-scroll opacity-0 bg-zinc-100 dark:bg-zinc-900 cursor-zoom-in"
+              style={{ animationDelay: `${(index % 3) * 150} ms` }}
+              onClick={() => openLightbox(index)}
             >
+              {/* Performance: background gradient as placeholder */}
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-amber-600/5"></div>
+
               <img
                 src={src}
                 alt={`Studio Shot ${index + 1} `}
@@ -224,6 +289,13 @@ export default function Home() {
                 {index + 1}
               </div>
 
+              {/* Fullscreen Icon */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                <div className="bg-black/40 backdrop-blur-md p-4 rounded-full border border-white/20">
+                  <Maximize2 className="h-6 w-6 text-white" />
+                </div>
+              </div>
+
               {/* Shine effect */}
               <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent -translate-x-full -translate-y-full group-hover:translate-x-full group-hover:translate-y-full transition-transform duration-1000"></div>
             </div>
@@ -231,26 +303,16 @@ export default function Home() {
         </div>
       </section>
 
-
-
       {/* Trust Banner */}
       <section className="py-20 border-y border-amber-500/20 relative overflow-hidden bg-zinc-50 dark:bg-black">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-500/5 to-transparent animate-shimmer"></div>
-
         <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
           <p className="text-gray-500 uppercase tracking-widest mb-8 animate-fade-in">
             Trusted by Creators From
           </p>
           <div className="flex flex-wrap justify-center gap-12 md:gap-24 opacity-40 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-700">
             {['SPOTIFY', 'APPLE', 'YOUTUBE', 'AUDIBLE'].map((brand, index) => (
-              <span
-                key={brand}
-                className="text-2xl font-black hover:text-amber-500 hover:scale-110 transition-all duration-300 cursor-default"
-                style={{
-                  fontFamily: index === 0 ? 'serif' : index === 1 ? 'mono' : index === 2 ? 'sans-serif' : 'inherit',
-                  animationDelay: `${index * 0.1}s`
-                }}
-              >
+              <span key={brand} className="text-2xl font-black hover:text-amber-500 hover:scale-110 transition-all duration-300 cursor-default">
                 {brand}
               </span>
             ))}
@@ -260,8 +322,6 @@ export default function Home() {
 
       {/* Location Section */}
       <section className="py-32 bg-white dark:bg-black relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,rgba(245,158,11,0.05),transparent_50%)]"></div>
-
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-20 animate-on-scroll opacity-0">
             <div className="inline-flex items-center gap-3 mb-6 px-4 py-2 rounded-full border border-amber-500/20 bg-amber-500/5">
@@ -269,42 +329,84 @@ export default function Home() {
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-500">Find Your Way</span>
             </div>
             <h3 className="text-5xl md:text-7xl font-black text-zinc-900 dark:text-white uppercase mb-8 leading-[0.9] tracking-tighter">
-              Located steps from <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600">
-                Woodbine Station
-              </span>
+              Located steps from <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600">Woodbine Station</span>
             </h3>
-            <p className="text-xl text-gray-500 font-medium uppercase tracking-[0.2em]">
-              Danforth Ave, Toronto, ON
-            </p>
           </div>
-
           <div className="animate-on-scroll opacity-0 delay-200 w-full max-w-6xl mx-auto group">
             <div className="relative p-2 bg-zinc-100 dark:bg-zinc-900 border border-amber-500/10 rounded-[3rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.5)]">
               <div className="relative h-[550px] rounded-[2.5rem] overflow-hidden">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2885.667503461284!2d-79.3090!3d43.6860!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4cc7766099dc3%3A0x63806a644171221b!2sWoodbine!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca"
-                  width="100%"
-                  height="100%"
-                  style={{
-                    border: 0,
-                    filter: 'contrast(1.2)'
-                  }}
+                  width="100%" height="100%" style={{ border: 0, filter: 'contrast(1.2)' }}
                   className="relative z-0 transition-transform duration-1000 group-hover:scale-105 grayscale-[1] invert-[0.9]"
                 ></iframe>
-              </div>
-
-              {/* Decorative elements */}
-              <div className="absolute top-10 left-10 p-5 bg-black/80 backdrop-blur-xl border border-white/10 rounded-2xl z-20">
-                <div className="flex items-center gap-3">
-                  <div className="w-2.5 h-2.5 bg-amber-500 rounded-full animate-pulse"></div>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-white">Visit Our Studio</span>
-                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Lightbox Modal */}
+      {isLightboxOpen && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-xl animate-fade-in"
+          onClick={() => setIsLightboxOpen(false)}
+        >
+          <button
+            className="absolute top-8 right-8 p-4 text-white/70 hover:text-white transition-colors z-[110]"
+            onClick={() => setIsLightboxOpen(false)}
+          >
+            <X size={40} strokeWidth={1.5} />
+          </button>
+
+          <button
+            onClick={nextImage}
+            className="absolute right-8 p-6 rounded-full bg-white/5 hover:bg-white/10 text-white transition-all z-[110] border border-white/10 hidden md:block"
+          >
+            <ChevronRight size={32} />
+          </button>
+          <button
+            onClick={prevImage}
+            className="absolute left-8 p-6 rounded-full bg-white/5 hover:bg-white/10 text-white transition-all z-[110] border border-white/10 hidden md:block"
+          >
+            <ChevronLeft size={32} />
+          </button>
+
+          <div
+            className="relative max-w-7xl max-h-[85vh] mx-auto px-4 flex flex-col items-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={ALL_GALLERY_IMAGES[activeImageIndex]}
+              alt={`Gallery Fullview ${activeImageIndex + 1}`}
+              className="w-full h-full object-contain rounded-xl shadow-2xl animate-fade-in-up"
+            />
+            <div className="mt-8 text-center">
+              <p className="text-amber-500 font-bold text-xl uppercase tracking-widest">
+                Studio Space {activeImageIndex + 1} / {ALL_GALLERY_IMAGES.length}
+              </p>
+            </div>
+
+            {/* Mobile Navigation */}
+            <div className="flex gap-6 mt-10 md:hidden">
+              <button
+                onClick={prevImage}
+                className="p-5 rounded-full bg-white/5 border border-white/10 text-white active:bg-amber-500 active:text-black transition-colors"
+                aria-label="Previous image"
+              >
+                <ChevronLeft size={28} />
+              </button>
+              <button
+                onClick={nextImage}
+                className="p-5 rounded-full bg-white/5 border border-white/10 text-white active:bg-amber-500 active:text-black transition-colors"
+                aria-label="Next image"
+              >
+                <ChevronRight size={28} />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

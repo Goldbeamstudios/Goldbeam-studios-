@@ -117,6 +117,22 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  to="/privacy-policy"
+                  className="text-zinc-600 dark:text-gray-400 hover:text-amber-500 transition-colors inline-block py-1"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/terms-of-service"
+                  className="text-zinc-600 dark:text-gray-400 hover:text-amber-500 transition-colors inline-block py-1"
+                >
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/book-wizard"
                   className="text-amber-500 hover:text-amber-400 transition-colors inline-block py-1 font-semibold"
                 >

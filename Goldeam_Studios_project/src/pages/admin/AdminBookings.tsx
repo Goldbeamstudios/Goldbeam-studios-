@@ -23,6 +23,7 @@ interface Booking {
     id: string;
     customer_name: string;
     customer_email: string;
+    customer_phone: string;
     plan_type: string;
     studio: string;
     theme?: string;
@@ -180,7 +181,7 @@ const AdminBookings = () => {
                         start_time: formatTime(booking.start_time),
                         studio: booking.studio,
                         duration: booking.duration_hours,
-                        logo_url: 'https://qsnudsnqbpbmjbzwyqzr.supabase.co/storage/v1/object/public/blog-images/logo.png'
+                        logo_url: 'https://qsnudsnqbpbmjbzwyqzr.supabase.co/storage/v1/object/public/logo/GoldBeam_Logo_PNG_06.png'
                     }
                 }
             });
@@ -214,7 +215,7 @@ const AdminBookings = () => {
                                 start_time: formatTime(booking.start_time),
                                 studio: booking.studio,
                                 duration: booking.duration_hours,
-                                logo_url: 'https://qsnudsnqbpbmjbzwyqzr.supabase.co/storage/v1/object/public/blog-images/logo.png'
+                                logo_url: 'https://qsnudsnqbpbmjbzwyqzr.supabase.co/storage/v1/object/public/logo/GoldBeam_Logo_PNG_06.png'
                             }
                         }
                     });
@@ -341,7 +342,9 @@ const AdminBookings = () => {
                                         </div>
                                         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-zinc-500 text-xs font-medium">
                                             <span className="flex items-center gap-1.5"><Mail size={12} className="text-amber-500" /> {booking.customer_email}</span>
-                                            {/* Note: phone isn't in current Booking interface but would be here if present */}
+                                            {booking.customer_phone && (
+                                                <span className="flex items-center gap-1.5"><Phone size={12} className="text-amber-500" /> {booking.customer_phone}</span>
+                                            )}
                                             <span className="flex items-center gap-1.5 px-2 py-0.5 bg-zinc-800 rounded text-[10px] uppercase font-black text-zinc-400">ID: {booking.id.slice(0, 8)}</span>
                                         </div>
                                     </div>
@@ -475,9 +478,18 @@ const AdminBookings = () => {
                                             <div className="h-12 w-12 rounded-2xl bg-zinc-900 flex items-center justify-center text-amber-500 border border-zinc-800">
                                                 <Phone size={20} />
                                             </div>
-                                            <div>
-                                                <p className="text-[10px] font-black text-zinc-600 uppercase">Identity Verified</p>
-                                                <p className="text-zinc-500 font-bold uppercase text-[10px]">Stripe KYC Approved</p>
+                                            <div className="flex-1">
+                                                <p className="text-[10px] font-black text-zinc-600 uppercase">Phone Communications</p>
+                                                {selectedBooking.customer_phone ? (
+                                                    <a
+                                                        href={`tel:${selectedBooking.customer_phone}`}
+                                                        className="text-white font-bold hover:text-amber-500 transition-colors"
+                                                    >
+                                                        {selectedBooking.customer_phone}
+                                                    </a>
+                                                ) : (
+                                                    <p className="text-zinc-500 font-bold uppercase text-[10px]">No Phone Provided</p>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
